@@ -1,0 +1,702 @@
+{
+	"schemaVersion": "2021-11-01",
+	"name": "Amazon Connect Contact Center Lens - Reliability",
+	"description": "Amazon Connect Well-Architected Contact Center Lens for Reliability.",
+	"pillars": [
+		{
+			"id": "REL",
+			"name": "Reliability",
+			"questions": [
+				{
+					"id": "REL01",
+					"title": "What does your business continuity plan involve?",
+					"description": "Defining a business continuity plan that includes redundant components is an important part of your DR strategy. Many organizations have a business continuity plan and the contact center is one component of the overall plan.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Regulatory requirement for multi-region disaster recovery strategy are being adhered to.",
+							"helpfulResource": {
+								"displayText": "Organizations can have certain regulatory requirements which they must adhere to. One example of this is DR sites needing to be a certain physical distance from each other or 'Multi-Regional'."
+							},
+							"improvementPlan": {
+								"displayText": "Amazon Connect operates across multiple availability zones (AZs) in any given region in an active-active-active fashion thereby increasing the resiliency of the solution. AWS recommends customers against considering a multi-region DR strategy since by design and architecture, the service operates in a redundant fashion. Additionally, there is built-in carrier redundancy for Amazon Connect US toll-free numbers. If your organization has a regulatory requirement, AWS advises you to work with your Connect specialist SA for further discovery and solution designing that will work for your specific use case.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-connect-global-resiliency.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Owned Toll-Free Numbers are using two or more carriers to handle calls.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect US toll-free numbers benefit from the resilient architecture where two or more carriers are used to handle your calls.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/disaster-recovery-resiliency.html#telephony-recovery-resiliency"
+							},							
+							"improvementPlan": {
+								"displayText": "AWS recommends porting your vanity numbers to Amazon Connect to take advantage of this resiliency. However, if you have business constraints such as existing carrier relationships, you may forward calls to Amazon Connect DIDs for processing. Please note that inherently, DIDs do not have carrier level redundancy.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/disaster-recovery-resiliency.html#telephony-recovery-resiliency"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL02",
+					"title": "How are you testing your disaster recovery strategy and measuring the strategy's effectiveness?",
+					"description": "Testing your DR strategy is just as important as having a strategy in place. You can measure the effectiveness of your DR strategy using two key metrics: RTO (Recovery Time Objective) and RPO (Recovery Point Objective).",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Disaster recovery approach is tested on a regular basis",
+							"helpfulResource": {
+                                "displayText": "Test to validate that your Amazon Connect design meets functional and non-functional requirements, because bugs or performance bottlenecks can impact the reliability of contact center connectivity. Test the resiliency of your implementation to help you find latent issues that only surface in production. Exercise these tests regularly.",
+								"url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/test-reliability.html"
+                            },
+							"improvementPlan": {
+								"displayText": "Refer to architectural guidance section below to understand Amazon Connect platform and telephony solution design for built in reliability and resiliency as you evaluate your disaster recovery approach.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/architecture-guidance.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Failover process is documented",
+							"helpfulResource": {
+                                "displayText": "Document and publish run books to cover all the steps necessary to failover your Connect instance, including any 3rd-party or other AWS service dependencies. Your recovery actions will need to deploy any missing resources to ensure your failover Region is available to accept and process contacts as expected."
+                            },
+                            "improvementPlan": {
+								"displayText": "Clearly document the failover process and the steps to follow along with dependencies and pre-requisites as well as owners identified. Have a centralize place (e.g. sharepoint etc.) to house the process artifacts.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_disaster_recovery.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "RPO and RTO have been established with internal stakeholders",
+							"helpfulResource": {
+                                "displayText": "Ensure that all the participants and key stakeholders have access the defined RTO and RPO for disaster recovery.",
+                                "url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+                            },
+							"improvementPlan": {
+								"displayText": "Ensure that all the participants and key stakeholders have access the defined RTO and RPO for disaster recovery.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Reliability testing methodologies are used to test the platform (Load Testing, Penetration Testing, etc)",
+							"helpfulResource": {
+                                "displayText": "Please refer to the documentation for Amazon Connect testing policy.",
+                                "url": "https://aws.amazon.com/connect/testing/"
+                            },
+                            "improvementPlan": {
+								"displayText": "Please refer to the documentation for Amazon Connect testing policy.",
+								"url": "https://aws.amazon.com/connect/testing/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL03",
+					"title": "How are your Agent Workstations configured to support reliability?",
+					"description": "While Amazon Connect Contact Control Panel (CCP) is browser based and uses WebRTC, it is important to understand any software and processes that can consume bandwidth or block traffic so those risks can be mitigated.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Agents are physically located close to instance region",
+							"helpfulResource": {
+								"displayText": "While Connect can deliver media and signaling over the internet, consideration must be put towards physical location. The further agents are located from a Connect region, the higher the chance of Latency.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							},
+							"improvementPlan": {
+								"displayText": "Test your agents' connection to the Amazon Connect service by utilizing the Amazon Connect Endpoint Test Utility.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Workstations meet the minimum workstation requirements",
+							"helpfulResource": {
+								"displayText": "Verify that your agents' workstations and headsets meet the minimum requirements for Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							},
+							"improvementPlan": {
+								"displayText": "Periodically audit agent workstations to ensure they meet minimum requirements. Upgrade agent workstations as necessary.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Workstations don't actively run monitoring/diagnostics software",
+							"helpfulResource": {
+                                "displayText": "Monitoring and diagnostic software is any software that might modify the performance or network connectivity to the Amazon Connect service, like packet monitoring."
+                            },
+                            "improvementPlan": {
+								"displayText": "Remove any monitoring/diagnostic software from workstations that could interfere with WebRTC traffic."
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Workstation running supported browser(s)",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect Admin Dashboard and CCP are only supported on the latest 3 versions of Mozilla Firefox and/or Google Chrome.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure your agents running the latest version of a supported browser for Amazon Connect.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Agents use a wired USB headset",
+							"helpfulResource": {
+								"displayText": "To reduce the risk of agent-end audio quality issues, we recommend agents utilize a direct-wire USB headset certified for use with VoIP communications.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							},
+							"improvementPlan": {
+								"displayText": "Provide agents with wired USB headsets for use with Connect",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Workstations using wired Ethernet for internet connectivity",
+                            "helpfulResource": {
+							    "displayText": "Workstations using wired internet are typically more reliable than connections over Wifi or cellular devices."
+                            },
+                            "improvementPlan": {
+								"displayText": "Configure agent workstations with wired ethernet connections for internet connectivity."
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Workstation Antivirus software configured to allow ports used by Connect",
+							"helpfulResource": {
+								"displayText": "Antivirus software can monitor packets, protocols and websites - and block these. Please review our networking guide ensure that the antivirus software is not blocking any domains, IP addresses, Ports or protocols.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							},
+							"improvementPlan": {
+                                "displayText": "Ensure agent workstation security software is configured to allow both signaling and WebRTC real-time communication between the workstation and Amazon Connect.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Workstation VPN Software configured to allow all ports used by Connect",
+							"helpfulResource": {
+								"displayText": "VPN software can restrict traffic on ports required by Connect to run.  Review the networking guide and ensure no ports / URL's and IP Ranges are blocked locally.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure VPN software allows traffic on ports required by Connect to run.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+							"id": "choice9",
+							"title": "Virtual workspaces best practices and considerations are being followed",
+							"helpfulResource": {
+								"displayText": "Virtual Desktop Infrastructure (VDI) environments add another layer of complexity to your solution that warrants separate POC efforts and performance testing to optimize. The Amazon Connect Contact Control Panel (CCP) can operate in thick, thin, and zero client VDI environments as any other WebRTC based browser application does, and the configuration/support/optimization is best handled by your VDI support team.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+							},
+							"improvementPlan": {
+								"displayText": "Configure your VDI environment follow best practices for Connect",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7 && choice8 && choice9",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6 || !choice7 || !choice8 || !choice9) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL04",
+					"title": "What considerations are taken for agent network connectivity to Amazon Connect?",
+					"description": "Reliability of passing data between Amazon Connect and and an agent and/or administrator endpoint is important to ensure all information is correctly passed between endpoints. Monitoring the packet lifecycle (from Amazon Connect to the endpoint and vice versa) ensures no loss of data occurs in any step of the process.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Pathway for signaling and media packets from AWS is defined",
+							"helpfulResource": {
+                                "displayText": "Can your organization define the internet path from your agents workstation to the Amazon Connect service? This should encompass firewalls, VPN's, and proxies."
+                            },
+                            "improvementPlan": {
+								"displayText": "Having a defined pathway gives a path to follow to monitor and fix issues that may arise in network connectivity.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+                            }
+						},
+						{
+							"id": "choice2",
+							"title": "VPN allow traffic to Amazon Connect global resources",
+							"helpfulResource": {
+                                "displayText": "Ensure that the VPN service does not block any URL's, Ports and IP's mentioned in the network setup guide. Steps to validate: Trace the route from an agent workstation to an Amazon Connect domain from our networking guide. Examine the path displayed - it should show if there are any VPN's in the path and any associated RTT delays.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+                            },
+                            "improvementPlan": {
+								"displayText": "Ensure that the VPN service does not block any URL's, Ports and IP's mentioned in the network setup guide. Steps to validate: Trace the route from an agent workstation to an Amazon Connect domain from our networking guide. Examine the path displayed - it should show if there are any VPN's in the path and any associated RTT delays.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "DNS Filtering Clients deployed",
+							"helpfulResource": {
+                                "displayText": "DNS filtering clients can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#allow-dns-resolution"
+                            },
+                            "improvementPlan": {
+								"displayText": "Ensure that AWS domains are allow-listed in DNS filtering solutions, as this can impact the agent and supervisor experience.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#allow-dns-resolution"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Endpoint monitoring software deployed",
+							"helpfulResource": {
+                                "displayText": "Endpoint monitoring software can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed."
+                            },
+                            "improvementPlan": {
+								"displayText": "Desktop and network related software which monitor web traffic can interfere with connection quality and latency to Amazon Connect. Amazon Connect URL's must be allow-listed with these services to ensure optimum audio quality and latency."
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Bandwidth and latency monitoring software deployed",
+							"helpfulResource": {
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues."
+                            },
+                            "improvementPlan": {
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues."
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Call quality monitoring software deployed on agent endpoints",
+							"helpfulResource": {
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues."
+							},
+                            "improvementPlan": {
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues."
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice5 && choice6",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL05",
+					"title": "How are calls delivered to end users (agents) and the Amazon Connect Service?",
+					"description": "Monitoring call delivery from an agent to Amazon Connect and vice versa ensures reliability in the call experience for both your agents and customers.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Phone numbers have been ported to AWS",
+							"helpfulResource": {
+								"displayText": "If you want to keep a phone number you already have, you can port the phone number and use it with Amazon Connect. After a phone number is ported to Amazon Connect, it appears in the list of available phone numbers for you to assign to flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-porting.html"
+							},
+							"improvementPlan": {
+								"displayText": "Porting your phone number to Amazon Connect allows you to keep using your phone number for your Connect workloads.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-porting.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Calls are originating from service endpoints supported by Amazon Connect",
+							"helpfulResource": {
+								"displayText": "Identifying regions and endpoints that customers are calling from is important to ensuring reliability of your telephony traffic, as unsupported regions can cause a hand-off, resulting in loss of quality or ANI propagation. Review region requirements for phone numbers in Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/phone-number-requirements.html"
+							},
+							"improvementPlan": {
+								"displayText": "Be aware of Country or region specific telecom regulations applicable for ordering and porting phone numbers.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/phone-number-requirements.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Calls are routed to an instance that are in close geographic proximity to caller",
+							"helpfulResource": {
+								"displayText": "Ensure your instance is geographically located to the majority of your callers. This will reduce latency and improve the end user experience. Leverage the Check Connectivity tool for latency testing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage the Check Connectivity tool for latency testing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL06",
+					"title": "What areas of your Amazon Connect Instance(s) and agent endpoints are monitored for reliability?",
+					"description": "Amazon Connect Contact Centers can interact with other AWS services, including Amazon Lex and AWS Lambda. Monitoring all parts of the contact center is important to ensure reliability of the service, and identify issues if they arise. This includes metrics, logging, and alarms for Amazon Connect and downstream systems.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Monitor Amazon Connect Instances and Service Quotas",
+							"helpfulResource": {
+								"displayText": "Monitoring of your Amazon Connect instance can be performed by monitoring CloudWatch Metrics. These metrics include concurrent calls/chats, quota breaches and packet loss rate.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+                            },
+                            "improvementPlan": {
+                                "displayText": "Monitor your instance using CloudWatch.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+                            }
+						},
+						{
+							"id": "choice2",
+							"title": "Monitor Contact Flows",
+							"helpfulResource": {
+								"displayText": "Enabling log streaming for Contact Flows can allow organizations to diagnose contacts who might have had a non-optimal experience. The \"Set logging behavior\" block allows us to view the path a user took in our Contact Flow, allowing easier debugging of potential issues.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Track events as customers interact with contact flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Monitor Amazon Lex bots",
+							"helpfulResource": {
+								"displayText": "Amazon Lex conversation logs allow visibility into text input, transcripts into audio input, and associated metadata such as confidence values for our intents. Delivery metrics are provided via CloudWatch to monitor writing of these logs to their defined logging destinations.",
+								"url": "https://docs.aws.amazon.com/lex/latest/dg/conversation-logs.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable Conversation Logs in Amazon Lex.",
+								"url": "https://docs.aws.amazon.com/lex/latest/dg/conversation-logs.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Monitor AWS Lambda functions",
+							"helpfulResource": {
+								"displayText": "Monitoring success rate of Lambda integrations is important to prevent users from reaching error paths in Amazon Connect Contact flows. Logging and metrics from Lambda functions can indicate problems with our data integrations.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-monitoring.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable monitoring and troubleshooting for Lambda serverless applications.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-monitoring.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Monitor agent endpoints and devices",
+							"helpfulResource": {
+								"displayText": "Packet drop, latency, and firewall / proxy settings should be monitored to ensure that agents are able to maintain a consistent connection to Amazon Connect.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement call quality monitoring with Amazon Connect.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Monitor contact trace record and agent event streams delivery",
+							"helpfulResource": {
+								"displayText": "Kinesis streams for Amazon Connect data should be monitored to ensure deliverability of events to the destination. CloudWatch metrics include details around success rate of event delivery, and if enhanced metrics is enabled, includes information about provisioned capacity rate limits being exceeded.",
+								"url": "https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement monitoring of Amazon Kinesis Data Streams Service with Amazon CloudWatch.",
+								"url": "https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html"
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Monitor custom agent desktop (CCP) environments",
+							"helpfulResource": {
+								"displayText": "Hosted agent desktops and CCP experiences should be monitored for uptime availability. Monitoring via APM tooling or CloudWatch Synthetic Canaries can provide monitoring and alerting into issues with the agent desktop experience.",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement synthetic monitoring on custom CCP implementations.",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html"
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Monitor AWS service API calls",
+							"helpfulResource": {
+								"displayText": "Logging Amazon Connect Service API calls can identify issues in any automation, such as swapping of agent routing profiles on a schedule. Alerts can be set to identify failed API calls, for instance if an IAM role was changed and causing failures.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement logging of Amazon Connect API calls with AWS CloudTrail.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7 && choice8",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6 || !choice7 || !choice8) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL07",
+					"title": "How do you ensure and maintain data resilience?",
+					"description": "Data resiliency strategies should be utilized to ensure that contact data generated by Amazon Connect instances is maintained in a consistent, available fashion.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Implement data streaming via Kinesis",
+                            "helpfulResource": {
+								"displayText": "Contact Trace Records should be streamed out via Amazon Kinesis to maintain data resiliency, as Amazon Connect only stores records for a period of 24 months.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-streaming.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable data streaming for your instance.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-streaming.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Scheduled delivery of historical reports",
+                            "helpfulResource": {
+								"displayText": "Scheduling reports can provide snapshots of the state of your contact center at regular intervals. As Contact Trace Records have a 24 month retention window, report snapshots should be utilized to maintain data for a longer period for historical reporting.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/schedule-historical-metrics-report.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Schedule a historical metrics report for backup purposes.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/schedule-historical-metrics-report.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Configure S3 Bucket Replication",
+                            "helpfulResource": {
+								"displayText": "Data in Amazon S3 buckets should be replicated across region to provide additional levels of resiliency and availability if required.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Replicating objects",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Manage S3 object storage lifecycle",
+                            "helpfulResource": {
+								"displayText": "Lifecycle policies can be configured to transition and expire objects in an S3 bucket. This can be utilized to move archival data to lower-cost, long-term storage tiers to aid in record retention and cost savings.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement S3 lifecycle policies on Connect S3 buckets.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "S3 Bucket versioning is enabled",
+                            "helpfulResource": {
+								"displayText": "S3 Bucket versioning should be enabled to ensure if objects are modified, previous versions are kept to recover in case of failure.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Review S3 Bucket versioning documentation and considerations before implementing.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL08",
+					"title": "How are you ensuring direct inbound voice to your Amazon Connect instance?",
+					"description": "Defining the telephony setup for inbound call routes is important in identifying reliability risks. Additional legs in the routes should be carefully documented with risks identified as part of designing a reliable contact center.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Toll-free numbers are used primarily for inbound customer contacts",
+                            "helpfulResource": {
+								"displayText": "For mission critical workloads and call center services that need to be highly available, it is strongly recommended to consider toll-free numbers over direct inward dial numbers to protect against any carrier level outages. In the event you are not able to adopt toll free numbers and are working with multiple DIDs, consider spreading the DIDs across different carriers to improve availability of your workload. ",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/workload-layers.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Amazon Connect owned toll-free numbers should be used if possible.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/workload-layers.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Calls are not routed from 3rd party managed phone numbers to Amazon Connect claimed numbers",
+                            "helpfulResource": {
+								"displayText": "Consider porting numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing. This will not only result in a cohesive solution deployment that can reduce the complexity and monitoring / operation overhead for you but will also allow you to increase reliability and resiliency, eliminate the failure points.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							},
+                            "improvementPlan": {
+								"displayText": "Consider porting numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "There are no intermediate hops in the voice path before landing the call in Amazon Connect",
+							"helpfulResource": {
+                                "displayText": "Reduce hops as much as possible to have Amazon Connect claimed phone numbers as an entry phone for callers to dial and connect with agent. Additional hops add more complexity and points of failure."
+                            },
+                            "improvementPlan": {
+								"displayText": "Reduce hops as much as possible to have Amazon Connect claimed phone numbers as an entry phone for callers to dial and connect with agent. Additional hops add more complexity and points of failure."
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		}
+	]
+}

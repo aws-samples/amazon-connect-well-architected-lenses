@@ -1,0 +1,417 @@
+{
+  "schemaVersion": "2021-11-01",
+  "name": "Amazon Connect Contact Center Lens - Security",
+  "description": "Amazon Connect Well-Architected Contact Center Lens for Security.",
+  "pillars": [
+    {
+      "id": "SEC",
+      "name": "Security",
+      "questions": [
+        {
+          "id": "SEC01",
+          "title": "How do you control access to your Amazon Connect instance?",
+          "description": "Amazon Connect provides a number of security features to consider as you develop and implement your own security policies.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Implement least privileged access",
+              "helpfulResource": {
+                "displayText": "When you set permissions with IAM policies, grant only the permissions required to perform a task. You do this by defining the actions that can be taken on specific resources under specific conditions, also known as least-privilege permissions. ",
+                "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege "
+              },
+              "improvementPlan": {
+                "displayText": "Ensure that all IAM permissions are as restrictive as possible. Allow access to only those resources absolutely required for the user's role. For example, don't give administrators who add Amazon Lex bots permissions to delete the instance or update telephony settings.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam-amazon-connect-permissions.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Multi-Factor Authentication",
+              "helpfulResource": {
+                "displayText": "When using IAM to manage access to Amazon Connect, you should consider implementing multi-factor authentication (MFA) to increase the security of your account.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam.html#security_iam_authentication"
+              },
+              "improvementPlan": {
+                "displayText": "For extra security, we recommend that you require multi-factor authentication (MFA) for all IAM users in your account. MFA can be set up through AWS IAM or your SAML 2.0 identity provider, or Radius server, if that's more applicable for your use case.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam.html#security_iam_authentication"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Identity Federation / single sign-on (SSO)",
+              "helpfulResource": {
+                "displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+              },
+              "improvementPlan": {
+                "displayText": "Enable single sign-on (SSO) to Amazon Connect by using identity federation. Federation is a recommended practice to allow for employee lifecycle events to be reflected in Amazon Connect when they are made in the source identity provider.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "Security Profiles",
+              "helpfulResource": {
+                "displayText": "A security profile is a group of permissions that map to a common role in a contact center. For example, the Agent security profile contains permissions needed to access the Contact Control Panel (CCP). Security profiles help you manage who can access the Amazon Connect dashboard and Contact Control Panel (CCP), and who can perform specific tasks.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html"
+              },
+              "improvementPlan": {
+                "displayText": "Ensure that all security profile permissions are as restrictive as possible. For example, don't give agents the ability to listen to recordings or edit reports if this is not a part of their role. Limit who has Users - Edit or Create permissions. People with these permissions pose a risk to your contact center because they can reset passwords of other users, including the administrator. They can also grant other users permission to the Admin security profile. People assigned to the Admin security profile have full access to your contact center.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html"
+              }
+            },
+            {
+              "id": "choice9_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this if your workload does not follow these best practices."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "choice1 && choice2 && choice3 && choice4",
+              "risk": "NO_RISK"
+            },
+            {
+              "condition": "((choice1 || choice3 || choice4) && choice2)",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        },
+        {
+          "id": "SEC02",
+          "title": "How do your Contact flows obtain permissions to integrated applications?",
+          "description": "Steps within your Contact flows may need credentials in order to access information in external applications and systems.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Leverage pre-built integrations",
+              "helpfulResource": {
+                "displayText": "Amazon Connect has several pre-built integrations to popular Solutions as a Service (SaaS) offerings such as Salesforce, Zendesk, and Shopify. These integrations are built on top of Amazon AppFlow and Amazon EventBridge to enable easy access to your data that's stored outside of Amazon Connect.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/crm.html"
+              },
+              "improvementPlan": {
+                "displayText": "Use pre-built integrations to generate tasks based on events in external applications, or create customer profiles based on data in external applications.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/crm.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "IAM Roles",
+              "helpfulResource": {
+                "displayText": "An IAM role is an entity that has its own set of permissions, but that isn't a user or group. Roles also don't have their own permanent set of credentials and are automatically rotated.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/port-phone-number.html"
+              },
+              "improvementPlan": {
+                "displayText": "Use IAM Roles to provide credentials to access other AWS services in a secure way.",
+                "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.htm"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Externally stored API keys",
+              "helpfulResource": {
+                "displayText": "Credentials such as API keys should be stored outside of your flow application code, where they can be retrieved programmatically.",
+                "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
+              },
+              "improvementPlan": {
+                "displayText": "Use AWS Secrets Manager or an existing third-party solution to replace hardcoded credentials in your code with an API call to Secrets Manager to retrieve the secret programmatically.",
+                "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
+              }
+            },
+            {
+              "id": "choice9_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this if your workload does not follow these best practices."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "choice1 && choice2 && choice2",
+              "risk": "NO_RISK"
+            },
+            {
+              "condition": "choice2 && choice3 && !choice1",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        },
+        {
+          "id": "SEC03",
+          "title": "What detective controls do you have in place for application logs and monitoring?",
+          "description": "Logging and monitoring are important for the availability, reliability and, performance of contact center. The AWS cloud provides flexible infrastructure and tools to support both sophisticated in cooperation with offerings and self-managed centralized-logging solutions.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Amazon CloudWatch alerts",
+              "helpfulResource": {
+                "displayText": "You should log relevant information from Amazon Connect Flows to Amazon CloudWatch and build alerts and notifications based on the same.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-flow-log-alerts.html"
+              },
+              "improvementPlan": {
+                "displayText": "You should log relevant information from Amazon Connect Flows to Amazon CloudWatch and build alerts and notifications based on the same.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-flow-log-alerts.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Amazon CloudTrail logs",
+              "helpfulResource": {
+                "displayText": "Amazon Connect public APIs log to AWS CloudTrail. You should review and automate actions set up based on CloudTrail logs.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+              },
+              "improvementPlan": {
+                "displayText": "Amazon Connect public APIs log to AWS CloudTrail. You should review and automate actions set up based on CloudTrail logs.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Fraud detection and prevention for incoming contacts",
+              "helpfulResource": {
+                "displayText": "Fraud detection and prevention for incoming contacts can be implemented by customizing Amazon Connect Flows per the customer requirements. ",
+                "url": "https://aws.amazon.com/blogs/apn/intelligent-call-routing-using-amazon-fraud-detector-and-amazon-connect/"
+              },
+              "improvementPlan": {
+                "displayText": "Ensure Contact Flows are configured to check incoming contacts against previous contact activity to detect and identify potentially impactful behavior, such as fraudulent online activity and spam calls.",
+                "url": "https://aws.amazon.com/blogs/apn/intelligent-call-routing-using-amazon-fraud-detector-and-amazon-connect/"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "Amazon Connect Voice ID",
+              "helpfulResource": {
+                "displayText": "Machine learning powered real-time caller authentication and fraud risk detection to make voice interactions faster and more secure.",
+                "url": "https://aws.amazon.com/connect/voice-id/"
+              },
+              "improvementPlan": {
+                "displayText": "Voice ID analyzes incoming audio and compares them with recordings of known fraudulent actors in your contact center's custom watch-list. During an active call, Voice ID will automatically flag suspicious callers to the agent with a risk threshold (e.g. 'High Risk or 'Low Risk,') — resulting fewer fraudulent attacks on your contact center. Add Voice ID to your IVR to deliver secure customer access to self-service requests such as checking refund status or changing contact information. This optimizes agent time and lowers contact center costs.",
+                "url": "https://aws.amazon.com/connect/voice-id/"
+              }
+            },
+            {
+              "id": "choice9_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this if your workload does not follow these best practices."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "choice1 && choice2 && choice3 && choice4",
+              "risk": "NO_RISK"
+            },
+            {
+              "condition": "!choice4 && choice1 && choice2 && choice3",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        },
+        {
+          "id": "SEC04",
+          "title": "What security controls do you have in place for Infrastructure protection?",
+          "description": "Although there is no infrastructure to manage in Amazon Connect, there could be scenarios where your Amazon Connect instance needs to interact with other components or applications deployed in infrastructure residing on-premises.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Endpoint (workstation) threat protection, detection & response",
+              "helpfulResource": {
+                "displayText": "Agent workstations should have enterprise endpoint security protection installed to prevent, detect, and respond to security threats.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-bp.html#infrastructureprotection"
+              },
+              "improvementPlan": {
+                "displayText": "Ensure Agent and Supervisor workstations are protected with enterprise security software with up-to-date security patches for both software and hardware.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-bp.html#infrastructureprotection"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Network boundary classification and protection",
+              "helpfulResource": {
+                "displayText": "As a managed service, Amazon Connect is protected by the AWS global network security procedures that are described on the Best Practices for Security, Identity, and Compliance page.",
+                "url": "https://aws.amazon.com/architecture/security-identity-compliance/"
+              },
+              "improvementPlan": {
+                "displayText": "Review AWS Best Practices for Infrastructure Protection and AWS Security Reference Architecture.",
+                "url": "https://aws.amazon.com/architecture/security-identity-compliance/?cards-all.sort-by=item.additionalFields.sortDate&cards-all.sort-order=desc&awsf.content-type=*all&awsf.methodology=*all"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Lambda functions connected to private subnets in a VPC",
+              "helpfulResource": {
+                "displayText": "Depending on the use case you can configure a Lambda function to connect to private subnets in a virtual private cloud (VPC) in your account.",
+                "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html"
+              },
+              "improvementPlan": {
+                "displayText": "Use Amazon Virtual Private Cloud (VPC) to create a private network for resources such as databases, cache instances, or internal services. Connect your function to the VPC to access private resources during execution.",
+                "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "Encrypting Contact Flow Inputs",
+              "helpfulResource": {
+                "displayText": "Mitigate insider threat and compliance risk associated with workloads that handle sensitive information, by creating a secure IVR solution that enables you to bypass agent access to sensitive information.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encrypt-data.html"
+              },
+              "improvementPlan": {
+                "displayText": "By encrypting contact input in your flows, you’re able to capture information securely without exposing it to your agents, their workstations, or their operating environments.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encrypt-data.html"
+              }
+            },
+            {
+              "id": "choice5",
+              "title": "Use domain allowlists for Amazon Connect network traffic",
+              "helpfulResource": {
+                "displayText": "You can establish persistent outbound send/receive connections through your web browser. As a result, you don't need to open a client-side port to listen for inbound traffic.. Instead, allowlist the Amazon Connect network endpoints to perform contact center functions from the agent Contact Control Panel.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+              },
+              "improvementPlan": {
+                "displayText": "Using domain allowlists allow updates to IP addresses to occur without requiring intervention. If this is not possible, you can alternatively monitor IP addresses used by Amazon Connect and update the allow list.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+              }
+            },
+            {
+              "id": "choice6",
+              "title": "Send only the data necessary to external systems with sensitive data",
+              "helpfulResource": {
+                "displayText": "Amazon Connect handles variety of data related to contact centers. This includes phone call media, call recordings, chat transcripts, contact metadata as well as flows, routing profiles and queues. Ensure you are only sharing necessary data with external systems.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-handled-by-connect.html"
+              },
+              "improvementPlan": {
+                "displayText": "As an example, if you have only one business unit using your call recording analytics solution, you can set an AWS Lambda trigger in your S3 bucket to process contact records, check for the business unit’s specific queues in the contact record data, and if it is a queue that belongs to the unit, send only that call recording to the external solution. With this approach, you only send the data necessary and avoid the cost and overhead associated with processing unnecessary recordings.",
+                "url": "http://aws.amazon.com/quickstart/connect/data-streaming/"
+              }
+            },
+            {
+              "id": "choice9_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this if your workload does not follow these best practices."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6",
+              "risk": "NO_RISK"
+            },
+            {
+              "condition": "((choice5 || choice6) && choice4)",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        },
+        {
+          "id": "SEC05",
+          "title": "What best practices do you follow for PCI compliance?",
+          "description": "Amazon Connect provides a number of options for operating in secure PCI compliant environments.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Conduct compliance eligibility audits for all services used in your contact center.",
+              "helpfulResource": {
+                "displayText": "Amazon Connect handles variety of data related to contact centers. This includes phone call media, call recordings, chat transcripts, contact metadata as well as flows, routing profiles and queues. Ensure you are performing audits on these systems to ensure compliance.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-handled-by-connect.html"
+              },
+              "improvementPlan": {
+                "displayText": "Work with a PCI qualified professional to ensure continuous compliance of your solutions.",
+                "url": "https://www.pcisecuritystandards.org/"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Payment card information (PCI) should be collected via encrypted DTMF.",
+              "helpfulResource": {
+                "displayText": "Amazon Connect allows you to gather and store customer input to be used as part of the customer experience. The store customer input contact flow block allows you to encrypt stored date. This way, you can encrypt sensitive input such as credit card numbers.",
+                "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-ivr-solution-with-amazon-connect/"
+              },
+              "improvementPlan": {
+                "displayText": "Use encryption in the *Store customer input* block for sensitive DTMF information.",
+                "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-ivr-solution-with-amazon-connect/"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Use encryption in transit and at rest for any downstream integration points.",
+              "helpfulResource": {
+                "displayText": "All data exchanged with Amazon Connect is protected in transit between the user’s web browser and Amazon Connect using industry-standard TLS encryption. External data is additionally encrypted while being processed by AWS KMS. When Amazon Connect integrates with AWS services, such as AWS Lambda, Amazon Kinesis, or Amazon Polly, data is always encrypted in transit using TLS. When event data is forwarded from external applications to Amazon Connect it is always encrypted in transit using TLS.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encryption-at-rest.html"
+              },
+              "improvementPlan": {
+                "displayText": "AWS Key Management Service (KMS) encrypts Amazon S3 contents at the object level, which covers recordings, logs, and saved reports by default for Amazon S3. Make sure encryption in transit and at rest rules apply downstream or to third party apps.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encryption-at-rest.html"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "Enable multi-factor authentication (MFA)",
+              "helpfulResource": {
+                "displayText": "As Amazon Connect is a public endpoint, ensure MFA is used when accessing PCI data.",
+                "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html"
+              },
+              "improvementPlan": {
+                "displayText": "For extra security, we recommend that you require multi-factor authentication (MFA) for all IAM users in your account. MFA can be set up through AWS IAM or your SAML 2.0 identity provider, or Radius server, if that's more applicable for your use case. After MFA is set up, a third text box becomes visible on the Amazon Connect login page to provide the second factor.",
+                "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html"
+              }
+            },
+            {
+              "id": "choice5",
+              "title": "Discovery of sensitive data",
+              "helpfulResource": {
+                "displayText": "Continuous discovery of stored data to ensure compliance best practices are functioning as expected.",
+                "url": "https://aws.amazon.com/macie/"
+              },
+              "improvementPlan": {
+                "displayText": "Use advanced managed security services such as Amazon Macie. Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.",
+                "url": "https://aws.amazon.com/macie/"
+              }
+            },
+            {
+              "id": "choice9_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this if your workload does not follow these best practices."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+              "risk": "NO_RISK"
+            },
+            {
+              "condition": "choice1 && choice2 && choice3 && !choice4",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

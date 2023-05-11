@@ -1,0 +1,1349 @@
+{
+	"schemaVersion": "2021-11-01",
+	"name": "Amazon Connect Contact Center Lens - Global Resiliency",
+	"description": "Amazon Connect Well-Architected Contact Center Lens for Global Resiliency.",
+	"pillars": [
+		{
+			"id": "GLOBAL",
+			"name": "GlobalResiliency",
+			"questions": [
+				{
+					"id": "GlobalResiliency_01",
+					"title": "What configuration options to enable Amazon Connect Global Resiliency do you have in place today?",
+					"description": "Prior to deploying Amazon Connect Global Resiliency, ensure you have completed the necessary technical and operational pre-requisites.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Ported all phone numbers you want to enable for use with Amazon Connect Global Resiliency",
+							"helpfulResource": {
+								"displayText": "In order to use Traffic Distribution Groups within Global Resiliency, the phone numbers must be claimed in your Amazon Connect instance. Numbers acquired within Amazon Connect or ported into Amazon Connect are eligible.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that the phone numbers you want to use for Global Resiliency are associated with your Amazon Connect instance..",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-center-phone-number.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Created a test SAML 2.0-enabled Amazon Connect instance in regions where multi-region is available (us-east-1/ us-west-2)",
+							"helpfulResource": {
+								"displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance. This allows your users to sign in to a portal in your organization hosted by a SAML 2.0 compatible identity provider (IdP) and log in to an Amazon Connect instance with a single sign-on experience without having to provide separate credentials for Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							},
+							"improvementPlan": {
+								"displayText": "Create and onboard your test environment to Global Resiliency prior to production accounts.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Created a production SAML 2.0-enabled Amazon Connect instance in regions where multi-region is available (us-east-1/ us-west-2)",
+							"helpfulResource": {
+								"displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance. This allows your users to sign in to a portal in your organization hosted by a SAML 2.0 compatible identity provider (IdP) and log in to an Amazon Connect instance with a single sign-on experience without having to provide separate credentials for Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that you have a SAML enabled instance created before proceeding with onboarding.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Tested in a lower environment prior to production.",
+							"helpfulResource": {
+								"displayText": "It is recommended to create and maintain a dev or test environment for testing prior to making production changes.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/create-connect-instance.html"
+							},
+							"improvementPlan": {
+								"displayText": "Test your Amazon Connect Global Resiliency configuration in a lower environment prior to a production go-live",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/create-connect-instance.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "For agent failover, Custom or Embedded CCP developed using Streams API.",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect Streams API (Streams) gives you the power to integrate your existing web applications with Amazon Connect. Streams lets you embed the Contact Control Panel (CCP) and Customer Profiles app UI into your page. It also enables you to handle agent and contact state events directly through an object-oriented event driven interface. You can use the built-in interface or build your own from scratch: Streams gives you the choice.",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Utilize the Streams API to facilitate an automated agent failover",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if none of these configuration options are in place today."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4 || !choice5",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_02",
+					"title": "Does your organization have well understood and defined RTO and RPO targets?",
+					"description": "RTO and RPO are your objectives for restoration of your workload. Set these based on business needs. Implement a strategy to meet these objectives, considering locations and function of workload resources and data. The probability of disruption and cost of recovery are also key factors that help to inform the business value of providing disaster recovery for a workload.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Yes",
+							"helpfulResource": {
+								"displayText": "A mix of RPO and RTO can range from standby to active-active implementations",
+								"url": "https://aws.amazon.com/blogs/mt/establishing-rpo-and-rto-targets-for-cloud-applications/"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure your RPO and RTO objectives align with your business, regulatory, and other requirements",
+								"url": "https://aws.amazon.com/blogs/mt/establishing-rpo-and-rto-targets-for-cloud-applications/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "No",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your organization doesn't have RTO and RPO targets."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_03",
+					"title": "What multi region strategy are you considering?",
+					"description": "Disaster recovery strategies available to you within AWS can be broadly categorized into four approaches, ranging from the low cost and low complexity of making backups to more complex strategies using multiple active Regions.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Backup & Restore",
+							"helpfulResource": {
+								"displayText": "Backup and restore is a suitable approach for mitigating against data loss or corruption. This approach can also be used to mitigate against a regional disaster by replicating data to other AWS Regions. In addition to data, you must redeploy the infrastructure, configuration, and application code in the recovery Region.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							},
+							"improvementPlan": {
+								"displayText": "Consider if the RTO and RPO provided by a Backup & Restore strategy is worth the deployment or downtime cost.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html "
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Pilot Light",
+							"helpfulResource": {
+								"displayText": "With the pilot light approach, you replicate your data from one Region to another and provision a copy of your core workload infrastructure. Resources required to support data replication and backup, such as databases and object storage, are always on. Other elements, such as application servers, are loaded with application code and configurations, but are 'switched off' and are only used during testing or when disaster recovery failover is invoked.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							},
+							"improvementPlan": {
+								"displayText": "Many services used with Amazon Connect are consumption based. Consider if Pilot Light if the most effective approach, or if an approach with a lower RTO and RPO is more appropriate. The pilot light approach requires you to “turn on” servers, possibly deploy additional (non-core) infrastructure, and scale up, whereas hot standby only requires you to shift traffic (everything is already deployed and running).",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Hot Standby",
+							"helpfulResource": {
+								"displayText": "The hot standby approach involves ensuring that there is an inactive, but fully functional, copy of your production environment in another Region. This approach extends the pilot light concept and decreases the time to recovery because your workload is always-on in another Region. When traffic is shifted to the secondary region, it is capable of handling the production workload..",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							},
+							"improvementPlan": {
+								"displayText": "This approach allows you to more easily perform testing or implement continuous testing to increase confidence in your ability to recover from a disaster.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html "
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Active-Active",
+							"helpfulResource": {
+								"displayText": "You can run your workload simultaneously in multiple Regions as part of a multi-site active/active. Multi-site active/active serves traffic from all regions to which it is deployed. With a multi-site active/active approach, users are able to access your workload in any of the Regions in which it is deployed.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							},
+							"improvementPlan": {
+								"displayText": "This approach is the most complex and costly approach to disaster recovery, but it can reduce your recovery time to near zero for most disasters with the correct technology choices and implementation. With multi-site active/active, because the workload is running in more than one Region, there is no such thing as failover in this scenario. Disaster recovery testing in this case would focus on how the workload reacts to loss of a Region: Is traffic routed away from the failed Region? Can the other Region(s) handle all the traffic?",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-options-in-the-cloud.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your multi-region doesn't match any of the options listed."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice3 || choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || choice2",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_04",
+					"title": "How have you configured your Traffic Distribution Groups (TDG)?",
+					"description": "Traffic distribution groups allow you to configure how your traffic is routed between Amazon Connect instances. You can configure the distribution for groups of numbers, in 10 percent intervals, between paired instances.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Each line of business is in their own TDG.",
+							"helpfulResource": {
+								"displayText": "You can choose to create separate TDGs for your different lines of business if they have separate phone numbers. This allows you shift traffic for critical business or functions without moving all traffic.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							},
+							"improvementPlan": {
+								"displayText": "Identify how you would like to distribute your traffic across your business.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "All numbers are in a single TDG.",
+							"helpfulResource": {
+								"displayText": "You can choose to move all numbers from one region to another at the same time. This allows for the minimal configuration, but does not allow for testing of non-prod numbers.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							},
+							"improvementPlan": {
+								"displayText": "Identify how you would like to distribute your traffic across your business.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "All production numbers are in one TDG and all test numbers are in another TDG.",
+							"helpfulResource": {
+								"displayText": "You can choose to move all numbers from one region to another at the same time in production and test buckets.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							},
+							"improvementPlan": {
+								"displayText": "Identify how you would like to distribute your traffic across your business.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Other.",
+							"helpfulResource": {
+								"displayText": "If you have a different strategy for your TDGs, include it in the notes.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							},
+							"improvementPlan": {
+								"displayText": "Identify how you would like to distribute your traffic across your business.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your TDGs haven't been configured."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 || choice2 || choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_05",
+					"title": "What does your failover runbook address?",
+					"description": "If your recovery point objective is one hour, then you need to detect the incident, notify appropriate personnel, engage your escalation processes, evaluate information (if you have any) on expected time to recovery (without executing the DR plan), declare a disaster and recover within an hour. Ensure that you have documented and tested the people and technology required to successfully execute a failover.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "The scenarios that would require a traffic distribution change to be initiated",
+							"helpfulResource": {
+								"displayText": "AWS publishes our most up-to-the-minute information on service availability on the Service Health Dashboard. Check at any time to get current status information, or subscribe to an RSS feed to be notified of interruptions to each individual service. If you are experiencing a real-time, operational issue with one of our services that is not shown on the Service Health Dashboard, you can create a Support Request.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/detection.html"
+							},
+							"improvementPlan": {
+								"displayText": "It is important to know as soon as possible that your workloads are not delivering the business outcomes that they should be delivering. In this way, you can quickly declare a disaster and recover from an incident.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/detection.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "The mechanism to initiate a telephony failover.",
+							"helpfulResource": {
+								"displayText": "After you have claimed phone numbers to your traffic distribution group, use the UpdateTrafficDistribution API to distribute telephony traffic across linked instances in a given traffic distribution group in 10% increments.",
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateTrafficDistribution.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure you have a documented process for invoking the UpdateTrafficDistribution API. This can be done via the CLI, API, or a custom UI. Ensure that the appropriate stakeholders have access to perform this action and that the process is documented..",
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateTrafficDistribution.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "The mechanism to failover agents",
+							"helpfulResource": {
+								"displayText": "Agent failover is currently performed by manually logging out of the impacted region and logging into the secondary region, or by implementing failover with a Streams API enabled CCP."
+							},
+							"improvementPlan": {
+								"displayText": "Ensure the agent failover process is documented and your agents and supervisors are trained on how to properly shift to the secondary region."
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Under what conditions would traffic be returned back to the initial primary AWS region",
+							"helpfulResource": {
+								"displayText": "The AWS Health Dashboard provides information about AWS Health events that can affect your account. You can also implement health checks to validate when the primary environment is recovered and you can return traffic.",
+								"url": "https://phd.aws.amazon.com/phd/home#/"
+							},
+							"improvementPlan": {
+								"displayText": "Design health checks that are representative of user experience and based on Key Performance Indicators. Deep health checks exercise key functionality of your workload and go beyond shallow heartbeat checks. Use deep health checks based on multiple signals.",
+								"url": "https://phd.aws.amazon.com/phd/home#/"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Why and how you move a particular telephony distribution group before another",
+							"helpfulResource": {
+								"displayText": "Business impact may be time dependent. You may want to consider factoring this in to your disaster recovery planning. For example, disruption to your payroll system is likely to have a very high impact to the business just before everyone gets paid, but it may have a low impact just after everyone has already been paid.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+							},
+							"improvementPlan": {
+								"displayText": "If you have priority business units, ensure that is included in your alerting and failover plans. Document the conditions that would require one business unit to shift traffic, and what would require additional business units to shift traffic.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Frequent testing to ensure operational readiness.",
+							"helpfulResource": {
+								"displayText": "Our experience has shown that the only error recovery that works is the path you test frequently. This is the reason why having a small number of recovery paths is best. You can establish recovery patterns and regularly test them. If you have a complex or critical recovery path, you still need to regularly execute that failure in production to validate that the recovery path works.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/testing-disaster-recovery.html"
+							},
+							"improvementPlan": {
+								"displayText": "Test disaster recovery implementation to validate the implementation and regularly test failover to your workloads DR Region to ensure that RTO and RPO are met.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/testing-disaster-recovery.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your disaster recovery runbook does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice1 || !choice2 || !choice3 || !choice6) || option_no",
+							"risk": "HIGH_RISK"
+						},
+						{
+							"condition": "!choice4 || !choice5",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_06",
+					"title": "Under what conditions would you recover back to the initial primary AWS region?",
+					"description": "In a DR scenario, you need a simple and effective approach to mitigate failures and then return to normal operations. To be fast and reliable, this process must be straightforward, require minimal steps, and be practiced regularly.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Shifting of numbers back to prior region and performing validation.",
+							"helpfulResource": {
+								"displayText": "Traffic Distribution Groups allow you to shift traffic in 10% increments. When validating health of the primary region, traffic can be slowly moved back so test plans can be executed.",
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateTrafficDistribution.html"
+							},
+							"improvementPlan": {
+								"displayText": "Determine at what rate traffic would be returned to the primary region. Determine what the testing process is for validating health of the environment.",
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/API_UpdateTrafficDistribution.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Service restored posted in PHD",
+							"helpfulResource": {
+								"displayText": "AWS publishes our most up-to-the-minute information on service availability on the Service Health Dashboard. Check at any time to get current status information, or subscribe to an RSS feed to be notified of interruptions to each individual service. If you are experiencing a real-time, operational issue with one of our services that is not shown on the Service Health Dashboard, you can create a Support Request. The AWS Health Dashboard provides information about AWS Health events that can affect your account.",
+								"url": "https://phd.aws.amazon.com/phd/home#/"
+							},
+							"improvementPlan": {
+								"displayText": "Monitoring the health dashboards will provide you with updates and signals as service restoration occurs. Use this data to influence when to return traffic to the primary region.",
+								"url": "https://phd.aws.amazon.com/phd/home#/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Confirmation from AWS Support",
+							"helpfulResource": {
+								"displayText": "Confirmation from AWS Support",
+								"url": "https://console.aws.amazon.com/support/home#/case/create?issueType=technical"
+							},
+							"improvementPlan": {
+								"displayText": "Confirmation from AWS Support",
+								"url": "https://console.aws.amazon.com/support/home#/case/create?issueType=technical"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your recovery criteria does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_07",
+					"title": "What is your telephony failover mechanism?",
+					"description": "Traffic failover is performed with the UpdateTrafficDistribution API. This can be done via the CLI, API, or a custom UI.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Manually initiate the failover API on the necessary traffic distribution groups",
+							"helpfulResource": {
+								"displayText": "For more information about creating traffic distribution groups, see Set up traffic distribution groups in the Amazon Connect Administrator Guide.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that the process for invoking the UpdateTrafficDistribution API aligns to your RTO and RPO targets.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Automated process that monitors production numbers.",
+							"helpfulResource": {
+								"displayText": "It is important to know as soon as possible that your workloads are not delivering the business outcomes that they should be delivering. In this way, you can quickly declare a disaster and recover from an incident. For aggressive recovery objectives, this response time coupled with appropriate information is critical in meeting recovery objectives.",
+								"url": "http://aws.amazon.com/builders-library/implementing-health-checks/"
+							},
+							"improvementPlan": {
+								"displayText": "For the most stringent RTO requirements, you can implement automated failover based on health checks. Design health checks that are representative of user experience and based on Key Performance Indicators.",
+								"url": "http://aws.amazon.com/builders-library/implementing-health-checks/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your failover mechanism does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice1 || option_no))",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_08",
+					"title": "What is your agent failover mechanism??",
+					"description": "Unless your DR strategy consists of operating IVR-only workloads, once traffic is shifted to a secondary region agents need to be logged into the secondary region.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Instruct agents to log out of primary instance and launch secondary instance application via SSO",
+							"helpfulResource": {
+								"displayText": "You may choose to only expose the secondary instance in your SSO portal when necessary, or automatically redirect logins to the active instance via a vanity URL or other mechanism.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							},
+							"improvementPlan": {
+								"displayText": "Appropriate process documentation, communication, and testing helps ensure agents can successfully failover to the secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Handle the active instance via a custom CCP",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect Streams API (Streams) gives you the power to integrate your existing web applications with Amazon Connect. Streams lets you embed the Contact Control Panel (CCP) UI into your page. It also enables you to handle agent and contact state events directly through an object-oriented event driven interface.",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure the agent failover process is documented and your agents and supervisors are trained on how to properly shift to the secondary region.",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your failover mechanism does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_09",
+					"title": "Are you checking whether agents have completed their active calls before failing them over?",
+					"description": "Shifting agent logins can be disruptive if they are actively participating in an interaction.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Yes",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect agent event stream can provide details on agent state"
+							},
+							"improvementPlan": {
+								"displayText": "If using automated methods, check whether the agent has completed their active contact prior to moving them to the secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/agent-event-streams.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "No",
+                            "helpfulResource": {
+								"displayText": "Agents fail over even if they are on an active contact."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_10",
+					"title": "How do your test the failover process?",
+					"description": "After you have designed your workload to be resilient to the stresses of production, testing is the only way to ensure that it will operate as designed, and deliver the resiliency you expect. Test disaster recovery implementation to validate the implementation and regularly test failover to your workload's DR Region to ensure that RTO and RPO are met.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Use playbooks to investigate failures",
+							"helpfulResource": {
+								"displayText": "Enable consistent and prompt responses to failure scenarios that are not well understood, by documenting the investigation process in playbooks. Playbooks are the predefined steps performed to identify the factors contributing to a failure scenario. The results from any process step are used to determine the next steps to take until the issue is identified or escalated.",
+                                "url": "https://wa.aws.amazon.com/wat.concept.playbook.en.html"
+							},
+							"improvementPlan": {
+								"displayText": "Use playbooks to investigate failures",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_playbook_resiliency.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Perform post-incident analysis",
+							"helpfulResource": {
+								"displayText": "Review customer-impacting events, and identify the contributing factors and preventative action items. Use this information to develop mitigations to limit or prevent recurrence. Develop procedures for prompt and effective responses. Communicate contributing factors and corrective actions as appropriate, tailored to target audiences. Have a method to communicate these causes to others as needed.",
+                                "url": "https://wa.aws.amazon.com/wat.concept.event.en.html"
+							},
+							"improvementPlan": {
+								"displayText": "Perform post-incident analysis",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_rca_resiliency.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Test functional requirements",
+							"helpfulResource": {
+								"displayText": "These include unit tests and integration tests that validate required functionality."
+							},
+							"improvementPlan": {
+								"displayText": "Test functional requirements",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_test_functional.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Test resiliency using chaos engineering",
+							"helpfulResource": {
+								"displayText": "Run tests that inject failures regularly into pre-production and production environments. Hypothesize how your workload will react to the failure, then compare your hypothesis to the testing results and iterate if they do not match. Ensure that production testing does not impact users."
+							},
+							"improvementPlan": {
+								"displayText": "Test resiliency using chaos engineering",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_failure_injection_resiliency.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Conduct game days regularly",
+							"helpfulResource": {
+								"displayText": "Use game days to regularly exercise your procedures for responding to events and failures as close to production as possible (including in production environments) with the people who will be involved in actual failure scenarios. Game days enforce measures to ensure that production events do not impact users. "
+							},
+							"improvementPlan": {
+								"displayText": "Considering increasing the frequency at which you're testing the failover process.",
+                                "url": "https://wa.aws.amazon.com/wat.concept.gameday.en.html"
+							}
+						},												
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Conduct game days regularly",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/rel_testing_resiliency_game_days_resiliency.html"
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "MEDIUM_RISK"
+						},						
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_11",
+					"title": "What resources are you mirroring between your two instances?",
+					"description": "Depending on your DR strategy, you may require some or all of these resources.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Contact Flows",
+							"helpfulResource": {
+								"displayText": "A flow defines the customer experience with your contact center from start to finish.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-contact-flows.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that you are configuring flows in your secondary region based on the experience you want your customers to have when contacts come into this environment,",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-contact-flows.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Phone Number to Contact Flow Mapping",
+							"helpfulResource": {
+								"displayText": "After you publish a flow, you can attach a claimed or ported phone number to it. When a contact calls the phone number that you associate with a flow, they are connected to that flow.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/associate-claimed-ported-phone-number-to-flow.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that the phone numbers map to the appropriate contact flows in the secondary region based on the desired experience.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/associate-claimed-ported-phone-number-to-flow.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Users",
+							"helpfulResource": {
+								"displayText": "Users need to be configured appropriately for access and permissions in each region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/manage-users.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure agents have matching usernames and security profiles across regions..",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/manage-users.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Queues",
+							"helpfulResource": {
+								"displayText": "Users need to be configured appropriately for access and permissions in each region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/create-queue.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure agents have matching usernames and security profiles across regions.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/create-queue.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Routing Profiles.",
+							"helpfulResource": {
+								"displayText": "While queues are a 'waiting area' for contacts, a routing profile links queues to agents. When you create a routing profile, you specify which queues will be in it. You can also specify whether one queue should be prioritized over another.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/routing-profiles.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that your routing profile strategy is defined, and configured appropriately in your secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/routing-profiles.html"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Security Profiles",
+							"helpfulResource": {
+								"displayText": "Security profiles help you manage who can access the Amazon Connect dashboard and Contact Control Panel (CCP), and who can perform specific tasks.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-security-profiles.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that users have the necessary permissions to perform functionality in the secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-security-profiles.html"
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Quick Connects",
+							"helpfulResource": {
+								"displayText": "Quick connects are a way for you to create a list of destinations for common transfers.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/quick-connects.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that necessary quick connects are configured appropriately in the secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/quick-connects.html"
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Amazon Lex Bots",
+							"helpfulResource": {
+								"displayText": "Amazon Lex is used for multiple purposes in a contact center, including routing, data collection, and self-service. By replicating these capabilities, you can ensure a consistent customer and agent experience regardless of the active Amazon Connect instance.",
+								"url": "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that your Amazon Lex bots are configured and associated as needed in your secondary region.",
+								"url": "https://docs.aws.amazon.com/lexv2/latest/dg/what-is.html"
+							}
+						},
+						{
+							"id": "choice9",
+							"title": "AWS Lambda Functions",
+							"helpfulResource": {
+								"displayText": "Lambda can be used to power self-service, personalization, and automation activities with Amazon Connect. Businesses often want to provide their customers with an exceptional experience, regardless of the region they are operating out of. Deploying Lambda functions across regions allows businesses to provide consistent quality experiences.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that necessary AWS Lambda functions are configured and associated as needed in your secondary region.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your resource replication strategy does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7 && choice8 && choice9",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "option_no",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_12",
+					"title": "How are you ensuring configuration parity between your two instances?",
+					"description": "To accommodate your chosen multi-region strategy, a deployment methodology needs to be defined for your in-scope services.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Manual Backup and Restore.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect and other AWS services provide manual back and restore functionality for migrating configurations across environments.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/copy-paste-contact-flows.html"
+							},
+							"improvementPlan": {
+								"displayText": "Manually replicating config changes is takes time and is error prone. We do not recommend relying on manual configuration of the secondary region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/copy-paste-contact-flows.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Manual using APIs.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect and other AWS services provide APIs for configuring resources programmatically.",
+								"url": "https://aws.amazon.com/premiumsupport/knowledge-center/connect-migrate-instance-resources/"
+							},
+							"improvementPlan": {
+								"displayText": "Although less prone to error, manually invoking APIs is still time consuming and requires appropriate processes to reduce errors.",
+								"url": "https://aws.amazon.com/premiumsupport/knowledge-center/connect-migrate-instance-resources/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Continuous Integration / Continuous Delivery (CI/CD)",
+							"helpfulResource": {
+								"displayText": "Continuous integration is a DevOps software development practice where developers regularly merge their code changes into a central repository, after which automated builds and tests are run. Continuous delivery is a software development practice where code changes are automatically prepared for a release to production. Continuous delivery expands upon continuous integration by deploying all code changes to a testing environment and/or a production environment after the build stage.",
+								"url": "https://aws.amazon.com/devops/"
+							},
+							"improvementPlan": {
+								"displayText": "Utilizing a CI/CD pipeline helps to reduce the overhead and risk of manually updating and deploying resources. This is the recommended approach for multi-region deployments.",
+								"url": "https://aws.amazon.com/devops/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your instance synchronization process does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice2",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || option_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_13",
+					"title": "How are you accounting for your metrics and data between your two instances?",
+					"description": "Amazon Connect does not currently associate data generated across multiple regions. Ensure you have a design to consolidate your data in order to avoid a disjointed reporting experience",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Each instance is treated separately and the data is manually correlated.",
+							"improvementPlan": {
+								"displayText": "Consider streaming data into a consolidated data store in order to provide unified metrics.",
+								"url": "https://catalog.us-east-1.prod.workshops.aws/workshops/607718a8-cddd-416a-97b4-4fc9dc93ff7a/en-US/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Utilizing a data lake strategy where both instances are writing data to a synchronized location",
+							"helpfulResource": {
+								"displayText": "A data lake is a centralized, curated, and secured repository that stores and governs all your structured and unstructured data in its native or transformed formats for analysis. AWS delivers the breadth and depth of services to build a secure, scalable, comprehensive, and cost-effective data lake solution. You can use the AWS services to ingest, store, find, process, and analyze data from a wide variety of sources.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/amazon-connect-data-lake-best-practices/amazon-connect.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure you are adhering to the Data Lake Best Practices.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/amazon-connect-data-lake-best-practices/amazon-connect.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Copying data from secondary region into primary region as needed",
+							"improvementPlan": {
+								"displayText": "Consider streaming data into a consolidated data store in order to provide unified metrics.",
+								"url": "https://catalog.us-east-1.prod.workshops.aws/workshops/607718a8-cddd-416a-97b4-4fc9dc93ff7a/en-US/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_14",
+					"title": "How are you ensuring your other AWS services are configured to meet your multi-region strategy?",
+					"description": "Amazon Connect can leverage a variety of AWS and third-party services to provide an exceptional customer, agent, and admin experience. It is recommended to deploy AWS resources in the same region as your Amazon Connect instances. In the event of an underlying service issue, the recommendation is to redistribute traffic away from the affected service rather than operate in a cross-regional fashion for the best experience.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Requested comparable service quotas",
+							"helpfulResource": {
+								"displayText": "Your AWS account has default quotas, formerly referred to as limits, for each AWS service. Unless otherwise noted, each quota is Region-specific. You can request increases for some quotas, and other quotas cannot be increased.",
+								"url": "https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html"
+							},
+							"improvementPlan": {
+								"displayText": "We recommend requesting comparable service quotas for services you expect to utilize in multiple regions.",
+								"url": "https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Utilize AWS CloudFormation or similar IaC process",
+							"helpfulResource": {
+								"displayText": "AWS CloudFormation lets you model, provision, and manage AWS and third-party resources by treating infrastructure as code.",
+								"url": "https://aws.amazon.com/cloudformation/"
+							},
+							"improvementPlan": {
+								"displayText": "AWS CloudFormation is a service that helps you model and set up Amazon Connect and your other AWS resources so that you can spend less time managing those resources and more time focusing on your applications that run in AWS.",
+								"url": "https://aws.amazon.com/cloudformation/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Utilize versioning tools such as CodeCommit",
+							"helpfulResource": {
+								"displayText": "AWS CodeCommit is a secure, highly scalable, managed source control service that hosts private Git repositories.",
+								"url": "https://aws.amazon.com/codecommit/"
+							},
+							"improvementPlan": {
+								"displayText": "This is the recommended approach to ensure that AWS Lambda functions and Amazon Lex bot versions have parity between regions while eliminating manual errors and reducing operational overhead.",
+								"url": "https://aws.amazon.com/codecommit/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_15",
+					"title": "What resiliency considerations for AWS Lambda have you implemented?",
+					"description": "Amazon Connect can interact with your own systems and take different paths in contact flows dynamically. To achieve this, invoke Lambda functions in a contact flow, fetch the results, and call your own services or interact with other AWS data stores or services. You can use Lambda functions to either look up or post data to sources outside of Amazon Connect.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Managing critical functions through a CI/CD pipeline such as AWS CodePipeline",
+							"helpfulResource": {
+								"displayText": "AWS CodePipeline is a continuous integration and continuous delivery service for fast and reliable application and infrastructure updates. CodePipeline builds, tests, and deploys your code every time there is a code change, based on the release process models you define. This enables you to rapidly and reliably deliver features and updates.",
+								"url": "https://aws.amazon.com/getting-started/hands-on/set-up-ci-cd-pipeline/"
+							},
+							"improvementPlan": {
+								"displayText": "When deploying functions to the production environment, also ensure you are deploying the function to a secondary disaster recovery region. For critical Lambda functions, consider managing these through a CI/CD Pipeline.",
+								"url": "https://aws.amazon.com/getting-started/hands-on/set-up-ci-cd-pipeline/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Using versioning tools to manage your Lambda functions such as CodeCommit",
+							"helpfulResource": {
+								"displayText": "AWS CodeCommit is a fully-managed source control service that makes it easy for companies to host secure and highly scalable private Git repositories. You can use CodeCommit to securely store anything from source code to binaries, and it works seamlessly with your existing Git tools.",
+								"url": "https://aws.amazon.com/codecommit/"
+							},
+							"improvementPlan": {
+								"displayText": "Utilize a versioning tool to manage your multi-region Lambda functions. AWS CodeCommit is a version control service hosted by Amazon Web Services that you can use to privately store and manage assets (such as documents, source code, and binary files) in the cloud.",
+								"url": "https://aws.amazon.com/codecommit/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Storing source code in multiple regions",
+							"helpfulResource": {
+								"displayText": "AWS CodeCommit is a fully-managed source control service that makes it easy for companies to host secure and highly scalable private Git repositories. You can use CodeCommit to securely store anything from source code to binaries, and it works seamlessly with your existing Git tools.",
+								"url": "https://aws.amazon.com/codecommit/"
+							},
+							"improvementPlan": {
+								"displayText": "Concurrency is the number of requests that your function is serving at any given time. When your function is invoked, Lambda allocates an instance of it to process the event. When the function code finishes running, it can handle another request. If the function is invoked again while a request is still being processed, another instance is allocated, which increases the function's concurrency. The total concurrency for all of the functions in your account is subject to a per-region quota..",
+								"url": "https://aws.amazon.com/codecommit/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Utilizing reserved concurrency for your Lambda functions deployed in your secondary region.",
+							"helpfulResource": {
+								"displayText": "Concurrency is the number of requests that your function is serving at any given time. When your function is invoked, Lambda allocates an instance of it to process the event. When the function code finishes running, it can handle another request. If the function is invoked again while a request is still being processed, another instance is allocated, which increases the function's concurrency. The total concurrency for all of the functions in your account is subject to a per-region quota.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							},
+							"improvementPlan": {
+								"displayText": "Reserved concurrency guarantees the maximum number of concurrent instances for the function. When a function has reserved concurrency, no other function can use that concurrency.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Ensure parameters are synchronized with Serverless Application Model (SAM).",
+							"helpfulResource": {
+								"displayText": "The AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications. It provides shorthand syntax to express functions, APIs, databases, and event source mappings.",
+								"url": "https://aws.amazon.com/serverless/sam/"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that parameters such as permissions, memory, timeout, environment variables, and other options are synchronized.",
+								"url": "https://aws.amazon.com/serverless/sam/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_16",
+					"title": "What resiliency considerations for Amazon Lex have you implemented??",
+					"description": "Utilizing Amazon Lex with Amazon Connect allows you to build conversational interactions that feel natural to your customers. You can capture spoken input as well as numeric input, allowing customers to choose how they interact with your contact flow. Amazon Lex also powers chat conversations, allowing conversational interaction with a virtual agent and rich interactive messaging.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Amazon Lex bots in the disaster recovery region are functional and kept up to date.",
+							"helpfulResource": {
+								"displayText": "Any Amazon Lex bots critical to functionality within the contact center should be managed by a CI/CD pipeline or manually. In a pilot light architecture, not all contact center functions will be supported. Typically only critical functionality is supported, such as a self-service workflow. Note that in a pilot light configuration, not all backend systems may be configured or operational."
+							},
+							"improvementPlan": {
+								"displayText": "If your DR strategy requires better parity with your production experience, you may consider a more comprehensive Amazon Lex multi-region deployment strategy."
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Utilizing a code delivery pipeline via CodeCommit and Lambda in multiple regions",
+							"helpfulResource": {
+								"displayText": "This is the recommended approach to ensure that Amazon Lex bot versions have parity between regions while eliminating manual errors and reducing operational overhead.",
+								"url": "https://github.com/aws-samples/cross-account-ci-cd-pipeline-for-amazon-lex-bot"
+							},
+							"improvementPlan": {
+								"displayText": "An example architecture for an Amazon Lex CI/CD pipeline can be seen here",
+								"url": "https://github.com/aws-samples/cross-account-ci-cd-pipeline-for-amazon-lex-bot/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_17",
+					"title": "What resiliency considerations for Amazon S3 have you implemented?",
+					"description": "Amazon Connect uses Amazon Simple Storage Service (Amazon S3) to store recorded conversations, chat transcripts, exported reports, and contact flows. When you set up Amazon Connect, it creates default buckets for these requirements, or you can point it to existing Amazon S3 infrastructure. You can also manage the Amazon S3 policies to move data to Amazon S3 Glacier for less expensive long-term storage.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Amazon S3 cross-region replication",
+							"helpfulResource": {
+								"displayText": "Amazon S3 cross-region replication enables automatic asynchronous copy of objects between Amazon S3 buckets. Buckets configured for object replication may be owned by the same AWS account or different accounts. You can copy objects between different AWS regions or within the same region.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/dev/replication.html"
+							},
+							"improvementPlan": {
+								"displayText": "If you want unified access to your Amazon Connect data stored in S3, consider using Amazon S3 cross-region replication.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/dev/replication.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon S3 Replication Time Control (S3 RTC)",
+							"helpfulResource": {
+								"displayText": "You can use Amazon S3 Replication Time Control (S3 RTC) to replicate your data in the same AWS Region or in different regions over a predictable period. Amazon S3 RTC replicates 99.99% of new objects stored in Amazon S3 in 15 minutes.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routing-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Within your contact flow, you can prompt for additional information and, if they need to reach an agent, you can use the contact flow configuration to place them in the appropriate queue.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routing-bp"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Amazon S3 Batch Replication",
+							"helpfulResource": {
+								"displayText": "To sync buckets and replicate existing objects, use Batch Replication as an on-demand replication action. Batch Replication replicates existing objects to different buckets as an on-demand option.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html#batch-replication-scenario"
+							},
+							"improvementPlan": {
+								"displayText": "When you need to move your data as needed, consider using Batch Replication versus live replication.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html#batch-replication-scenario"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Amazon S3 Multi-Region Access Points.",
+							"helpfulResource": {
+								"displayText": "Amazon S3 Multi-Region Access Points provide a single global endpoint to access a data set that spans multiple S3 buckets in different AWS Regions. This allows you to build multi-region applications with the same simple architecture used in a single region, and then to run those applications anywhere in the world..",
+								"url": "https://aws.amazon.com/s3/features/multi-region-access-points/"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using Amazon S3 Multi-Region Access Points when your application requires requests to be made to an S3 Multi-Region Access Point’s global endpoint automatically route over the AWS global network to the S3 bucket with the lowest network latency.",
+								"url": "https://aws.amazon.com/s3/features/multi-region-access-points/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && (choice2 || choice3) && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_18",
+					"title": "How do you dynamically adapt to out-of-office conditions?",
+					"description": "Other AWS services can be used to augment, monitor, or operationalize your Amazon Connect deployment. Ensure you are considering these resources when architecting Amazon Connect Global Resiliency.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "DynamoDB global tables",
+							"helpfulResource": {
+								"displayText": "DynamoDB global tables are a collection of one or more replica tables, all owned by a single AWS account. A replica table is a single DynamoDB table that functions as a part of a global table. Each replica stores the same set of data items. Any given global table can only have one replica table per AWS region.",
+								"url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+							},
+							"improvementPlan": {
+								"displayText": "If an AWS region becomes isolated or degraded, your application and Amazon Connect can re-distribute traffic to a secondary healthy region. By replicating data across regions, the active Amazon Connect instance can access data in region to perform necessary interaction handling functions. This architecture carries additional costs, but offers strong redundancy with eventually-consistent data replication in an active-active topology..",
+								"url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GlobalTables.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon CloudWatch cross-region dashboards.",
+							"helpfulResource": {
+								"displayText": "You can create cross-account cross-region dashboards, which summarize your CloudWatch data from multiple AWS accounts and multiple Regions into one dashboard.",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_xaxr_dashboard.html"
+							},
+							"improvementPlan": {
+								"displayText": "Cross-account cross-region dashboards enables centralized visibility of your CloudWatch metrics, logs and the health/ performance of applications running in several Regions. CloudWatch metric math allows you to query multiple metrics for aggregation from multiple accounts and Regions. This ensures monitoring visibility in the event of a failover scenario. CloudWatch also provides metrics for concurrent call, chat and task quotas..",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_xaxr_dashboard.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "MEDIUM_RISK"
+						}
+					]
+				},
+				{
+					"id": "GlobalResiliency_19",
+					"title": "What other Amazon Connect capabilities do you use?",
+					"description": "Not all functionality of Amazon Connect is natively support by Global Resiliency. Determine if you are using or plan to use these services, and determine how to best manage them across regions.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Chat",
+							"helpfulResource": {
+								"displayText": "Amazon Connect Chat enables your customers to start chatting with contact center agents from any of your business applications, web or mobile.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/chat.html"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Tasks",
+							"helpfulResource": {
+								"displayText": "Amazon Connect Tasks, a feature of Amazon Connect, makes it easier to prioritize, track, manage, and automate contact center agent tasks, improving agent productivity and ensuring customer issues are quickly resolved.",
+								"url": "https://aws.amazon.com/connect/tasks/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Queued callback",
+							"helpfulResource": {
+								"displayText": "Amazon Connect queued callback provides the ability for customers to leave their phone number and get a callback from an agent.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-queued-callback.html"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Outbound Campaigns",
+							"helpfulResource": {
+								"displayText": "With Amazon Connect Outbound Campaigns, you can proactively communicate across voice, SMS, and email to quickly serve your customers and improve agent productivity, while supporting compliance with local regulations.",
+								"url": "https://aws.amazon.com/connect/outbound/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Wisdom",
+							"helpfulResource": {
+								"displayText": "Wisdom is a feature of Amazon Connect that delivers agents the information they need, reducing the time spent searching for answers.",
+								"url": "https://aws.amazon.com/connect/wisdom/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Contact Lens",
+							"helpfulResource": {
+								"displayText": "Contact Lens for Amazon Connect, a feature of Amazon Connect, helps you follow the sentiment and trends of customer conversations in real time to identify crucial company and product feedback.",
+								"url": "https://aws.amazon.com/connect/contact-lens/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Voice ID",
+							"helpfulResource": {
+								"displayText": "Amazon Connect Voice ID, a feature of Amazon Connect, uses machine learning to provide real-time caller authentication and fraud risk detection to make voice interactions faster and more secure.",
+								"url": "https://aws.amazon.com/connect/voice-id/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Cases",
+							"helpfulResource": {
+								"displayText": "Amazon Connect Cases, a feature of Amazon Connect, allows your agents to track and manage customer issues that require multiple interactions, follow-up tasks, and teams in your contact center.",
+								"url": "https://aws.amazon.com/connect/cases/"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "choice9",
+							"title": "Forecasting, Capacity Planning and Scheduling",
+							"helpfulResource": {
+								"displayText": "Amazon Connect now provides new machine-learning powered capabilities to make it easy for contact center managers to predict contact volumes and average handle time with high accuracy, determine ideal staffing levels, and optimize agent schedules to ensure they have the right agents at the right time.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							},
+							"improvementPlan": {
+								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if you are not using any of the Amazon Connect features listed."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 || choice2 || choice3 || choice4 || choice5 || choice6 || choice7 || choice8 || choice9",
+							"risk": "HIGH_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "NO_RISK"
+						}
+					]
+				}
+			]
+		}
+	]
+}
