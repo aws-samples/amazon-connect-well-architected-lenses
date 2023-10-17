@@ -10,11 +10,12 @@
 
 ## Operational Excellence
 
+**v1.3 (10/17/2023)** - Added helpful resource link to relevant question on incident response.
 **v1.2 (01/09/2023)** - Reduced question count from 20 to 16 by removing duplicate questions and combining into existing questions. Added additional helpful links for questions that were missing them.
 
 **v1.1 (10/18/2022)** - Added choice for 'None of the above' in each question.
 
-**v1.0** (10/12/2022) - Initial Release
+**v1.0 (10/12/2022)** - Initial Release
 
 ## Performance Efficiency
 
