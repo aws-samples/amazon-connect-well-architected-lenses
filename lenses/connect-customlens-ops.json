@@ -678,7 +678,18 @@
 							"improvementPlan": {
 								"displayText": "Raise an alert when workload outcomes are at risk so that you can respond appropriately.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
-							}
+							},
+							"additionalResources":[
+								{
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "AWS Incident Detection and Response offers AWS Enterprise Support customers proactive monitoring and incident management for selected workloads.",
+											"url": "https://aws.amazon.com/premiumsupport/aws-incident-detection-response/"
+										}
+									]
+								}
+							]
 						},
 						{
 							"id": "choice2",
