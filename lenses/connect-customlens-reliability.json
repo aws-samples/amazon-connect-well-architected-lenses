@@ -307,32 +307,38 @@
 						},
 						{
 							"id": "choice4",
-							"title": "Endpoint monitoring software deployed",
+							"title": "Web traffic monitoring software configured to support WebRTC",
 							"helpfulResource": {
-                                "displayText": "Endpoint monitoring software can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed."
+                                "displayText": "Endpoint monitoring software can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
                             },
                             "improvementPlan": {
-								"displayText": "Desktop and network related software which monitor web traffic can interfere with connection quality and latency to Amazon Connect. Amazon Connect URL's must be allow-listed with these services to ensure optimum audio quality and latency."
+								"displayText": "Desktop and network related software which monitor web traffic can interfere with connection quality and latency to Amazon Connect. Amazon Connect URL's must be allow-listed with these services to ensure optimum audio quality and latency.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
 							}
 						},
 						{
 							"id": "choice5",
 							"title": "Bandwidth and latency monitoring software deployed",
 							"helpfulResource": {
-								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues."
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues.",
+								"url": "https://tools.connect.aws/"
                             },
                             "improvementPlan": {
-								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues."
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues.",
+								"url": "https://tools.connect.aws/"
 							}
 						},
 						{
 							"id": "choice6",
-							"title": "Call quality monitoring software deployed on agent endpoints",
+							"title": "Call quality monitoring best practices are being followed",
 							"helpfulResource": {
-								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues."
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html"
 							},
                             "improvementPlan": {
-								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues."
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html"
 							}
 						},
 						{

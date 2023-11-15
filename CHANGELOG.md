@@ -27,6 +27,8 @@
 
 ## Reliability
 
+**v1.3 (10/20/2023)** - Updated choices in question 4 to include reference links in helpful resources and improvement plan.
+
 **v1.3 (04/27/2023)** - Removed 'pilot light' choice from question #1.
 
 **v1.2 (03/03/2023)** - Updated all 'None of the above' choices.
