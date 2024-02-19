@@ -1,0 +1,369 @@
+{
+	"schemaVersion": "2021-11-01",
+	"name": "Amazon Connect Contact Center Lens - Performance Efficiency",
+	"description": "Amazon Connect Well-Architected Contact Center Lens for Performance Efficiency.",
+	"pillars": [
+		{
+			"id": "PER",
+			"name": "Performance Efficiency",
+			"questions": [
+				{
+					"id": "PER01",
+					"title": "How do you measure agent performance?",
+					"description": "Tracking the right contact center metrics can provide supervisors with the knowledge needed to improve agent performance.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Establish key performance metrics",
+							"helpfulResource": {
+								"displayText": "Amazon Connect provides suprivsors and admins with the ability to monitor Contact Center metrics with out of the box reporting cababilites. If organizations would like use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to the third party app(s).",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Determine what key performance metrics will be monitored and at what interval they will be evaluated.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Mechanisms exist to monitor and report on the metrics",
+							"helpfulResource": {
+								"displayText": "Amazon Connect provides suprivsors and admins the ability to monitor Contact Center metrics with out-of-the box reporting cababilites. If organizations would like to use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to third party app(s).",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement an automate process to stream data to a real-time dashboard or perform batch reporting on desire metrics.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/real-time-metrics-definitions.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Identify instructive, positive agent coaching based on performance results",
+							"helpfulResource": {
+								"displayText": "Whether it's coaching an agent with a training opportunity or rewarding positive behavior, it's important to train your Contact Center staff to drive the experience desired for your customers.",
+								"url": "https://aws.amazon.com/connect/contact-lens/"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage Contact Lens for Amazon Connect for agent coaching and training opportunities based on the past performance metrics and data.",
+								"url": "https://aws.amazon.com/connect/contact-lens/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Offer survey to customers to receive the feedback",
+							"helpfulResource": {
+								"displayText": "Post-call and Post-chat survey are some of the most popular and effective strategies to measure performance.",
+								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate chat and call flows to determine where surveys and survey opt-in options could be implemented. Blog resources exist that provide information how to implement surveys in Amazon Connect and how to gain valuble insights from the results.",
+								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER02",
+					"title": "How are you designing your Contact Flows?",
+					"description": "Contact Flows should be designed using best practices. Principles to follow include designing for testability, maintainability and customer experience.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Multiple DNIS to one or few contact flows",
+							"helpfulResource": {
+								"displayText": "A one-to-one mapping of DNIS and Contact Flows can result in unnecessary service quota requests and a large number of contact flows to support and maintain.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/performance-efficiency-bp.html#contactflowdesign-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Consider an approach that results in Multiple DNIS to one or few contact flows by using the dynamic nature of Amazon Connect contact flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/performance-efficiency-bp.html#contactflowdesign-bp"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Using Modules within Contact Flows",
+							"helpfulResource": {
+								"displayText": "Contact Flow Modules are resusable sections of a contact flow.",
+								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using Modules to extract repeatable logic across your flow and creat common functions.",
+								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Contact Flow Best Practices are being followed",
+							"helpfulResource": {
+								"displayText": "Following best practices can help you get the maximum benefit from Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/best-practices.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review any existing Contact Flows and determine where best practices can be implemented. When designing new Contact Flows, refer to our Best Practices guide.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/best-practices.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER03",
+					"title": "How are you preparing for peak volume periods?",
+					"description": "It is important that a Contact Center is periodically performance tested in preparation for peak volumes and seasonality.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Performing periodic Load or Scale Testing",
+							"helpfulResource": {
+								"displayText": "Performance Load and Scale testing should be performed on a periodic basis to ensure your Contact Center can perform duing periods of increased or peak volumes.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							},
+							"improvementPlan": {
+								"displayText": "Review the Amazon Connect Testing Policy to ensure testing is performed withing the operating guidelines.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Using empirical capacity planning data to staff the correct amount of agents",
+							"helpfulResource": {
+								"displayText": "A capacity plan helps you estimate the amount of agents are required to meet the service level target for a certain period of time.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using Forecasting, Capacity Planning and Scheduling within Amazon Connect to determine the amount of agents to staff based on historical data.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Confirming Service Quotas are at an acceptable level",
+							"helpfulResource": {
+								"displayText": "Amazon Connect default service quotas may not be sufficient for your organization during peak times.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A15296%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C712.8%2Cnull%5D"
+							},
+							"improvementPlan": {
+								"displayText": "Review the default Amazon Connect Service Quotas. If a service quota needs to be increased, use the Service Quota service found in the AWS Console.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A15296%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C712.8%2Cnull%5D"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER04",
+					"title": "How are you enabling your agents?",
+					"description": "Enabling agents is an important part of a Well Architected Contact Center. If agents can be enabled to increase First Call Resolution or lower Average Handle Time, this will create a better experience for all involved parties as well as drive down operational costs.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "A Custom CCP is being used",
+							"helpfulResource": {
+								"displayText": "Significant performance efficiency can be realized through the creation of custom agent desktop solutions using the Amazon Connect Streams API.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using the Streams API to create customized CCP's for your agents to increase performance efficiency.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon Connect is integrated with a CRM",
+							"helpfulResource": {
+								"displayText": "With a CRM integration, your agents can get a comprenehsive view of customer and contact information in a single interface without managing multiple screens and interfaces",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate if a CCP can be embedded into the CRM used by your organization.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Agent Automation",
+							"helpfulResource": {
+								"displayText": "Common and repeatable tasks are automated for your agents. For example, automatically creating cases or pre-filling webforms and offering a screen pop with relevant information when a contact is offered.",
+								"url": "https://aws.amazon.com/connect/tasks/"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate what repeatable processes or jobs are performed by agents and determine if Tasks can be used to improve automation.",
+								"url": "https://aws.amazon.com/connect/tasks/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Enhanced Capabilities have been built into the CCP",
+							"helpfulResource": {
+								"displayText": "CCP functionality can be extended/enhanced to include real-time Transcriptions, Translations, Suggested Actions and Knowledge base integrations.",
+								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Integrate enhanced capabilities with your agent desktop to allow skilled agents to service contacts more efficiently and unskilled agents to provide service when skilled agents aren’t available. For example, you can use this approach to automatically translate a chat contact for unskilled agents that don't know the language. When your agent replies, you can automatically translate the text to the contact’s language, allowing for real-time bilingual communication.",
+								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER05",
+					"title": "Is your Contact Center leveraging other AWS Services?",
+					"description": "Amazon Connect natively works with a number of other AWS Services to improve performance, identify areas of opportunity, and gain valuable insights into your contact data",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "AWS Lambda",
+							"helpfulResource": {
+								"displayText": "You can use AWS Lambda un you Amazon Connect contact flows to perform data dips for customer information, send SMS text messages, and with other services like Amazon S3  to automatically distribute scheduled repots.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
+							},
+							"improvementPlan": {
+								"displayText": "Determine what self-service or automation options you'd like to provide to customers, agents and supervisors and evaluate how AWS Lambda could help ahchieve desired functionality.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon Polly",
+							"helpfulResource": {
+								"displayText": "Amazon Connect offers a native integration with Amazon Polly, allowing you to play dynamic and natural Text-to-Speech (TTS), use Speech Synthesis Markup Language (SSML), and take advantageof Neural Text-to-Speech (NTTS) to achieve the most natural and human-like text-to-speech voices possible.",
+								"url": "https://aws.amazon.com/polly/"
+							},
+							"improvementPlan": {
+								"displayText": "Explore the many different language, voice and dialect options available in Amazon Polly which can be used in Amazon Connect to provide a custom and familiar experience to customers.",
+								"url": "https://aws.amazon.com/polly/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Amazon Lex",
+							"helpfulResource": {
+								"displayText": "Amazon Lex is a service that allows you to create intelligent conversational chatbots. It lets you turnyour Amazon Connect contact center contact flows into natural conversations that provide personalizedexperiences for your caller.",
+								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
+							},
+							"improvementPlan": {
+								"displayText": "Work with your Contact Center agents and supervisors to understand the common topics that customers call in about. If these topics can be built into a conversational bot, evaluate how Amazon Lex could faciliate those interactions with your callers.",
+								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Amazon Kinesis",
+							"helpfulResource": {
+								"displayText": "For situations where you need to gain additional insight from your contact metrics and real-time data from Amazon Connect, you can leverage Amazon Kinesis to stream data to dashboard and reporting tools.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
+							},
+							"improvementPlan": {
+								"displayText": "Evaulate any current reporting and dashboard tools used within your organization and understand how Amazon Kinesis can stream data from Connect to these tools. If your organization doesn't have tools that allow you to process and query real-tiome and historical data from Amazon Connect, consdier using Amazon Opensearch Service or Kibana.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,350 @@
+{
+	"schemaVersion": "2021-11-01",
+	"name": "Amazon Connect Contact Center Lens - Cost Optimization",
+	"description": "Amazon Connect Well-Architected Contact Center Lens for Cost Optimization.",
+	"pillars": [
+		{
+			"id": "COST",
+			"name": "Cost Optimization",
+			"questions": [
+				{
+					"id": "COST01",
+					"title": "How are agents accessing information required to serve the contact?",
+					"description": "Agents are one of the biggest cost component in contact center solutions. Streamlining processes and tools for the agent to access information will improve agent productivity, which in-turn will reduce agent costs.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Working with multiple systems or screens",
+							"helpfulResource": {
+								"displayText": "Are agents leveraging multiple systems or tools and going out of CCP to collect the information needed to serve the contacts? "
+							},
+							"improvementPlan": {
+								"displayText": "Amazon Connect is an open platform that allows quick and easy integration with other apps and 3rd party systems so that agents can serve the contacts without leaving CCP. Refer to various Amazon Connect capabilities like Invoke Lambda , Amazon Connect Agents Apps, Amazon Connect Customers Profile, Amazon Connect Tasks, Amazon Connect Wisdom features and Amazon Connect Stream APIs to build a unified and rich user experience for agent that not only provides relevant and contextual information from various systems and apps in one place (CCP) but also allows agents to take actions like create ticket in ITSM or update Customer information in CRM etc from CCP.",
+								"url": "https://aws.amazon.com/blogs/aws/amazon-connect-smarter-and-more-integrated/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Transferring calls to other agents",
+							"helpfulResource": {
+								"displayText": "Metrics like Call Transfer-in / Out, Call Transfer-out by agent etc can provide meaningful insights and data around call routing. Optimizing these metrics can help improve agent's productivity and reduce cost.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html#contacts-transferred-in-historical"
+							},
+							"improvementPlan": {
+								"displayText": "Refer documentation on how to setup contact transfers and leverage features like Transfer contact to specific agent and Queue To Queue transfer that allow you to automatically transfer calls from one queue to another in your contact flow. This lets you minimize call wait times in your contact center, adjust to changing call patterns dynamically, or to assign calls to more qualified agents. You can use metrics, such as agent availability or the number of calls in the queue, to determine which queue to route the call to. To do this,, first create a customer queue contact flow, then define the conditions for transferring calls using blocks in your contact flow. Finally, use a transfer to queue block in your contact flow to enable calls to automatically transfer to the desired queue.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/transfer.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "CCP is auto-populated with desired information to guide and assist the agent",
+							"helpfulResource": {
+								"displayText": "Are there any intelligence added to CCP to provide real-time assistance to agent serving the contact?"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage Amazon Connect Customer Profiles, Contact Lens, Wisdom and Voice ID features of Amazon Connect to auto-populate the information and provide additional context and guidance in near real-time to improve agents effectiveness in serving the contacts.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/customer-profiles.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Agents leverage SOPs and their experience to best serve the contact",
+							"helpfulResource": {
+								"displayText": "Are appropriate SOPs in place for agents to refer and being evaluated periodically for their effectiveness?"
+							},
+							"improvementPlan": {
+								"displayText": "Have appropriate Standard Operating Procedures (SOPs) for agents to follow as well as implement means to monitor and enforce compliance and governance of them. You can leverage platform features like Amazon Connect Contact Lens, Stream APIs and CTR records etc to realize governance and monitoring. For more details on Contact Lens, refer Amazon Connect documentation.",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							}	
+						},	
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+						}	
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST02",
+					"title": "What call deflection strategy is in place ?",
+					"description": "It's highly encouraged have a call deflection strategy as it can help significantly reduce the cost.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Provide callback options, in case of long queue",
+							"helpfulResource": {
+							"displayText": "Is the expected wait time and queue depth monitored and used to provide callback options to contacts? Long wait times in contact center queues are a key driver for customer frustration. They also increase costs to companies. "
+							},
+							"improvementPlan": {
+								"displayText": "Implement callback options considering things like queue status, time in queue, staff availability / hours of operation etc. Another good place to offer callbacks is the transfer to queue node. While you can check queue capacity within the check queue status node, transfer to queue is the last node in the IVR and will contain the most recent queue data. Depending on how complex your call flow is this might be a better point in the call experience to route callers to a callback menu option.Once we use a branch node to asses the status and the caller is aware there are no immediately available agents, it makes sense to offer them a callback option through a get customer input node. Refer these docs on how to implement callbacks. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/optimize-customer-wait-experience-in-queue-using-amazon-connect/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Leverage self-serve IVR",
+							"helpfulResource": {
+							"displayText": "Are the IVR systems fronting the agent to serve the contacts?"
+							},
+							"improvementPlan": {
+								"displayText": "Utilize services like Amazon Lex bots to implement call deflection strategy. You can further improve the customer experience and reduce the cost by leveraging features like Voice ID to automate authentication etc.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-lex.html"
+
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Detect theme across issues and proactive reach-out for common issues ",
+							"helpfulResource": {
+							"displayText": "Proactively identify call patterns or trends for a potential of mass communication on common issues, system-wide problems, trends etc. "
+							},
+							"improvementPlan": {
+								"displayText": "Use features like Amazon Connect Contact Lens Theme Detection , High Volume Outbound communication in conjunction with Amazon Pinpoint, or Contact Trace Records (CTR) and Stream APIs to identify themes and categorization of issues to drive proactive actions and reach-out to contacts on common issues / patterns / trends which in-turn will help drive down the inbound calls and hence cost. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/announcing-contact-lens-for-amazon-connect-preview/"
+							}
+						},
+{
+							"id": "choice4",
+							"title": "Use of alternate channels",
+							"helpfulResource": {
+							"displayText": "Do you offer other channels to contacts seeking assistance e.g. Chat, Email etc?"
+							},
+							"improvementPlan": {
+								"displayText": "Implement an omni-channel based contact center solution on Amazon Connect using Amazon Connect Streaming APIs , native channels,  and other services like Amazon Pinpoint, and SNS. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/adding-digital-messaging-channels-to-your-amazon-connect-contact-center/"
+							}
+						},
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3  && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3  || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST03",
+					"title": "What procedure do you follow to ensure agents utilization ?",
+					"description": "There are several procedures like SOPs, training and compliance as well as forecasting items that can help improve agents utilization.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Regular review of SOPs",
+							"helpfulResource": {
+							"displayText": "Are Standard Operating Procedures (SOPs) being periodically reviewed and/or updated for its accuracy and effectiveness?"
+							},
+							"improvementPlan": {
+								"displayText": "To monitor and enforce compliance and governance of the procedures, you can leverage  platform features like Contact Lens, Stream APIs and CTR records etc",
+								"url": "https://aws.amazon.com/blogs/contact-center/analyze-amazon-connect-contact-lens-using-contact-trace-record-amazon-athena-and-amazon-quicksight-part-2/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Capacity planning accurately forecasting the staff",
+							"helpfulResource": {
+							"displayText": "Is staff forecasting and capacity planning accurate for both short-term and log term forecast? "
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that Workforce management capacity planning and forecasting module in use is appropriately setup and accounting for any changes in contact volumes, patterns, seasonality etc along with agents schedules, performance etc. to accurately forecast the staffing, for both short-term and long-term forecast.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Periodic coaching and training of Amazon Connect users",
+							"helpfulResource": {
+							"displayText": "Keeping agents up-to-date with use of SOPs and platform / tools is key to their ability to effectively use the resources. Are Amazon Connect users (agents, supervisors etc) being regularly trained and kept up-to-date on the resources and tools available at their disposal to serve the contacts."
+							},
+							"improvementPlan": {
+								"displayText": "Account for training time in resource schedule in the Workforce management scheduling and forecasting module to ensure timely and regular training of agents on the resources / tools etc. Leverage and/or create and update resources and mechanisms like agents training guide , internal resources and knowledge bases, SOPs, and evaluation process to gauge effectiveness of the training.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/agent-user-guide.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Agents schedule aligned to contacts volume and other activities",
+							"helpfulResource": {
+							"displayText": "Are the agents schedule created keeping all activities and considerations in mind, including but not only limited to contact volumes and trainings ?"
+							},
+							"improvementPlan": {
+								"displayText": "Make sure to create agents schedule (both for short term and long term) keeping expected volumes, seasonality, shrinkage, time offs (planned and unplanned), training etc activities in mind.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST04",
+					"title": "Have you reviewed telephony and inbound call routes for the opportunities, if any, to optimize telephony cost?",
+					"description": "Telephony being another major cost element, its important to apply considerations in choosing the right telephony to optimize cost.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Calls routed from the 3rd party managed phone number to Amazon Connect claimed number",
+							"helpfulResource": {
+							"displayText": "Are the customer facing number(s) dialed in by contacts owned and managed by 3rd party in order to route calls to Amazon Connect?"
+							},
+							"improvementPlan": {
+								"displayText": "Considering porting the numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing. This will eliminate some of the call legs in the flow contributing to the cost and may help reduce operations cost of the solution. Refer to the link for more info.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "No intermediate hops in the call flow managed outside of Amazon Connect",
+							"helpfulResource": {
+							"displayText": "There are no intermediate hops in between the phone number dialed by Contacts and Amazon Connect claimed number(s) to route the Contacts to agent"
+							},
+							"improvementPlan": {
+								"displayText": "Consider having customer dialed number directly route to Amazon claimed phone numbers as opposed to keeping any intermediate hops in between. This will help remove the unnecessary cost due to additional hops for any non customer facing numbers outside of Amazon Connect",
+								"url": "https://github.com/aws/amazon-connect-streams"
+
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "No Telephony outbound for Integration to external systems",
+							"helpfulResource": {
+							"displayText": "Does the end to end call flow involve transfer out to external systems for e.g. 3rd party IVR?"
+							},
+							"improvementPlan": {
+								"displayText": "PSTN call transfers out to a 3rd Party IP telephony system can add to your Amazon Connect spend because the calls are still pinned to Connect for the duration of the transfer.  It's highly advised to streamline the call flow and avoid one or more call transfer out between Amazon and 3rd party systems, if possible. As this will not only help with our customer experience and operations but will also help reduce the Amazon Connect telephony and/or platform service minute costs when outbound transfers cannot be avoided. Connect SAs can review the call flow etc. and determine the next best options available. Work with an Amazon Connect specialist to identify the most appropriate design catering to your customer experience goals.",
+								"url": ""
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Considered appropriate Telephony type for numbers claimed on Amazon Connect",
+							"helpfulResource": {
+							"displayText": "Amazon Connect offers Direct in-dial (DID) and Toll Free numbers (TFN) for telephony managed by Amazon Connect. Have appropriate considerations been taken into account in choosing between DIDs and TFNs."
+							},
+							"improvementPlan": {
+								"displayText": "Though Toll free numbers provide additional resiliency, it comes with additional cost when compared with DIDs. Apply your workload's availability and resiliency requirements in choosing right telephony numbers. Refer documentation for additional details on DIDs and TFNs in Amazon Connect",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html"
+							}
+						},
+						{
+                            "id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST05",
+					"title": "How is the region for Amazon Connect instance determined for your Contact Center solution deployment?",
+					"description": "Amazon Connect Region is one of the first decision customers make when adopting Amazon Connect for their contact center workloads. Telephony pricing for Claimed Phone Numbers Per Day and Per Minute Inbound Usage can be different for countries depending upon the AWS Region in which you select to instantiate your Amazon Connect Instance.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Same region as the country of business",
+							"helpfulResource": {
+							"displayText": "Amazon Connect instance is deployed in the AWS region as the country of your business"
+							},
+							"improvementPlan": {
+								"displayText": "Review the recommendation to further ensure appropriate setup",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#ccp-region-selection"
+							}
+						},				
+						{
+							"id": "choice2",
+							"title": "Different region(s) than country of business",
+							"helpfulResource": {
+							"displayText": "Is your Amazon Connect instance deployed to AWS region different from the country of your business?"
+							},
+							"improvementPlan": {
+								"displayText": "If you require to have the Amazon Connect instance in a different regions than the country of business (agent vs customers), consider the most cost effective phone call (inbound/outbound) costs",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#ccp-region-selection"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "A combination of country of business and Amazon Connect region",
+							"helpfulResource": {
+							"displayText": "Chose this option if your agents and contacts are in a different country"
+							},
+							"improvementPlan": {
+								"displayText": "Optimize the inbound/outbound call costs based on the customer's and agent's country and Amazon Connect region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+                           	"id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || choice2 || choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		}
+	]
+}
