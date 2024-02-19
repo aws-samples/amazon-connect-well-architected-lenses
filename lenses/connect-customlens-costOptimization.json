@@ -64,7 +64,7 @@
 					],
 					"riskRules": [
 						{
-							"condition": "!choice1 && !choice2 && choice3 && choice4",
+							"condition": "choice1 && choice2 && choice3 && choice4",
 							"risk": "NO_RISK"
 						},
 						{
@@ -273,7 +273,7 @@
 					],
 					"riskRules": [
 						{
-							"condition": "!choice1 && choice2 && choice3 && choice4",
+							"condition": "choice1 && choice2 && choice3 && choice4",
 							"risk": "NO_RISK"
 						},
 						{
@@ -331,7 +331,7 @@
 					],
 					"riskRules": [
 						{
-							"condition": "choice1 && !choice2 && !choice3",
+							"condition": "choice1 && choice2 && choice3",
 							"risk": "NO_RISK"
 						},
 						{
