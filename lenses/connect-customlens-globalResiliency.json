@@ -87,11 +87,11 @@
 						},
 						{
 							"condition": "!choice1 || !choice2 || !choice3 || !choice4 || !choice5",
-							"risk": "MEDIUM_RISK"
+							"risk": "HIGH_RISK"
 						},
 						{
 							"condition": "default",
-							"risk": "HIGH_RISK"
+							"risk": "MEDIUM_RISK"
 						}
 					]
 				},
@@ -1271,10 +1271,10 @@
 						},
 						{
 							"id": "choice5",
-							"title": "Wisdom",
+							"title": "Amazon Q in Connect",
 							"helpfulResource": {
-								"displayText": "Wisdom is a feature of Amazon Connect that delivers agents the information they need, reducing the time spent searching for answers.",
-								"url": "https://aws.amazon.com/connect/wisdom/"
+								"displayText": "Amazon Q in Connect is a feature of Amazon Connect that delivers agents the information they need, reducing the time spent searching for answers.",
+								"url": "https://aws.amazon.com/connect/q/"
 							},
 							"improvementPlan": {
 								"displayText": "Make considerations for services that are not Natively Supported by Global Resiliency."
@@ -1335,7 +1335,7 @@
 					"riskRules": [
 						{
 							"condition": "choice1 || choice2 || choice3 || choice4 || choice5 || choice6 || choice7 || choice8 || choice9",
-							"risk": "HIGH_RISK"
+							"risk": "MEDIUM_RISK"
 						},
 						{
 							"condition": "default",
