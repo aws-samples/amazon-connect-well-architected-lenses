@@ -48,3 +48,7 @@
 ## Global Resiliency
 
 **v1.1 (2/13/2023)** - Initial Release
+
+## Global Resiliency
+
+**v1.2 (4/19/2024)** - Updated the Risk in Q1 from MEDIUM to HIGH when any of the first 5 choices is not selected. Q19 risk was reduced to MEDIUM for other Amazon Connect features that are in use and are not supported by ACGR. Update Wisdom to Amazon Q in Connnect.
