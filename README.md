@@ -1,6 +1,6 @@
 # Amazon Connect Well-Architected Lenses
 
-The Amazon Connect Well-Architected Lenses provide a way for customers to evaluate contact centers against best-practices created by AWS Experts. Building off the [AWS Well-Architected framework](https://aws.amazon.com/architecture/well-architected/), the Amazon Connect Well-Architected Lenses look at five of the well-architected pillars with questions specifically related to Amazon Connect deployments. Additionally, a Global Resillency feature specific lens is included to evaluate workloads using the Amazon Connect Global Resillency solution.
+The Amazon Connect Well-Architected Lenses provide a way for customers to evaluate contact centers against best-practices created by AWS Experts. Building off the [AWS Well-Architected framework](https://aws.amazon.com/architecture/well-architected/), the Amazon Connect Well-Architected Lenses look at five of the well-architected pillars with questions specifically related to Amazon Connect deployments. Additionally, a Global Resiliency feature specific lens is included to evaluate workloads using the Amazon Connect Global Resiliency solution.
 
 ## What is the AWS Well-Architected Framework?
 The Well-Architected Framework is a set of questions and design principles across six pillars. (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, and Sustainability)
@@ -13,7 +13,14 @@ As of re:Invent 2022 customers can now create user defined and managed Custom Le
 
 ## How can you use the Amazon Connect Custom Lens?
 
-Customers can use the Amazon Connect Well-Architected custom lenses in their own well-architected reviews, either self facilitated or led by an AWS Solutions Architect or APN Partner.
+Customers can use the Amazon Connect Well-Architected custom lenses in their own well-architected reviews, either self facilitated or led by an AWS Solutions Architect or APN Partner. This repo currently has the following custom lenses:
+- **Amazon Connect Contact Center Well-architected Lenses** - Amazon Connect Well-Architected Contact Center Lenses.
+- **Amazon Connect Contact Center Lens - Operational Excellence** - Amazon Connect Well-Architected Contact Center Lens for the Operational Excellence Pillar.
+- **Amazon Connect Contact Center Lens - Security** - Amazon Connect Well-Architected Contact Center Lens for Security.
+- **Amazon Connect Contact Center Lens - Reliability** - Amazon Connect Well-Architected Contact Center Lens for Reliability.
+- **Amazon Connect Contact Center Lens - Performance Efficiency** - Amazon Connect Well-Architected Contact Center Lens for Performance Efficiency.
+- **Amazon Connect Contact Center Lens - Cost Optimization** - Amazon Connect Well-Architected Contact Center Lens for Cost Optimization.
+- **Amazon Connect Contact Center Lens - Global Resiliency** - Amazon Connect Well-Architected Contact Center Lens for Global Resiliency.
 
 The Custom Lens in the Well-Architected tool provides a structured and consistent approach to evaluating architectures during Operational and Well-Architected reviews. The tool enables the reviewer to:
 
