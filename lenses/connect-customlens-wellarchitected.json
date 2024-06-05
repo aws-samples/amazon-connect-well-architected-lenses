@@ -1,0 +1,3173 @@
+{
+	"schemaVersion": "2021-11-01",
+	"name": "Amazon Connect Contact Center Well-architected Lenses",
+	"description": "Amazon Connect Well-Architected Contact Center Lenses.",
+	"pillars": [
+		{
+			"id": "OPS",
+			"name": "Operational Excellence",
+			"questions": [
+				{
+					"id": "conops_01",
+					"title": "How do you select and prepare the most suitable contact center services and solutions?",
+					"description": "Deploy your workload so that it aligns with both internal and external governance requirements and allows customer connectivity.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Deploy Amazon Connect in a dedicated account within an AWS Organization landing zone.",
+							"helpfulResource": {
+								"displayText": "With AWS Organizations, you can set up multiple AWS accounts for each level of your development, staging, and quality assurance environments. This allows you to centrally govern your environment as you grow and scale your workloads on AWS. AWS Organizations helps you to centrally manage billing; control access, compliance, and security; and share resources across your AWS accounts.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#awsaccount"
+							},
+							"improvementPlan": {
+								"displayText": "Deploy Amazon Connect in a dedicated account within an AWS Organization landing zone.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#awsaccount"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Deploy Amazon Connect in a region central to your agents, contacts, and external transfer endpoint geography.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect Region selection is contingent upon data governance requirements, use case, services available in each Region, telephony costs in each region, and latency in relation to your agents, contacts, and external transfer endpoint geography.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#regionselection"
+							},
+							"improvementPlan": {
+								"displayText": "Deploy Amazon Connect in a region central to your agents, contacts, and external transfer endpoint geography.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#regionselection"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Ensure Agent directory aligns with corporate user directory and authentication strategy.",
+							"helpfulResource": {
+								"displayText": "You cannot change the identity option you select after you create your instance. For example, if you decide to change the directory you selected to enable Single Sign On (SSO) for your instance, you will need to create a new instance.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#configure-directory"
+							},
+							"improvementPlan": {
+								"displayText": "If you are already using an AWS Directory Service directory to manage users, you can use the same directory to manage user accounts in Amazon Connect. This must be decided and configured when you create your Amazon Connect instance. You cannot change the identity option you select after you create the instance. For example, if you decide to change the directory you selected to enable Single Sign On (SSO) for your instance, you can delete the instance and create a new one. When you delete an instance, you lose all configuration settings and metrics data for it.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#configure-directory"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice1 || choice3) && choice2)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_02",
+					"title": "How do you plan for telephony availability and connectivity to support your workload?",
+					"description": "Review telephony availability in advance for both domestic and toll-free numbers in the target deployment region(s).",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Optimize reputation for outbound calling.",
+							"helpfulResource": {
+								"displayText": "It is important to understand how your customers expect to be contacted and adopt an outbound calling strategy to improve and protect your call answer rate for outbound calling. This includes knowing your customer's preferred contact method, branding your calls, selecting caller ID's that mean something to your customer, and monitoring the reputation of your caller IDs.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/optimize-outbound-calling.html"
+							},
+							"improvementPlan": {
+								"displayText": "Establish an outbound calling strategy to protect, monitor, and validate your call answer rate is delivering real business value.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/optimize-outbound-calling.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Provide adequate lead time for phone number porting.",
+							"helpfulResource": {
+								"displayText": "When porting phone numbers for critical workloads, include all requirements and use case information in your claim/port number several months before the go-live date. This includes requests for live cutover support, communication prior, during, and after cutover, monitoring, and anything else specific to your use case.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/port-phone-number.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review the latest documentation regarding phone number porting to ensure number availability and support in your target deployment region. Open a porting request as far in advance of your pending go-live date as possible.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/things-to-know-before-porting.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Ensure telephony support/availability in the target deployment region.",
+							"helpfulResource": {
+								"displayText": "In the US, you should use Amazon Connect telephony services for US toll-free numbers, allowing you to route toll-free traffic across multiple suppliers in an active-active fashion at no additional charge.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#telephony-bp"
+							},
+							"improvementPlan": {
+								"displayText": "In situations where you are forwarding inbound traffic to an Amazon Connect phone number, you should request redundant DID or Toll-Free numbers across multiple telephony providers. If you are claiming or porting multiple DID or Toll-Free numbers outside of the US, you should request that those numbers be claimed or ported to a variety of telephony providers for increased resiliency.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#telephony-bp"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Ensure carrier diversity for international toll-free and high-concurrency DIDs.",
+							"helpfulResource": {
+								"displayText": "If you are using an existing toll-free national service to redirect inbound traffic to DIDs, you should request DID phone numbers across multiple telephony providers. A general recommendation for this configuration is 100 sessions per-DID and your AWS Solutions Architect can help with capacity calculations and setup.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#telephony-bp"
+							},
+							"improvementPlan": {
+								"displayText": "If you are using an existing toll-free national service to redirect inbound traffic to DIDs, you should request DID phone numbers across multiple telephony providers. A general recommendation for this configuration is 100 sessions per-DID and your AWS Solutions Architect can help with capacity calculations and setup.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#telephony-bp"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Understand outbound calling restrictions and follow eligibility criteria.",
+							"helpfulResource": {
+								"displayText": "Domestic and international carriers have several restrictions that can impact your ability to contact your customers. These include presenting toll-free numbers for international calling, using UIFN numbers for outbound calling, and blocking international calls with unsupported use cases.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/outbound-calling-restrictions.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement a process to train administrators and operationalize your outbound calling to international destinations to ensure calls can be delivered.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/outbound-calling-restrictions.html"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3 || choice4 || choice5) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_03",
+					"title": "How do you prepare for global and/or multi-region deployments?",
+					"description": "Deploy your workload so that it aligns with both internal and external governance requirements and allows customer connectivity.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Ensure the region supports the AWS services required for your Contact Center including integrations with other services.",
+							"helpfulResource": {
+								"displayText": "It is the responsibility of the business to ensure compliance reports such as Service Organization Control (SOC) reports, Payment Card Industry (PCI) reports, and certifications from accreditation bodies meet business governance requirements for the AWS regions in use.",
+								"url": "https://aws.amazon.com/artifact/"
+							},
+							"improvementPlan": {
+								"displayText": "Validate service availability in the region(s) of choice, and ensure operating effectiveness of AWS security controls in place meet business compliance requirements.",
+								"url": "https://aws.amazon.com/artifact/ "
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Thoroughly test all use case scenarios, preferably using the same or similar environment as your agents and customers.",
+							"helpfulResource": {
+								"displayText": "Ensure that you test several inbound and outbound scenarios for quality of experience, Caller ID functionality, and measure latency to ensure it falls within acceptable range for your use case.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/troubleshooting.html"
+							},
+							"improvementPlan": {
+								"displayText": "Thoroughly test all use case scenarios, preferably using the same or similar environment as your agents and customers.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/troubleshooting.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Validate service quotas are adequate to support your contact center.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect service quotas apply per Region. For example, you can have 2 Amazon Connect instances in each Region. It can take up to a few weeks to increase your service quota. If you're increasing your quotas as part of a larger project, be sure to add this time to your plan.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review the default service quotas for each service involved in your workload as well as the default service quotas for Amazon Connect and request increases where applicable. When requesting an increase for Amazon Connect, be sure to use expected values without additional padding for fluctuations.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-service-limits.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Subscribe to AWS Enterprise support.",
+							"helpfulResource": {
+								"displayText": "AWS Enterprise Support is recommended for business and/or mission-critical workloads on AWS. Both Enterprise Support and Well-Architected Review with an AWS Solutions Architect are required to qualify for the Amazon Connect Service Level Agreement",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#enterprise-support-bp"
+							},
+							"improvementPlan": {
+								"displayText": "AWS Enterprise Support is recommended for business and/or mission-critical workloads on AWS. Both Enterprise Support and Well-Architected Review with an AWS Solutions Architect are required to qualify for the Amazon Connect Service Level Agreement",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#enterprise-support-bp"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3 || choice4) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_04",
+					"title": "Can your corporate infrastructure support minimum connectivity requirements?",
+					"description": "Design your infrastructure so that it provides necessary access both to internal and external resources with the lowest latency possible.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Network resources meet minimum bandwidth requirements.",
+							"helpfulResource": {
+								"displayText": "Minimum bandwidth is 100 Kbps bandwidth (upload and download) per connected workstation.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-workstation"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure connectivity to the internet via the shortest route possible and bandwidth requirements are met within your network for the maximum concurrent calls expected.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-workstation"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Network/workstation firewalls are configured following AWS accessibility recommendations.",
+							"helpfulResource": {
+								"displayText": "The Contact Control Panel (CCP) establishes persistent outbound send/receive connections through your web browser on TCP port 443 and UDP port 3478.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure network traffic is allowed from Amazon EC2 endpoints by reviewing the latest information in the Set up your network section of the Amazon Connect Administrators Guide.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Network routing (remote) is configured for split-tunneling.",
+							"helpfulResource": {
+								"displayText": "Remote agents, those that use Amazon Connect from a location other than those connected to your organization's main network, may experience issues relating to their local network if they have an unstable connection, packet loss, or high latency. This is compounded if a VPN is required to access resources.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+							},
+							"improvementPlan": {
+								"displayText": "Ideally, the agents are located close to the AWS Region where your AWS resources and Amazon Connect instance are hosted, and have a stable connection to the public WAN.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_05",
+					"title": "How do you govern the provisioning of agent headsets and workstations?",
+					"description": "Agent headsets and workstations in the contact center vary widely. Validate the architecture of the workstations that agents use, and the location and environment in which they take contacts, to ensure quality.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Agent workstation resources are adequate to run CCP and third-party applications to perform necessary job functions.",
+							"helpfulResource": {
+								"displayText": "Under-powered workstations can make it difficult for agents to access the tools and resources they need to service contacts. Also, keep in mind the resource requirements when scoping workstations to ensure that they can perform under load while appropriately multitasking for the use case.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-workstation"
+							},
+							"improvementPlan": {
+								"displayText": "Make sure that your agents' computers are performant and meet the minimum hardware requirements to run CCP and any other third-party applications that consume resources.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-workstation"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Agent workstations use a wired network connection.",
+							"helpfulResource": {
+								"displayText": "Typically, wired ethernet has lower latency, so it is easier to provide the consistent transmission quality required for voice data transmission.  We recommend 100 KB bandwidth per call at the minimum.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							},
+							"improvementPlan": {
+								"displayText": "If agents are working from home, we recommend wired over wireless connections. It shouldn't take more than 150 milliseconds to hear the customer. If agents are working from the office, corporate Wi-Fi is acceptable as long as parameters are in the recommended range, and Real-time Transport Protocol (RTP) traffic is prioritized.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html#improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers-epics"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Amazon Connect Check Connectivity Tool tests 'Pass' from agent workstation.",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect Check Connectivity Tool can be used to evaluate regional latency from the users workstations.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							},
+							"improvementPlan": {
+								"displayText": "Use Amazon Connect Check Connectivity Tool to validate regional latency to agents and ensure they are within acceptable limits (i.e. less than 200ms one-way, 400-500ms round trip)",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Agent workstation is using a supported browser with default WebRTC settings.",
+							"helpfulResource": {
+								"displayText": "Agents use the Contact Control Panel (CCP) in Amazon Connect to communicate with contacts. The CCP is a website that they access using a supported web browser. Refer to the Amazon Connect Administrator Guide to verify your browser is currently supported.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure agent workstations are using a supported browser as indicated in the Amazon Connect Administrator Guide. WebRTC has to be enabled to make soft phone calls with CCP. We recommend that you keep the default settings for WebRTC-related features.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3 || choice4) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_06",
+					"title": "How do you optimize your agents' work environment and workstation settings to ensure voice quality?",
+					"description": "The voice path from the agent to the customer is affected by the agent's headset, browser, operating system, workstation hardware, and network. Headsets and workstations must comply with the requirements specified in the Amazon Connect Administrator Guide.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Agents are using a wired headset that's dedicated to contact center use.",
+							"helpfulResource": {
+								"displayText": "The agent's Contact Control Panel (CCP) is compatible with all types of headsets. For the best agent and customer experience, we recommend using a USB headset. Alternatively, you can redirect the contact to an external number, in E.164 format, using an agent's existing telephony.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-headset"
+							},
+							"improvementPlan": {
+								"displayText": "For best quality, use a wired headset that's dedicated to contact center use.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html#ccp-agent-headset"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "The agents work environment is optimized to reduce background noise.",
+							"helpfulResource": {
+								"displayText": "Avoid noisy environments. If this is not possible, optimize the environment with these soundproofing tips: Absorb noise by using sound-dissipating surfaces such as curtains, carpets, and soft furnishings. Block noise by putting barriers between desks. Consider an active noise cancellation (ANC) solution such as a white noise generator to help concentration and ensure privacy, or use noise-canceling headsets. Prevent echo on your calls. Big, empty spaces might create echo effects or amplify noises. Covering surfaces that can bounce sounds will help reduce echoes.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html#improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers-epics"
+							},
+							"improvementPlan": {
+								"displayText": "Adjust the agents work environment to reduce background noise by incorporating soundproofing strategies. Examples include sound-dissipating surfaces such as curtains, carpets, and soft furnishings, and active noise cancellation (ANC) solutions such as white noise generators.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html#improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers-epics"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "The workstation operating system is configured with voice quality in mind.",
+							"helpfulResource": {
+								"displayText": "The default settings for microphone level and boost usually work fine. If you find that outbound voice is quiet or the microphone is picking up too much, it might help to adjust these settings. Microphone settings can be found in your computer's system sound configuration (Sound, Input on MacOS, Microphone Properties in Windows). You can access advanced settings that might affect voice quality through system tools or third-party applications."
+							},
+							"improvementPlan": {
+								"displayText": "Review workstation operating system sound settings for sample rate, gain, bit depth, and open threshold to ensure configurations are consistent across agent workstations."
+							},
+							"additionalResources":[
+								{
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "Sound, Input on MacOS",
+											"url": "https://support.apple.com/en-gb/guide/mac-help/mchlp2567/12.0/mac/12.0"
+										},
+										{
+											"displayText": "Microphone Properties in Windows",
+											"url": "https://support.microsoft.com/en-us/windows/fix-microphone-problems-5f230348-106d-bfa4-1db5-336f35576011"
+										},
+										{
+											"displayText": "Verify the headset and browser sample rates",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/verify-sample-rate.html"
+										},
+                                        {
+											"displayText": "Using Amazon Connect in a VDI environment",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+										}
+									]
+								},
+								{
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "Sound, Input on MacOS",
+											"url": "https://support.apple.com/en-gb/guide/mac-help/mchlp2567/12.0/mac/12.0"
+										},
+										{
+											"displayText": "Microphone Properties in Windows",
+											"url": "https://support.microsoft.com/en-us/windows/fix-microphone-problems-5f230348-106d-bfa4-1db5-336f35576011"
+										},
+										{
+											"displayText": "Verify the headset and browser sample rates",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/verify-sample-rate.html"
+										},
+                                        {
+											"displayText": "Using Amazon Connect in a VDI environment",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+										}
+									]
+								}
+							]
+						},
+						{
+							"id": "choice4",
+							"title": "Agent workstations are monitored for call quality using internal tools or partner solutions.",
+							"helpfulResource": {
+								"displayText": "Audio quality delivered over WebRTC is typically high, however, changes in networking conditions can result in varying audio quality from factors such as increased latency or packet loss. By capturing and storing real-time call metrics, you can proactively monitor call quality.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Implement an agent workstation monitoring solution to capture WebRTC metrics related to packet loss and latency for monitoring, reporting, and troubleshooting purposes.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3 || choice4) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_07",
+					"title": "How do you know that you are ready to support your contact center workload?",
+					"description": "Evaluate the operational readiness of your workload, processes and procedures, and personnel to understand the operational risks related to your workload.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Ensure cross-functional support personnel capability.",
+							"helpfulResource": {
+								"displayText": "Support personnel should have access to all services in use to support your workload.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_ready_to_support_personnel_capability.html"
+							},
+							"improvementPlan": {
+								"displayText": "Have a mechanism to validate that you have the appropriate number of trained personnel to provide support for operational needs. Train personnel and adjust personnel capacity as necessary to maintain effective support.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_ready_to_support_personnel_capability.html"
+							},
+                            "additionalResources":[
+								{
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "AWS Contact Center Blogs",
+											"url": "https://aws.amazon.com/blogs/contact-center/"
+										},
+										{
+											"displayText": "Amazon Connect FAQs",
+											"url": "https://aws.amazon.com/connect/faqs/"
+										},
+                                        {
+											"displayText": "AWS Skill Builder",
+											"url": "https://explore.skillbuilder.aws/learn/signin"
+										}
+									]
+								},
+                                {
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "AWS Contact Center Blogs",
+											"url": "https://aws.amazon.com/blogs/contact-center/"
+										},
+										{
+											"displayText": "Amazon Connect FAQs",
+											"url": "https://aws.amazon.com/connect/faqs/"
+										},
+                                        {
+											"displayText": "AWS Skill Builder",
+											"url": "https://explore.skillbuilder.aws/learn/signin"
+										}
+									]
+								}
+							]
+						},
+						{
+							"id": "choice2",
+							"title": "Ensure consistent review of operational readiness.",
+							"helpfulResource": {
+								"displayText": "Use Operational Readiness Reviews (ORRs) to validate that you can operate your workload.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_ready_to_support_const_orr.html"
+							},
+							"improvementPlan": {
+								"displayText": "Run ORRs before a workload launches to general availability and then throughout the software development lifecycle. Reviews must include, at a minimum, the operational readiness of the teams and the workload, and security requirements. Implement review activities in code and trigger automated review in response to events where appropriate, to ensure consistency, speed of execution, and reduce errors caused by manual processes.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_ready_to_support_const_orr.html"
+							}
+						},
+                        {
+							"id": "choice3",
+							"title": "Ensure event logging is enabled and integrated to an appropriate log management system for collection and analysis.",
+							"helpfulResource": {
+								"displayText": "Monitoring is important for maintaining the reliability, availability, and performance of your contact center. You should collect monitoring data from all of the parts of your AWS solution so that you can more easily debug a multi-point failure if one occurs.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-and-monitoring.html"
+							},
+							"improvementPlan": {
+								"displayText": "Perform regular proactive reviews of metrics to identify trends and determine where appropriate responses are needed. See the following topics to learn how to use Amazon CloudWatch Logs and AWS CloudTrail to monitor Amazon Connect and describes the Amazon Connect metrics sent to CloudWatch."
+							},
+							"additionalResources":[
+								{
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "Monitoring your instance using CloudWatch.",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+										},
+										{
+											"displayText": "Logging Amazon Connect API calls with AWS CloudTrail",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+										}
+									]
+								},
+                                {
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "Monitoring your instance using CloudWatch.",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+										},
+										{
+											"displayText": "Logging Amazon Connect API calls with AWS CloudTrail",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+										}
+									]
+								}
+							]
+						},
+						{
+							"id": "choice4",
+							"title": "Use run-books to perform standard operational procedures.",
+							"helpfulResource": {
+								"displayText": "Run books are documented procedures to achieve specific outcomes.",
+								"url": "https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.runbook.en.html"
+							},
+							"improvementPlan": {
+								"displayText": "Enable consistent and prompt responses to well-understood events by documenting procedures in run books. Implement run books as code and trigger the execution of run books in response to events where appropriate, to ensure consistency, speed responses, and reduce errors caused by manual processes.",
+								"url": "https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.runbook.en.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Have a solution for real-time and historical monitoring and reporting for your application and the underlying system.",
+							"helpfulResource": {
+								"displayText": "Establish patterns of workload activity to identify anomalous behavior so that you can respond appropriately if required.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement a mechanism to periodically check the health of your system to answer questions like are customers able to dial the phone # or its giving busy signal, how is system utilization against the service limit etc.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Identify key performance indicators.",
+							"helpfulResource": {
+								"displayText": "Identify key performance indicators (KPIs) based on desired business outcomes (for example, order rate, customer retention rate, and profit versus operating expense) and customer outcomes (for example, customer satisfaction). By identifying key performance indicators you enable achieving business outcomes as the test of the health and success of your workload.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_workload_health_define_workload_kpis.html"
+							},
+							"improvementPlan": {
+								"displayText": "Identify key performance indicators: Identify key performance indicators (KPIs) based on desired business and customer outcomes. Evaluate KPIs to determine workload success.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_workload_health_define_workload_kpis.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Define workload metrics.",
+							"helpfulResource": {
+								"displayText": "Define workload metrics to measure the achievement of KPIs (for example, abandoned shopping carts, orders placed, cost, price, and allocated workload expense). Define workload metrics to measure the health of the workload (for example, interface response time, error rate, requests made, requests completed, and utilization).",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_workload_health_design_workload_metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Define workload metrics to measure the achievement of KPIs. Define workload metrics to measure the health of the workload and its individual components. Evaluate metrics to determine if the workload is achieving desired outcomes, and to understand the health of the workload.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_workload_health_design_workload_metrics.html#implementation-guidance"
+							},
+                            "additionalResources":[
+                                {
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "Publish custom metrics.",
+											"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html"
+										},
+										{
+											"displayText": "Searching and filtering log data.",
+											"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/MonitoringLogData.html"
+										},
+                                        {
+                                            "displayText": "Amazon CloudWatch metrics and dimensions reference.",
+                                            "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CW_Support_For_AWS.html"
+                                        }
+									]
+								}
+							]
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3 || choice4 || choice5 || choice6 || choice7) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_08",
+					"title": "How are you notified when your workload isn't operating as expected?",
+					"description": "Configure alerting, logging, and monitoring mechanisms to address needs in real time.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Alert when workload outcomes are at risk.",
+							"helpfulResource": {
+								"displayText": "Ensure current logs and metrics align with key metrics to identify system performance at any point in time. (i.e. Queue depth, API calls, concurrent calls, etc.)",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							},
+							"improvementPlan": {
+								"displayText": "Raise an alert when workload outcomes are at risk so that you can respond appropriately.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							},
+							"additionalResources":[
+								{
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "AWS Incident Detection and Response offers AWS Enterprise Support customers proactive monitoring and incident management for selected workloads.",
+											"url": "https://aws.amazon.com/premiumsupport/aws-incident-detection-response/"
+										}
+									]
+								}
+							]
+						},
+						{
+							"id": "choice2",
+							"title": "Alert when workload anomalies are detected.",
+							"helpfulResource": {
+								"displayText": "Have a system to identify issues and generate alert or notification to operation team to take corrective actions.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+							},
+							"improvementPlan": {
+								"displayText": "Raise an alert when workload anomalies are detected so that you can respond appropriately.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Validate the achievement of outcomes and the effectiveness of KPIs and metrics.",
+							"helpfulResource": {
+								"displayText": "Establish patterns of workload activity to identify anomalous behavior so that you can respond appropriately if required.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+							},
+							"improvementPlan": {
+								"displayText": "Create a business-level view of your workload operations to help you determine if you are satisfying needs and to identify areas that need improvement to reach business goals. Validate the effectiveness of KPIs and metrics and revise them if necessary.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_09",
+					"title": "How do you respond to anomalies?",
+					"description": "Prepare and validate procedures for responding to events to minimize their disruption to your contact center.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Use a process for event, incident, and problem management.",
+							"helpfulResource": {
+								"displayText": "When incidents and problems happen to your workload, you need processes to handle them. Processes must be documented in a central location and available to anyone involved in your workload. If you don't have a central wiki or document store, a version control repository can be used. You'll keep these plans up to date as your processes evolve.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_event_incident_problem_process.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement a process to handle events, incidents, and problems. These processes are documented and stored in a central location. They are updated as processes change.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_event_incident_problem_process.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Define support escalation paths.",
+							"helpfulResource": {
+								"displayText": "Identify owners for each action to ensure effective and prompt responses to operations events. Identify when a human decision is required before an action is taken. Work with decision makers to have that decision made in advance, and the action pre-approved, so that Mean-Time-to-Resolution (MTTR) is not extended waiting for a response.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_define_escalation_paths.html"
+							},
+							"improvementPlan": {
+								"displayText": "Define escalation paths in your run books and playbooks, including what triggers escalation, and procedures for escalation. Identify owners for each action to ensure effective and prompt responses to operations events.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_define_escalation_paths.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Automate responses to events.",
+							"helpfulResource": {
+								"displayText": "Automate the communication with your users (for example, with email or SMS) when the services they use are impacted, and again when the services return to normal operating conditions, to enable users to take appropriate action.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_auto_event_response.html"
+							},
+							"improvementPlan": {
+								"displayText": "Automate responses to events to reduce errors caused by manual processes, and to ensure prompt and consistent responses.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_auto_event_response.html#implementation-guidance"
+							},
+                            "additionalResources":[
+                                {
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "What is Amazon CloudWatch Events.",
+											"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/WhatIsCloudWatchEvents.html"
+										},
+										{
+											"displayText": "Creating a CloudWatch Events rule that triggers on an event.",
+											"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/Create-CloudWatch-Events-Rule.html"
+										},
+                                        {
+                                            "displayText": "Creating a CloudWatch Events rule that triggers on an AWS API call using AWS CloudTrail.",
+                                            "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/Create-CloudWatch-Events-CloudTrail-Rule.html"
+                                        }
+									]
+								}
+							]
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_10",
+					"title": "How do you respond to API resource constraints?",
+					"description": "Amazon Connect throttling quotas are by account, are not per instance. Ensure usage of service APIs follow best practices to respond appropriately to throttle events.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Implement a caching/queuing solution.",
+							"helpfulResource": {
+								"displayText": "To decrease API data query overhead and avoid throttling, you can use an intermediary database like Amazon DynamoDB to store API call results rather than calling the API from all endpoints interested in the API data.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#apis-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Rather than having separate AWS Lambda functions, each with their own polling requirements, you can have a single AWS Lambda function write all interesting data to Amazon DynamoDB. Rather than having each endpoint go to the API directly to retrieve the data, they point to DynamoDB.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#apis-bp"
+                            }   
+						},
+						{
+							"id": "choice2",
+							"title": "Ensure exponential back off and retry strategies are in place.",
+							"helpfulResource": {
+								"displayText": "You can run into situations where API throttling limits get exceeded. This can happen when the API calls fail and are retried repeatedly or made directly from multiple concurrent endpoints without a caching or queuing solution implemented. To avoid exceeding your service quotas and impacting downstream processes, you should consider using exponential back off and retry strategies within your AWS Lambda functions in combination with caching and queueing.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#apis-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using exponential back off and retry strategies within your AWS Lambda functions in combination with caching and queueing to assist in avoiding exceeding service quotas.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#apis-bp"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 && !choice2",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_11",
+					"title": "How do you plan for and manage configuration changes?",
+					"description": "Adopt approaches that provide fast feedback on quality and enable rapid recovery from changes that do not have desired outcomes. Using these practices mitigates the impact of issues introduced through the deployment of changes.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Backup contact flows.",
+							"helpfulResource": {
+								"displayText": "Export contact flows and store them in a source control repository, such as CodeCommit or GitHub.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							},
+							"improvementPlan": {
+								"displayText": "Export contact flows and store them in a source control repository, such as CodeCommit or GitHub.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Test and validate changes in testing environment with peer-review.",
+							"helpfulResource": {
+								"displayText": "Test changes and validate the results at all lifecycle stages to confirm new features and minimize the risk and impact of failed deployments.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_mit_deploy_risks_test_val_chg.html"
+							},
+							"improvementPlan": {
+								"displayText": "Test changes and validate the results at all lifecycle stages to confirm new features and minimize the risk and impact of failed deployments.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_mit_deploy_risks_test_val_chg.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Test using limited deployments.",
+							"helpfulResource": {
+								"displayText": "Test with limited deployments alongside existing systems to confirm desired outcomes prior to full scale deployment. For example, consider leveraging Percentage distribution blocks to implement canary or A/B testing strategies.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_mit_deploy_risks_test_limited_deploy.html"
+							},
+							"improvementPlan": {
+								"displayText": "Test with limited deployments alongside existing systems to confirm desired outcomes prior to full scale deployment. For example, consider leveraging Percentage distribution blocks to implement canary or A/B testing strategies.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_mit_deploy_risks_test_limited_deploy.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Plan for unsuccessful changes / rollbacks.",
+							"helpfulResource": {
+								"displayText": "Plan to revert to a known good state, or remediate in the production environment if a change does not have the desired outcome. This preparation reduces recovery time through faster responses.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that there is a clear, well-defined, and well-understood process to back out any changes to the previous state, specific to the change performed. For example, if you publish a new contact flow version, ensure that the change instructions include documentation on how to roll back to the previous contact flow version.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#changemanagement"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Deploy using parallel environments.",
+							"helpfulResource": {
+								"displayText": "Implement changes onto parallel environments, and then transition over to the new environment. Maintain the prior environment until there is confirmation of successful deployment. Doing so minimizes recovery time by enabling rollback to the previous environment.",
+                                "url": "https://aws.amazon.com/premiumsupport/knowledge-center/connect-migrate-instance-resources/"
+							},
+							"improvementPlan": {
+								"displayText": "You might want to create multiple contact center instances, for example, one as a Sandbox for development, another for QA, and a third for Production.",
+                                "url": "https://aws.amazon.com/premiumsupport/knowledge-center/connect-migrate-instance-resources/"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_12",
+					"title": "What processes are implemented to achieve change management?",
+					"description": "In case of large team setup, a well defined change management process is important for an stable, on-going quality delivery of the features between environments.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Leverage source control system.",
+							"helpfulResource": {
+								"displayText": "Source control (or version control) is the practice of tracking and managing changes to code. Source control management (SCM) systems provide a running history of code development and help to resolve conflicts when merging contributions from multiple sources.",
+                                "url": "https://aws.amazon.com/devops/source-control/"
+							},
+							"improvementPlan": {
+								"displayText": "Implement source control (or version control) to store code, binaries, and metadata in a redundant fashion with high availability. You will be able to collaborate with local and remote teams to edit, compare, sync, and revise your code.",
+                                "url": "https://aws.amazon.com/devops/source-control/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Automate build and deployment process.",
+							"helpfulResource": {
+								"displayText": "Continuous integration and continuous delivery are practices that automate the software release process, from build to deploy.",
+                                "url": "https://aws.amazon.com/devops/what-is-devops/"
+							},
+							"improvementPlan": {
+								"displayText": "Incorporate a DevOps model where engineers work across the entire application lifecycle, from development and test to deployment to operations, and develop a range of skills not limited to a single function.",
+                                "url": "https://aws.amazon.com/devops/what-is-devops/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Leverage Amazon Connect APIs for change management automation.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect provides a new user management API that lets you automate creation and deletion of user accounts, changes to user configurations, and updates to security settings, based on your business needs. You can also use the API to make changes to routing profiles assigned to users, which lets you easily move agents to busier queues during periods of high call volume.", 
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/Welcome.html"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage Amazon Connect user management APIs for creation and deletion of user accounts, changes to user configurations, and updates to security settings, based on your business needs.", 
+								"url": "https://docs.aws.amazon.com/connect/latest/APIReference/Welcome.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_13",
+					"title": "How do you ensure path to service for your contacts?",
+					"description": "Design your contact flows to ensure contacts are handled or receive relative information on why the contact cannot be routed.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Ensure consistent routing profiles coverage.",
+							"helpfulResource": {
+								"displayText": "Understanding how priority, delay, and overflow routing work within Amazon Connect is critical to maximizing agent productivity, reducing contact wait times, and ensuring the best quality of experience for your contacts.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routingprofiles"
+							},
+							"improvementPlan": {
+								"displayText": "Understanding how priority, delay, and overflow routing work within Amazon Connect is critical to maximizing agent productivity, reducing contact wait times, and ensuring the best quality of experience for your contacts.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routingprofiles"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Implement tiered routing.",
+							"helpfulResource": {
+								"displayText": "Contact routing in Amazon Connect is done through a collection of queues and routing configurations called a routing profile.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routing-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Within your contact flow, you can prompt for additional information and, if they need to reach an agent, you can use the contact flow configuration to place them in the appropriate queue.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#routing-bp"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Offer queued callbacks.",
+							"helpfulResource": {
+								"displayText": "You can create contact flows that provide the ability for customers to leave their phone number and get a callback from an agent rather than remaining on the contact and waiting for the next available agent.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-queued-callback.html"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate offering queued callbacks to give the customer the ability to leave a phone number and get called back rather than remaining on the phone.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-queued-callback.html"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice2 || choice3) && choice1)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_14",
+					"title": "How do you dynamically adapt to out-of-office conditions?",
+					"description": "Design your contact flows to ensure proper prompting for out-of-office conditions and other contact error events.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Use small, modular, and dynamic contact flows",
+							"helpfulResource": {
+								"displayText": "Use small, modular, and dynamic contact flows for a simple and reusable contact flow structure. This results in easier troubleshooting and faster deployment.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#pathtoservice-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Create modular contact flows. Make the flows as small as possible, and then combine modular flows into an end-to-end contact experience. This helps to keep your flows manageable, and you won't require numerous regression testing cycles.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#pathtoservice-bp"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Implement look ahead checks for operating hours and queue status.",
+							"helpfulResource": {
+								"displayText": "There are many planned and unplanned events that can impact the customer experience as they traverse through Amazon Connect contact flows. Standard look-ahead checks typically include holiday, business hours, and staffing checks."
+							},
+							"improvementPlan": {
+								"displayText": "Implement look ahead checks for operating hours, queue status, and staffing."
+							},
+							"additionalResources":[
+                                {
+									"type": "HELPFUL_RESOURCE",
+									"content": [
+										{
+											"displayText": "Check hours of operation",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-hours-of-operation.html"
+										},
+										{
+											"displayText": "Check queue status",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-queue-status.html"
+										},
+										{
+											"displayText": "Check staffing",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-staffing.html"
+										}
+									]
+								},
+								{
+									"type": "IMPROVEMENT_PLAN",
+									"content": [
+										{
+											"displayText": "Check hours of operation",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-hours-of-operation.html"
+										},
+										{
+											"displayText": "Check queue status",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-queue-status.html"
+										},
+										{
+											"displayText": "Check staffing",
+											"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-staffing.html"
+										}
+									]
+								}
+							]
+						},
+						{
+							"id": "choice3",
+							"title": "Implement emergency routing.",
+							"helpfulResource": {
+								"displayText": "Incorporating a mechanism to set an emergency flag in one (or many) contact flows can ensure business continuity and mitigate the impact of disaster situations from affecting your customers.",
+                                "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-emergency-outage-message-in-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Consider building an AWS API gateway with AWS Lambda function at the back end to set the Emergency flag to true/false securely in the database. Your supervisors can securely access that API through web to toggle disaster mode or dynamically toggle it in response to an external event.",
+                                "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-emergency-outage-message-in-amazon-connect/"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "((choice1 && choice2) && !choice3)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_15",
+					"title": "How do you evolve contact center operations?",
+					"description": "Dedicate time and resources for continuous incremental improvement to evolve the effectiveness and efficiency of your operations.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Have a process for continuous improvement",
+							"helpfulResource": {
+								"displayText": "Regularly evaluate and prioritize opportunities for improvement to focus efforts where they can provide the greatest benefits.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_process_cont_imp.html"
+							},
+							"improvementPlan": {
+								"displayText": "Regularly evaluate and prioritize opportunities for improvement to focus efforts where they can provide the greatest benefits.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_process_cont_imp.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Perform operations metrics reviews.",
+							"helpfulResource": {
+								"displayText": "Regularly perform retrospective analysis of operations metrics with cross-team participants from different areas of the business. Use these reviews to identify opportunities for improvement, potential courses of action, and to share lessons learned.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_metrics_review.html"
+							},
+							"improvementPlan": {
+								"displayText": "Regularly perform retrospective analysis of operations metrics with cross-team participants from different areas of the business. Use these reviews to identify opportunities for improvement, potential courses of action, and to share lessons learned.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_metrics_review.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Perform post-incident analysis.",
+							"helpfulResource": {
+								"displayText": "Review customer-impacting events, and identify the contributing factors and preventative actions. Use this information to develop mitigation's to limit or prevent recurrence. Develop procedures for prompt and effective responses. Communicate contributing factors and corrective actions as appropriate, tailored to target audiences.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_perform_rca_process.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review customer-impacting events, and identify the contributing factors and preventative actions. Use this information to develop mitigation's to limit or prevent recurrence. Develop procedures for prompt and effective responses. Communicate contributing factors and corrective actions as appropriate, tailored to target audiences.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_perform_rca_process.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Document and share lessons learned.",
+							"helpfulResource": {
+								"displayText": "Document and share lessons learned from the execution of operations activities so that you can use them internally and across teams.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_share_lessons_learned.html"
+							},
+							"improvementPlan": {
+								"displayText": "Document and share lessons learned: Have procedures to document the lessons learned from the execution of operations activities and retrospective analysis so that they can be used by other teams.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_share_lessons_learned.html#implementation-guidance"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(choice1 || choice2 || choice3 || choice4)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "conops_16",
+					"title": "How do you improve the customer experience?",
+					"description": "Implement a virtuous cycle to gather critical feedback from customers on how to improve contact center efficiency.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Implement feedback loops.",
+							"helpfulResource": {
+								"displayText": "Include feedback loops in your procedures and workloads to help you identify issues and areas that need improvement. Examples include post-call surveys and agent feedback via Enhanced CCP mechanisms.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_feedback_loops.html"
+							},
+							"improvementPlan": {
+								"displayText": "Include feedback loops in your procedures and workloads to help you identify issues and areas that need improvement. Examples include post-call surveys and agent feedback via Enhanced CCP mechanisms.",
+                                "url": "https://aws.amazon.com/machine-learning/ml-use-cases/contact-center-intelligence/post-call-analytics-pca/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Validate insights.",
+							"helpfulResource": {
+								"displayText": "Review your analysis results and responses with cross-functional teams and business owners. Use these reviews to establish common understanding, identify additional impacts, and determine courses of action. Adjust responses as appropriate.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_validate_insights.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review your analysis results and responses with cross-functional teams and business owners. Use these reviews to establish common understanding, identify additional impacts, and determine courses of action. Adjust responses as appropriate.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_validate_insights.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Allocate time to make improvements.",
+							"helpfulResource": {
+								"displayText": "Dedicate time and resources within your processes to make continuous incremental improvements possible.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_allocate_time_for_imp.html"
+							},
+							"improvementPlan": {
+								"displayText": "Dedicate time and resources within your processes to make continuous incremental improvements possible.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_evolve_ops_allocate_time_for_imp.html#implementation-guidance"
+							}
+						},
+                        {
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(choice1 || choice2 || choice3)",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		},
+        {
+            "id": "SEC",
+            "name": "Security",
+            "questions": [
+              {
+                "id": "SEC01",
+                "title": "How do you control access to your Amazon Connect instance?",
+                "description": "Amazon Connect provides a number of security features to consider as you develop and implement your own security policies.",
+                "choices": [
+                  {
+                    "id": "choice1",
+                    "title": "Implement least privileged access",
+                    "helpfulResource": {
+                      "displayText": "When you set permissions with IAM policies, grant only the permissions required to perform a task. You do this by defining the actions that can be taken on specific resources under specific conditions, also known as least-privilege permissions. ",
+                      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#grant-least-privilege "
+                    },
+                    "improvementPlan": {
+                      "displayText": "Ensure that all IAM permissions are as restrictive as possible. Allow access to only those resources absolutely required for the user's role. For example, don't give administrators who add Amazon Lex bots permissions to delete the instance or update telephony settings.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam-amazon-connect-permissions.html"
+                    }
+                  },
+                  {
+                    "id": "choice2",
+                    "title": "Multi-Factor Authentication",
+                    "helpfulResource": {
+                      "displayText": "When using IAM to manage access to Amazon Connect, you should consider implementing multi-factor authentication (MFA) to increase the security of your account.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam.html#security_iam_authentication"
+                    },
+                    "improvementPlan": {
+                      "displayText": "For extra security, we recommend that you require multi-factor authentication (MFA) for all IAM users in your account. MFA can be set up through AWS IAM or your SAML 2.0 identity provider, or Radius server, if that's more applicable for your use case.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-iam.html#security_iam_authentication"
+                    }
+                  },
+                  {
+                    "id": "choice3",
+                    "title": "Identity Federation / single sign-on (SSO)",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Enable single sign-on (SSO) to Amazon Connect by using identity federation. Federation is a recommended practice to allow for employee lifecycle events to be reflected in Amazon Connect when they are made in the source identity provider.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
+                    }
+                  },
+                  {
+                    "id": "choice4",
+                    "title": "Security Profiles",
+                    "helpfulResource": {
+                      "displayText": "A security profile is a group of permissions that map to a common role in a contact center. For example, the Agent security profile contains permissions needed to access the Contact Control Panel (CCP). Security profiles help you manage who can access the Amazon Connect dashboard and Contact Control Panel (CCP), and who can perform specific tasks.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Ensure that all security profile permissions are as restrictive as possible. For example, don't give agents the ability to listen to recordings or edit reports if this is not a part of their role. Limit who has Users - Edit or Create permissions. People with these permissions pose a risk to your contact center because they can reset passwords of other users, including the administrator. They can also grant other users permission to the Admin security profile. People assigned to the Admin security profile have full access to your contact center.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-best-practices.html"
+                    }
+                  },
+                  {
+                    "id": "choice9_no",
+                    "title": "None of these",
+                    "helpfulResource": {
+                      "displayText": "Choose this if your workload does not follow these best practices."
+                    }
+                  }
+                ],
+                "riskRules": [
+                  {
+                    "condition": "choice1 && choice2 && choice3 && choice4",
+                    "risk": "NO_RISK"
+                  },
+                  {
+                    "condition": "((choice1 || choice3 || choice4) && choice2)",
+                    "risk": "MEDIUM_RISK"
+                  },
+                  {
+                    "condition": "default",
+                    "risk": "HIGH_RISK"
+                  }
+                ]
+              },
+              {
+                "id": "SEC02",
+                "title": "How do your Contact flows obtain permissions to integrated applications?",
+                "description": "Steps within your Contact flows may need credentials in order to access information in external applications and systems.",
+                "choices": [
+                  {
+                    "id": "choice1",
+                    "title": "Leverage pre-built integrations",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect has several pre-built integrations to popular Solutions as a Service (SaaS) offerings such as Salesforce, Zendesk, and Shopify. These integrations are built on top of Amazon AppFlow and Amazon EventBridge to enable easy access to your data that's stored outside of Amazon Connect.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/crm.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use pre-built integrations to generate tasks based on events in external applications, or create customer profiles based on data in external applications.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/crm.html"
+                    }
+                  },
+                  {
+                    "id": "choice2",
+                    "title": "IAM Roles",
+                    "helpfulResource": {
+                      "displayText": "An IAM role is an entity that has its own set of permissions, but that isn't a user or group. Roles also don't have their own permanent set of credentials and are automatically rotated.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/port-phone-number.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use IAM Roles to provide credentials to access other AWS services in a secure way.",
+                      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.htm"
+                    }
+                  },
+                  {
+                    "id": "choice3",
+                    "title": "Externally stored API keys",
+                    "helpfulResource": {
+                      "displayText": "Credentials such as API keys should be stored outside of your flow application code, where they can be retrieved programmatically.",
+                      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use AWS Secrets Manager or an existing third-party solution to replace hardcoded credentials in your code with an API call to Secrets Manager to retrieve the secret programmatically.",
+                      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html"
+                    }
+                  },
+                  {
+                    "id": "choice9_no",
+                    "title": "None of these",
+                    "helpfulResource": {
+                      "displayText": "Choose this if your workload does not follow these best practices."
+                    }
+                  }
+                ],
+                "riskRules": [
+                  {
+                    "condition": "choice1 && choice2 && choice2",
+                    "risk": "NO_RISK"
+                  },
+                  {
+                    "condition": "choice2 && choice3 && !choice1",
+                    "risk": "MEDIUM_RISK"
+                  },
+                  {
+                    "condition": "default",
+                    "risk": "HIGH_RISK"
+                  }
+                ]
+              },
+              {
+                "id": "SEC03",
+                "title": "What detective controls do you have in place for application logs and monitoring?",
+                "description": "Logging and monitoring are important for the availability, reliability and, performance of contact center. The AWS cloud provides flexible infrastructure and tools to support both sophisticated in cooperation with offerings and self-managed centralized-logging solutions.",
+                "choices": [
+                  {
+                    "id": "choice1",
+                    "title": "Amazon CloudWatch alerts",
+                    "helpfulResource": {
+                      "displayText": "You should log relevant information from Amazon Connect Flows to Amazon CloudWatch and build alerts and notifications based on the same.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-flow-log-alerts.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "You should log relevant information from Amazon Connect Flows to Amazon CloudWatch and build alerts and notifications based on the same.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-flow-log-alerts.html"
+                    }
+                  },
+                  {
+                    "id": "choice2",
+                    "title": "Amazon CloudTrail logs",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect public APIs log to AWS CloudTrail. You should review and automate actions set up based on CloudTrail logs.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Amazon Connect public APIs log to AWS CloudTrail. You should review and automate actions set up based on CloudTrail logs.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+                    }
+                  },
+                  {
+                    "id": "choice3",
+                    "title": "Fraud detection and prevention for incoming contacts",
+                    "helpfulResource": {
+                      "displayText": "Fraud detection and prevention for incoming contacts can be implemented by customizing Amazon Connect Flows per the customer requirements. ",
+                      "url": "https://aws.amazon.com/blogs/apn/intelligent-call-routing-using-amazon-fraud-detector-and-amazon-connect/"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Ensure Contact Flows are configured to check incoming contacts against previous contact activity to detect and identify potentially impactful behavior, such as fraudulent online activity and spam calls.",
+                      "url": "https://aws.amazon.com/blogs/apn/intelligent-call-routing-using-amazon-fraud-detector-and-amazon-connect/"
+                    }
+                  },
+                  {
+                    "id": "choice4",
+                    "title": "Amazon Connect Voice ID",
+                    "helpfulResource": {
+                      "displayText": "Machine learning powered real-time caller authentication and fraud risk detection to make voice interactions faster and more secure.",
+                      "url": "https://aws.amazon.com/connect/voice-id/"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Voice ID analyzes incoming audio and compares them with recordings of known fraudulent actors in your contact center's custom watch-list. During an active call, Voice ID will automatically flag suspicious callers to the agent with a risk threshold (e.g. 'High Risk or 'Low Risk,') — resulting fewer fraudulent attacks on your contact center. Add Voice ID to your IVR to deliver secure customer access to self-service requests such as checking refund status or changing contact information. This optimizes agent time and lowers contact center costs.",
+                      "url": "https://aws.amazon.com/connect/voice-id/"
+                    }
+                  },
+                  {
+                    "id": "choice9_no",
+                    "title": "None of these",
+                    "helpfulResource": {
+                      "displayText": "Choose this if your workload does not follow these best practices."
+                    }
+                  }
+                ],
+                "riskRules": [
+                  {
+                    "condition": "choice1 && choice2 && choice3 && choice4",
+                    "risk": "NO_RISK"
+                  },
+                  {
+                    "condition": "!choice4 && choice1 && choice2 && choice3",
+                    "risk": "MEDIUM_RISK"
+                  },
+                  {
+                    "condition": "default",
+                    "risk": "HIGH_RISK"
+                  }
+                ]
+              },
+              {
+                "id": "SEC04",
+                "title": "What security controls do you have in place for Infrastructure protection?",
+                "description": "Although there is no infrastructure to manage in Amazon Connect, there could be scenarios where your Amazon Connect instance needs to interact with other components or applications deployed in infrastructure residing on-premises.",
+                "choices": [
+                  {
+                    "id": "choice1",
+                    "title": "Endpoint (workstation) threat protection, detection & response",
+                    "helpfulResource": {
+                      "displayText": "Agent workstations should have enterprise endpoint security protection installed to prevent, detect, and respond to security threats.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-bp.html#infrastructureprotection"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Ensure Agent and Supervisor workstations are protected with enterprise security software with up-to-date security patches for both software and hardware.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/security-bp.html#infrastructureprotection"
+                    }
+                  },
+                  {
+                    "id": "choice2",
+                    "title": "Network boundary classification and protection",
+                    "helpfulResource": {
+                      "displayText": "As a managed service, Amazon Connect is protected by the AWS global network security procedures that are described on the Best Practices for Security, Identity, and Compliance page.",
+                      "url": "https://aws.amazon.com/architecture/security-identity-compliance/"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Review AWS Best Practices for Infrastructure Protection and AWS Security Reference Architecture.",
+                      "url": "https://aws.amazon.com/architecture/security-identity-compliance/?cards-all.sort-by=item.additionalFields.sortDate&cards-all.sort-order=desc&awsf.content-type=*all&awsf.methodology=*all"
+                    }
+                  },
+                  {
+                    "id": "choice3",
+                    "title": "Lambda functions connected to private subnets in a VPC",
+                    "helpfulResource": {
+                      "displayText": "Depending on the use case you can configure a Lambda function to connect to private subnets in a virtual private cloud (VPC) in your account.",
+                      "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use Amazon Virtual Private Cloud (VPC) to create a private network for resources such as databases, cache instances, or internal services. Connect your function to the VPC to access private resources during execution.",
+                      "url": "https://docs.aws.amazon.com/lambda/latest/dg/configuration-vpc.html"
+                    }
+                  },
+                  {
+                    "id": "choice4",
+                    "title": "Encrypting Contact Flow Inputs",
+                    "helpfulResource": {
+                      "displayText": "Mitigate insider threat and compliance risk associated with workloads that handle sensitive information, by creating a secure IVR solution that enables you to bypass agent access to sensitive information.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encrypt-data.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "By encrypting contact input in your flows, you’re able to capture information securely without exposing it to your agents, their workstations, or their operating environments.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encrypt-data.html"
+                    }
+                  },
+                  {
+                    "id": "choice5",
+                    "title": "Use domain allowlists for Amazon Connect network traffic",
+                    "helpfulResource": {
+                      "displayText": "You can establish persistent outbound send/receive connections through your web browser. As a result, you don't need to open a client-side port to listen for inbound traffic.. Instead, allowlist the Amazon Connect network endpoints to perform contact center functions from the agent Contact Control Panel.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Using domain allowlists allow updates to IP addresses to occur without requiring intervention. If this is not possible, you can alternatively monitor IP addresses used by Amazon Connect and update the allow list.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+                    }
+                  },
+                  {
+                    "id": "choice6",
+                    "title": "Send only the data necessary to external systems with sensitive data",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect handles variety of data related to contact centers. This includes phone call media, call recordings, chat transcripts, contact metadata as well as flows, routing profiles and queues. Ensure you are only sharing necessary data with external systems.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-handled-by-connect.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "As an example, if you have only one business unit using your call recording analytics solution, you can set an AWS Lambda trigger in your S3 bucket to process contact records, check for the business unit’s specific queues in the contact record data, and if it is a queue that belongs to the unit, send only that call recording to the external solution. With this approach, you only send the data necessary and avoid the cost and overhead associated with processing unnecessary recordings.",
+                      "url": "http://aws.amazon.com/quickstart/connect/data-streaming/"
+                    }
+                  },
+                  {
+                    "id": "choice9_no",
+                    "title": "None of these",
+                    "helpfulResource": {
+                      "displayText": "Choose this if your workload does not follow these best practices."
+                    }
+                  }
+                ],
+                "riskRules": [
+                  {
+                    "condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6",
+                    "risk": "NO_RISK"
+                  },
+                  {
+                    "condition": "((choice5 || choice6) && choice4)",
+                    "risk": "MEDIUM_RISK"
+                  },
+                  {
+                    "condition": "default",
+                    "risk": "HIGH_RISK"
+                  }
+                ]
+              },
+              {
+                "id": "SEC05",
+                "title": "What best practices do you follow for PCI compliance?",
+                "description": "Amazon Connect provides a number of options for operating in secure PCI compliant environments.",
+                "choices": [
+                  {
+                    "id": "choice1",
+                    "title": "Conduct compliance eligibility audits for all services used in your contact center.",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect handles variety of data related to contact centers. This includes phone call media, call recordings, chat transcripts, contact metadata as well as flows, routing profiles and queues. Ensure you are performing audits on these systems to ensure compliance.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-handled-by-connect.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Work with a PCI qualified professional to ensure continuous compliance of your solutions.",
+                      "url": "https://www.pcisecuritystandards.org/"
+                    }
+                  },
+                  {
+                    "id": "choice2",
+                    "title": "Payment card information (PCI) should be collected via encrypted DTMF.",
+                    "helpfulResource": {
+                      "displayText": "Amazon Connect allows you to gather and store customer input to be used as part of the customer experience. The store customer input contact flow block allows you to encrypt stored date. This way, you can encrypt sensitive input such as credit card numbers.",
+                      "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-ivr-solution-with-amazon-connect/"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use encryption in the *Store customer input* block for sensitive DTMF information.",
+                      "url": "https://aws.amazon.com/blogs/contact-center/creating-a-secure-ivr-solution-with-amazon-connect/"
+                    }
+                  },
+                  {
+                    "id": "choice3",
+                    "title": "Use encryption in transit and at rest for any downstream integration points.",
+                    "helpfulResource": {
+                      "displayText": "All data exchanged with Amazon Connect is protected in transit between the user’s web browser and Amazon Connect using industry-standard TLS encryption. External data is additionally encrypted while being processed by AWS KMS. When Amazon Connect integrates with AWS services, such as AWS Lambda, Amazon Kinesis, or Amazon Polly, data is always encrypted in transit using TLS. When event data is forwarded from external applications to Amazon Connect it is always encrypted in transit using TLS.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encryption-at-rest.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "AWS Key Management Service (KMS) encrypts Amazon S3 contents at the object level, which covers recordings, logs, and saved reports by default for Amazon S3. Make sure encryption in transit and at rest rules apply downstream or to third party apps.",
+                      "url": "https://docs.aws.amazon.com/connect/latest/adminguide/encryption-at-rest.html"
+                    }
+                  },
+                  {
+                    "id": "choice4",
+                    "title": "Enable multi-factor authentication (MFA)",
+                    "helpfulResource": {
+                      "displayText": "As Amazon Connect is a public endpoint, ensure MFA is used when accessing PCI data.",
+                      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html"
+                    },
+                    "improvementPlan": {
+                      "displayText": "For extra security, we recommend that you require multi-factor authentication (MFA) for all IAM users in your account. MFA can be set up through AWS IAM or your SAML 2.0 identity provider, or Radius server, if that's more applicable for your use case. After MFA is set up, a third text box becomes visible on the Amazon Connect login page to provide the second factor.",
+                      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html"
+                    }
+                  },
+                  {
+                    "id": "choice5",
+                    "title": "Discovery of sensitive data",
+                    "helpfulResource": {
+                      "displayText": "Continuous discovery of stored data to ensure compliance best practices are functioning as expected.",
+                      "url": "https://aws.amazon.com/macie/"
+                    },
+                    "improvementPlan": {
+                      "displayText": "Use advanced managed security services such as Amazon Macie. Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.",
+                      "url": "https://aws.amazon.com/macie/"
+                    }
+                  },
+                  {
+                    "id": "choice9_no",
+                    "title": "None of these",
+                    "helpfulResource": {
+                      "displayText": "Choose this if your workload does not follow these best practices."
+                    }
+                  }
+                ],
+                "riskRules": [
+                  {
+                    "condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+                    "risk": "NO_RISK"
+                  },
+                  {
+                    "condition": "choice1 && choice2 && choice3 && !choice4",
+                    "risk": "MEDIUM_RISK"
+                  },
+                  {
+                    "condition": "default",
+                    "risk": "HIGH_RISK"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+			"id": "REL",
+			"name": "Reliability",
+			"questions": [
+				{
+					"id": "REL01",
+					"title": "What does your business continuity plan involve?",
+					"description": "Defining a business continuity plan that includes redundant components is an important part of your DR strategy. Many organizations have a business continuity plan and the contact center is one component of the overall plan.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Regulatory requirement for multi-region disaster recovery strategy are being adhered to.",
+							"helpfulResource": {
+								"displayText": "Organizations can have certain regulatory requirements which they must adhere to. One example of this is DR sites needing to be a certain physical distance from each other or 'Multi-Regional'."
+							},
+							"improvementPlan": {
+								"displayText": "Amazon Connect operates across multiple availability zones (AZs) in any given region in an active-active-active fashion thereby increasing the resiliency of the solution. AWS recommends customers against considering a multi-region DR strategy since by design and architecture, the service operates in a redundant fashion. Additionally, there is built-in carrier redundancy for Amazon Connect US toll-free numbers. If your organization has a regulatory requirement, AWS advises you to work with your Connect specialist SA for further discovery and solution designing that will work for your specific use case.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-connect-global-resiliency.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Owned Toll-Free Numbers are using two or more carriers to handle calls.",
+							"helpfulResource": {
+								"displayText": "Amazon Connect US toll-free numbers benefit from the resilient architecture where two or more carriers are used to handle your calls.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/disaster-recovery-resiliency.html#telephony-recovery-resiliency"
+							},							
+							"improvementPlan": {
+								"displayText": "AWS recommends porting your vanity numbers to Amazon Connect to take advantage of this resiliency. However, if you have business constraints such as existing carrier relationships, you may forward calls to Amazon Connect DIDs for processing. Please note that inherently, DIDs do not have carrier level redundancy.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/disaster-recovery-resiliency.html#telephony-recovery-resiliency"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL02",
+					"title": "How are you testing your disaster recovery strategy and measuring the strategy's effectiveness?",
+					"description": "Testing your DR strategy is just as important as having a strategy in place. You can measure the effectiveness of your DR strategy using two key metrics: RTO (Recovery Time Objective) and RPO (Recovery Point Objective).",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Disaster recovery approach is tested on a regular basis",
+							"helpfulResource": {
+                                "displayText": "Test to validate that your Amazon Connect design meets functional and non-functional requirements, because bugs or performance bottlenecks can impact the reliability of contact center connectivity. Test the resiliency of your implementation to help you find latent issues that only surface in production. Exercise these tests regularly.",
+								"url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/test-reliability.html"
+                            },
+							"improvementPlan": {
+								"displayText": "Refer to architectural guidance section below to understand Amazon Connect platform and telephony solution design for built in reliability and resiliency as you evaluate your disaster recovery approach.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/architecture-guidance.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Failover process is documented",
+							"helpfulResource": {
+                                "displayText": "Document and publish run books to cover all the steps necessary to failover your Connect instance, including any 3rd-party or other AWS service dependencies. Your recovery actions will need to deploy any missing resources to ensure your failover Region is available to accept and process contacts as expected."
+                            },
+                            "improvementPlan": {
+								"displayText": "Clearly document the failover process and the steps to follow along with dependencies and pre-requisites as well as owners identified. Have a centralize place (e.g. sharepoint etc.) to house the process artifacts.",
+                                "url": "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_for_recovery_disaster_recovery.html#implementation-guidance"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "RPO and RTO have been established with internal stakeholders",
+							"helpfulResource": {
+                                "displayText": "Ensure that all the participants and key stakeholders have access the defined RTO and RPO for disaster recovery.",
+                                "url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+                            },
+							"improvementPlan": {
+								"displayText": "Ensure that all the participants and key stakeholders have access the defined RTO and RPO for disaster recovery.",
+								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Reliability testing methodologies are used to test the platform (Load Testing, Penetration Testing, etc)",
+							"helpfulResource": {
+                                "displayText": "Please refer to the documentation for Amazon Connect testing policy.",
+                                "url": "https://aws.amazon.com/connect/testing/"
+                            },
+                            "improvementPlan": {
+								"displayText": "Please refer to the documentation for Amazon Connect testing policy.",
+								"url": "https://aws.amazon.com/connect/testing/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL03",
+					"title": "How are your Agent Workstations configured to support reliability?",
+					"description": "While Amazon Connect Contact Control Panel (CCP) is browser based and uses WebRTC, it is important to understand any software and processes that can consume bandwidth or block traffic so those risks can be mitigated.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Agents are physically located close to instance region",
+							"helpfulResource": {
+								"displayText": "While Connect can deliver media and signaling over the internet, consideration must be put towards physical location. The further agents are located from a Connect region, the higher the chance of Latency.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							},
+							"improvementPlan": {
+								"displayText": "Test your agents' connection to the Amazon Connect service by utilizing the Amazon Connect Endpoint Test Utility.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Workstations meet the minimum workstation requirements",
+							"helpfulResource": {
+								"displayText": "Verify that your agents' workstations and headsets meet the minimum requirements for Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							},
+							"improvementPlan": {
+								"displayText": "Periodically audit agent workstations to ensure they meet minimum requirements. Upgrade agent workstations as necessary.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Workstations don't actively run monitoring/diagnostics software",
+							"helpfulResource": {
+                                "displayText": "Monitoring and diagnostic software is any software that might modify the performance or network connectivity to the Amazon Connect service, like packet monitoring."
+                            },
+                            "improvementPlan": {
+								"displayText": "Remove any monitoring/diagnostic software from workstations that could interfere with WebRTC traffic."
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Workstation running supported browser(s)",
+							"helpfulResource": {
+								"displayText": "The Amazon Connect Admin Dashboard and CCP are only supported on the latest 3 versions of Mozilla Firefox and/or Google Chrome.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure your agents running the latest version of a supported browser for Amazon Connect.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/browsers.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Agents use a wired USB headset",
+							"helpfulResource": {
+								"displayText": "To reduce the risk of agent-end audio quality issues, we recommend agents utilize a direct-wire USB headset certified for use with VoIP communications.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							},
+							"improvementPlan": {
+								"displayText": "Provide agents with wired USB headsets for use with Connect",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-agent-hardware.html"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Workstations using wired Ethernet for internet connectivity",
+                            "helpfulResource": {
+							    "displayText": "Workstations using wired internet are typically more reliable than connections over Wifi or cellular devices."
+                            },
+                            "improvementPlan": {
+								"displayText": "Configure agent workstations with wired ethernet connections for internet connectivity."
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Workstation Antivirus software configured to allow ports used by Connect",
+							"helpfulResource": {
+								"displayText": "Antivirus software can monitor packets, protocols and websites - and block these. Please review our networking guide ensure that the antivirus software is not blocking any domains, IP addresses, Ports or protocols.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							},
+							"improvementPlan": {
+                                "displayText": "Ensure agent workstation security software is configured to allow both signaling and WebRTC real-time communication between the workstation and Amazon Connect.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Workstation VPN Software configured to allow all ports used by Connect",
+							"helpfulResource": {
+								"displayText": "VPN software can restrict traffic on ports required by Connect to run.  Review the networking guide and ensure no ports / URL's and IP Ranges are blocked locally.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							},
+							"improvementPlan": {
+								"displayText": "Ensure VPN software allows traffic on ports required by Connect to run.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+							"id": "choice9",
+							"title": "Virtual workspaces best practices and considerations are being followed",
+							"helpfulResource": {
+								"displayText": "Virtual Desktop Infrastructure (VDI) environments add another layer of complexity to your solution that warrants separate POC efforts and performance testing to optimize. The Amazon Connect Contact Control Panel (CCP) can operate in thick, thin, and zero client VDI environments as any other WebRTC based browser application does, and the configuration/support/optimization is best handled by your VDI support team.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+							},
+							"improvementPlan": {
+								"displayText": "Configure your VDI environment follow best practices for Connect",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/using-ccp-vdi.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7 && choice8 && choice9",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6 || !choice7 || !choice8 || !choice9) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL04",
+					"title": "What considerations are taken for agent network connectivity to Amazon Connect?",
+					"description": "Reliability of passing data between Amazon Connect and and an agent and/or administrator endpoint is important to ensure all information is correctly passed between endpoints. Monitoring the packet lifecycle (from Amazon Connect to the endpoint and vice versa) ensures no loss of data occurs in any step of the process.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Pathway for signaling and media packets from AWS is defined",
+							"helpfulResource": {
+                                "displayText": "Can your organization define the internet path from your agents workstation to the Amazon Connect service? This should encompass firewalls, VPN's, and proxies."
+                            },
+                            "improvementPlan": {
+								"displayText": "Having a defined pathway gives a path to follow to monitor and fix issues that may arise in network connectivity.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+                            }
+						},
+						{
+							"id": "choice2",
+							"title": "VPN allow traffic to Amazon Connect global resources",
+							"helpfulResource": {
+                                "displayText": "Ensure that the VPN service does not block any URL's, Ports and IP's mentioned in the network setup guide. Steps to validate: Trace the route from an agent workstation to an Amazon Connect domain from our networking guide. Examine the path displayed - it should show if there are any VPN's in the path and any associated RTT delays.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+                            },
+                            "improvementPlan": {
+								"displayText": "Ensure that the VPN service does not block any URL's, Ports and IP's mentioned in the network setup guide. Steps to validate: Trace the route from an agent workstation to an Amazon Connect domain from our networking guide. Examine the path displayed - it should show if there are any VPN's in the path and any associated RTT delays.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#remote-agents"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "DNS Filtering Clients deployed",
+							"helpfulResource": {
+                                "displayText": "DNS filtering clients can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#allow-dns-resolution"
+                            },
+                            "improvementPlan": {
+								"displayText": "Ensure that AWS domains are allow-listed in DNS filtering solutions, as this can impact the agent and supervisor experience.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#allow-dns-resolution"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Web traffic monitoring software configured to support WebRTC",
+							"helpfulResource": {
+                                "displayText": "Endpoint monitoring software can interfere with the connectivity to the Amazon Connect service. Ensure if they are being used, AWS domains are allow-listed.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+                            },
+                            "improvementPlan": {
+								"displayText": "Desktop and network related software which monitor web traffic can interfere with connection quality and latency to Amazon Connect. Amazon Connect URL's must be allow-listed with these services to ensure optimum audio quality and latency.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Bandwidth and latency monitoring software deployed",
+							"helpfulResource": {
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues.",
+								"url": "https://tools.connect.aws/"
+                            },
+                            "improvementPlan": {
+								"displayText": "Bandwidth and latency monitoring software ensures logging of connection quality to Amazon Connect, making it easier to diagnose agent and supervisor network issues.",
+								"url": "https://tools.connect.aws/"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Call quality monitoring best practices are being followed",
+							"helpfulResource": {
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Monitoring call quality ensures a reliable experience for the end customer, making it easier to diagnose call quality issues.",
+								"url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/patterns/improve-call-quality-on-agent-workstations-in-amazon-connect-contact-centers.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice5 && choice6",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL05",
+					"title": "How are calls delivered to end users (agents) and the Amazon Connect Service?",
+					"description": "Monitoring call delivery from an agent to Amazon Connect and vice versa ensures reliability in the call experience for both your agents and customers.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Phone numbers have been ported to AWS",
+							"helpfulResource": {
+								"displayText": "If you want to keep a phone number you already have, you can port the phone number and use it with Amazon Connect. After a phone number is ported to Amazon Connect, it appears in the list of available phone numbers for you to assign to flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-porting.html"
+							},
+							"improvementPlan": {
+								"displayText": "Porting your phone number to Amazon Connect allows you to keep using your phone number for your Connect workloads.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-porting.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Calls are originating from service endpoints supported by Amazon Connect",
+							"helpfulResource": {
+								"displayText": "Identifying regions and endpoints that customers are calling from is important to ensuring reliability of your telephony traffic, as unsupported regions can cause a hand-off, resulting in loss of quality or ANI propagation. Review region requirements for phone numbers in Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/phone-number-requirements.html"
+							},
+							"improvementPlan": {
+								"displayText": "Be aware of Country or region specific telecom regulations applicable for ordering and porting phone numbers.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/phone-number-requirements.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Calls are routed to an instance that are in close geographic proximity to caller",
+							"helpfulResource": {
+								"displayText": "Ensure your instance is geographically located to the majority of your callers. This will reduce latency and improve the end user experience. Leverage the Check Connectivity tool for latency testing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage the Check Connectivity tool for latency testing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/check-connectivity-tool.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL06",
+					"title": "What areas of your Amazon Connect Instance(s) and agent endpoints are monitored for reliability?",
+					"description": "Amazon Connect Contact Centers can interact with other AWS services, including Amazon Lex and AWS Lambda. Monitoring all parts of the contact center is important to ensure reliability of the service, and identify issues if they arise. This includes metrics, logging, and alarms for Amazon Connect and downstream systems.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Monitor Amazon Connect Instances and Service Quotas",
+							"helpfulResource": {
+								"displayText": "Monitoring of your Amazon Connect instance can be performed by monitoring CloudWatch Metrics. These metrics include concurrent calls/chats, quota breaches and packet loss rate.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+                            },
+                            "improvementPlan": {
+                                "displayText": "Monitor your instance using CloudWatch.",
+                                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/monitoring-cloudwatch.html"
+                            }
+						},
+						{
+							"id": "choice2",
+							"title": "Monitor Contact Flows",
+							"helpfulResource": {
+								"displayText": "Enabling log streaming for Contact Flows can allow organizations to diagnose contacts who might have had a non-optimal experience. The \"Set logging behavior\" block allows us to view the path a user took in our Contact Flow, allowing easier debugging of potential issues.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Track events as customers interact with contact flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-flow-logs.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Monitor Amazon Lex bots",
+							"helpfulResource": {
+								"displayText": "Amazon Lex conversation logs allow visibility into text input, transcripts into audio input, and associated metadata such as confidence values for our intents. Delivery metrics are provided via CloudWatch to monitor writing of these logs to their defined logging destinations.",
+								"url": "https://docs.aws.amazon.com/lex/latest/dg/conversation-logs.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable Conversation Logs in Amazon Lex.",
+								"url": "https://docs.aws.amazon.com/lex/latest/dg/conversation-logs.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Monitor AWS Lambda functions",
+							"helpfulResource": {
+								"displayText": "Monitoring success rate of Lambda integrations is important to prevent users from reaching error paths in Amazon Connect Contact flows. Logging and metrics from Lambda functions can indicate problems with our data integrations.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-monitoring.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable monitoring and troubleshooting for Lambda serverless applications.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/lambda-monitoring.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Monitor agent endpoints and devices",
+							"helpfulResource": {
+								"displayText": "Packet drop, latency, and firewall / proxy settings should be monitored to ensure that agents are able to maintain a consistent connection to Amazon Connect.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement call quality monitoring with Amazon Connect.",
+								"url": "https://aws.amazon.com/blogs/contact-center/easily-monitor-call-quality-with-amazon-connect/"
+							}
+						},
+						{
+							"id": "choice6",
+							"title": "Monitor contact trace record and agent event streams delivery",
+							"helpfulResource": {
+								"displayText": "Kinesis streams for Amazon Connect data should be monitored to ensure deliverability of events to the destination. CloudWatch metrics include details around success rate of event delivery, and if enhanced metrics is enabled, includes information about provisioned capacity rate limits being exceeded.",
+								"url": "https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement monitoring of Amazon Kinesis Data Streams Service with Amazon CloudWatch.",
+								"url": "https://docs.aws.amazon.com/streams/latest/dev/monitoring-with-cloudwatch.html"
+							}
+						},
+						{
+							"id": "choice7",
+							"title": "Monitor custom agent desktop (CCP) environments",
+							"helpfulResource": {
+								"displayText": "Hosted agent desktops and CCP experiences should be monitored for uptime availability. Monitoring via APM tooling or CloudWatch Synthetic Canaries can provide monitoring and alerting into issues with the agent desktop experience.",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement synthetic monitoring on custom CCP implementations.",
+								"url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html"
+							}
+						},
+						{
+							"id": "choice8",
+							"title": "Monitor AWS service API calls",
+							"helpfulResource": {
+								"displayText": "Logging Amazon Connect Service API calls can identify issues in any automation, such as swapping of agent routing profiles on a schedule. Alerts can be set to identify failed API calls, for instance if an IAM role was changed and causing failures.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement logging of Amazon Connect API calls with AWS CloudTrail.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-using-cloudtrail.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5 && choice6 && choice7 && choice8",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5 || !choice6 || !choice7 || !choice8) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL07",
+					"title": "How do you ensure and maintain data resilience?",
+					"description": "Data resiliency strategies should be utilized to ensure that contact data generated by Amazon Connect instances is maintained in a consistent, available fashion.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Implement data streaming via Kinesis",
+                            "helpfulResource": {
+								"displayText": "Contact Trace Records should be streamed out via Amazon Kinesis to maintain data resiliency, as Amazon Connect only stores records for a period of 24 months.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-streaming.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Enable data streaming for your instance.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-streaming.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Scheduled delivery of historical reports",
+                            "helpfulResource": {
+								"displayText": "Scheduling reports can provide snapshots of the state of your contact center at regular intervals. As Contact Trace Records have a 24 month retention window, report snapshots should be utilized to maintain data for a longer period for historical reporting.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/schedule-historical-metrics-report.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Schedule a historical metrics report for backup purposes.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/schedule-historical-metrics-report.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Configure S3 Bucket Replication",
+                            "helpfulResource": {
+								"displayText": "Data in Amazon S3 buckets should be replicated across region to provide additional levels of resiliency and availability if required.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Replicating objects",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Manage S3 object storage lifecycle",
+                            "helpfulResource": {
+								"displayText": "Lifecycle policies can be configured to transition and expire objects in an S3 bucket. This can be utilized to move archival data to lower-cost, long-term storage tiers to aid in record retention and cost savings.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Implement S3 lifecycle policies on Connect S3 buckets.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "S3 Bucket versioning is enabled",
+                            "helpfulResource": {
+								"displayText": "S3 Bucket versioning should be enabled to ensure if objects are modified, previous versions are kept to recover in case of failure.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Review S3 Bucket versioning documentation and considerations before implementing.",
+								"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3 || !choice4 || !choice5) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "REL08",
+					"title": "How are you ensuring direct inbound voice to your Amazon Connect instance?",
+					"description": "Defining the telephony setup for inbound call routes is important in identifying reliability risks. Additional legs in the routes should be carefully documented with risks identified as part of designing a reliable contact center.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Toll-free numbers are used primarily for inbound customer contacts",
+                            "helpfulResource": {
+								"displayText": "For mission critical workloads and call center services that need to be highly available, it is strongly recommended to consider toll-free numbers over direct inward dial numbers to protect against any carrier level outages. In the event you are not able to adopt toll free numbers and are working with multiple DIDs, consider spreading the DIDs across different carriers to improve availability of your workload. ",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/workload-layers.html"
+							},
+                            "improvementPlan": {
+								"displayText": "Amazon Connect owned toll-free numbers should be used if possible.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/workload-layers.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Calls are not routed from 3rd party managed phone numbers to Amazon Connect claimed numbers",
+                            "helpfulResource": {
+								"displayText": "Consider porting numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing. This will not only result in a cohesive solution deployment that can reduce the complexity and monitoring / operation overhead for you but will also allow you to increase reliability and resiliency, eliminate the failure points.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							},
+                            "improvementPlan": {
+								"displayText": "Consider porting numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "There are no intermediate hops in the voice path before landing the call in Amazon Connect",
+							"helpfulResource": {
+                                "displayText": "Reduce hops as much as possible to have Amazon Connect claimed phone numbers as an entry phone for callers to dial and connect with agent. Additional hops add more complexity and points of failure."
+                            },
+                            "improvementPlan": {
+								"displayText": "Reduce hops as much as possible to have Amazon Connect claimed phone numbers as an entry phone for callers to dial and connect with agent. Additional hops add more complexity and points of failure."
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+                            "helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "(!choice2 || !choice3) && choice1",
+							"risk": "MEDIUM_RISK"
+						},
+                        {
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		},
+        {
+			"id": "PER",
+			"name": "Performance Efficiency",
+			"questions": [
+				{
+					"id": "PER01",
+					"title": "How do you measure agent performance?",
+					"description": "Tracking the right contact center metrics can provide supervisors with the knowledge needed to improve agent performance.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Establish key performance metrics",
+							"helpfulResource": {
+								"displayText": "Amazon Connect provides suprivsors and admins with the ability to monitor Contact Center metrics with out of the box reporting cababilites. If organizations would like use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to the third party app(s).",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Determine what key performance metrics will be monitored and at what interval they will be evaluated.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Mechanisms exist to monitor and report on the metrics",
+							"helpfulResource": {
+								"displayText": "Amazon Connect provides suprivsors and admins the ability to monitor Contact Center metrics with out-of-the box reporting cababilites. If organizations would like to use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to third party app(s).",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement an automate process to stream data to a real-time dashboard or perform batch reporting on desire metrics.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/real-time-metrics-definitions.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Identify instructive, positive agent coaching based on performance results",
+							"helpfulResource": {
+								"displayText": "Whether it's coaching an agent with a training opportunity or rewarding positive behavior, it's important to train your Contact Center staff to drive the experience desired for your customers.",
+								"url": "https://aws.amazon.com/connect/contact-lens/"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage Contact Lens for Amazon Connect for agent coaching and training opportunities based on the past performance metrics and data.",
+								"url": "https://aws.amazon.com/connect/contact-lens/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Offer survey to customers to receive the feedback",
+							"helpfulResource": {
+								"displayText": "Post-call and Post-chat survey are some of the most popular and effective strategies to measure performance.",
+								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate chat and call flows to determine where surveys and survey opt-in options could be implemented. Blog resources exist that provide information how to implement surveys in Amazon Connect and how to gain valuble insights from the results.",
+								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER02",
+					"title": "How are you designing your Contact Flows?",
+					"description": "Contact Flows should be designed using best practices. Principles to follow include designing for testability, maintainability and customer experience.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Multiple DNIS to one or few contact flows",
+							"helpfulResource": {
+								"displayText": "A one-to-one mapping of DNIS and Contact Flows can result in unnecessary service quota requests and a large number of contact flows to support and maintain.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/performance-efficiency-bp.html#contactflowdesign-bp"
+							},
+							"improvementPlan": {
+								"displayText": "Consider an approach that results in Multiple DNIS to one or few contact flows by using the dynamic nature of Amazon Connect contact flows.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/performance-efficiency-bp.html#contactflowdesign-bp"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Using Modules within Contact Flows",
+							"helpfulResource": {
+								"displayText": "Contact Flow Modules are resusable sections of a contact flow.",
+								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using Modules to extract repeatable logic across your flow and creat common functions.",
+								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Contact Flow Best Practices are being followed",
+							"helpfulResource": {
+								"displayText": "Following best practices can help you get the maximum benefit from Amazon Connect.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/best-practices.html"
+							},
+							"improvementPlan": {
+								"displayText": "Review any existing Contact Flows and determine where best practices can be implemented. When designing new Contact Flows, refer to our Best Practices guide.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/best-practices.html"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER03",
+					"title": "How are you preparing for peak volume periods?",
+					"description": "It is important that a Contact Center is periodically performance tested in preparation for peak volumes and seasonality.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Performing periodic Load or Scale Testing",
+							"helpfulResource": {
+								"displayText": "Performance Load and Scale testing should be performed on a periodic basis to ensure your Contact Center can perform duing periods of increased or peak volumes.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							},
+							"improvementPlan": {
+								"displayText": "Review the Amazon Connect Testing Policy to ensure testing is performed withing the operating guidelines.",
+								"url": "https://www.connect-tools.net/endpoint-test/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Using empirical capacity planning data to staff the correct amount of agents",
+							"helpfulResource": {
+								"displayText": "A capacity plan helps you estimate the amount of agents are required to meet the service level target for a certain period of time.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using Forecasting, Capacity Planning and Scheduling within Amazon Connect to determine the amount of agents to staff based on historical data.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Confirming Service Quotas are at an acceptable level",
+							"helpfulResource": {
+								"displayText": "Amazon Connect default service quotas may not be sufficient for your organization during peak times.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A15296%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C712.8%2Cnull%5D"
+							},
+							"improvementPlan": {
+								"displayText": "Review the default Amazon Connect Service Quotas. If a service quota needs to be increased, use the Service Quota service found in the AWS Console.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A15296%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C712.8%2Cnull%5D"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER04",
+					"title": "How are you enabling your agents?",
+					"description": "Enabling agents is an important part of a Well Architected Contact Center. If agents can be enabled to increase First Call Resolution or lower Average Handle Time, this will create a better experience for all involved parties as well as drive down operational costs.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "A Custom CCP is being used",
+							"helpfulResource": {
+								"displayText": "Significant performance efficiency can be realized through the creation of custom agent desktop solutions using the Amazon Connect Streams API.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Consider using the Streams API to create customized CCP's for your agents to increase performance efficiency.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon Connect is integrated with a CRM",
+							"helpfulResource": {
+								"displayText": "With a CRM integration, your agents can get a comprenehsive view of customer and contact information in a single interface without managing multiple screens and interfaces",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate if a CCP can be embedded into the CRM used by your organization.",
+								"url": "https://github.com/aws/amazon-connect-streams"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Agent Automation",
+							"helpfulResource": {
+								"displayText": "Common and repeatable tasks are automated for your agents. For example, automatically creating cases or pre-filling webforms and offering a screen pop with relevant information when a contact is offered.",
+								"url": "https://aws.amazon.com/connect/tasks/"
+							},
+							"improvementPlan": {
+								"displayText": "Evaluate what repeatable processes or jobs are performed by agents and determine if Tasks can be used to improve automation.",
+								"url": "https://aws.amazon.com/connect/tasks/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Enhanced Capabilities have been built into the CCP",
+							"helpfulResource": {
+								"displayText": "CCP functionality can be extended/enhanced to include real-time Transcriptions, Translations, Suggested Actions and Knowledge base integrations.",
+								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+							},
+							"improvementPlan": {
+								"displayText": "Integrate enhanced capabilities with your agent desktop to allow skilled agents to service contacts more efficiently and unskilled agents to provide service when skilled agents aren’t available. For example, you can use this approach to automatically translate a chat contact for unskilled agents that don't know the language. When your agent replies, you can automatically translate the text to the contact’s language, allowing for real-time bilingual communication.",
+								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "PER05",
+					"title": "Is your Contact Center leveraging other AWS Services?",
+					"description": "Amazon Connect natively works with a number of other AWS Services to improve performance, identify areas of opportunity, and gain valuable insights into your contact data",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "AWS Lambda",
+							"helpfulResource": {
+								"displayText": "You can use AWS Lambda un you Amazon Connect contact flows to perform data dips for customer information, send SMS text messages, and with other services like Amazon S3  to automatically distribute scheduled repots.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
+							},
+							"improvementPlan": {
+								"displayText": "Determine what self-service or automation options you'd like to provide to customers, agents and supervisors and evaluate how AWS Lambda could help ahchieve desired functionality.",
+								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Amazon Polly",
+							"helpfulResource": {
+								"displayText": "Amazon Connect offers a native integration with Amazon Polly, allowing you to play dynamic and natural Text-to-Speech (TTS), use Speech Synthesis Markup Language (SSML), and take advantageof Neural Text-to-Speech (NTTS) to achieve the most natural and human-like text-to-speech voices possible.",
+								"url": "https://aws.amazon.com/polly/"
+							},
+							"improvementPlan": {
+								"displayText": "Explore the many different language, voice and dialect options available in Amazon Polly which can be used in Amazon Connect to provide a custom and familiar experience to customers.",
+								"url": "https://aws.amazon.com/polly/"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Amazon Lex",
+							"helpfulResource": {
+								"displayText": "Amazon Lex is a service that allows you to create intelligent conversational chatbots. It lets you turnyour Amazon Connect contact center contact flows into natural conversations that provide personalizedexperiences for your caller.",
+								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
+							},
+							"improvementPlan": {
+								"displayText": "Work with your Contact Center agents and supervisors to understand the common topics that customers call in about. If these topics can be built into a conversational bot, evaluate how Amazon Lex could faciliate those interactions with your callers.",
+								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Amazon Kinesis",
+							"helpfulResource": {
+								"displayText": "For situations where you need to gain additional insight from your contact metrics and real-time data from Amazon Connect, you can leverage Amazon Kinesis to stream data to dashboard and reporting tools.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
+							},
+							"improvementPlan": {
+								"displayText": "Evaulate any current reporting and dashboard tools used within your organization and understand how Amazon Kinesis can stream data from Connect to these tools. If your organization doesn't have tools that allow you to process and query real-tiome and historical data from Amazon Connect, consdier using Amazon Opensearch Service or Kibana.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
+							}
+						},
+						{
+							"id": "option_no",
+							"title": "None of these",
+							"helpfulResource": {
+								"displayText": "Choose this option if your workload does not follow these best practices."
+							}
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "default",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		},
+        {
+			"id": "COST",
+			"name": "Cost Optimization",
+			"questions": [
+				{
+					"id": "COST01",
+					"title": "How are agents accessing information required to serve the contact?",
+					"description": "Agents are one of the biggest cost component in contact center solutions. Streamlining processes and tools for the agent to access information will improve agent productivity, which in-turn will reduce agent costs.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Working with multiple systems or screens",
+							"helpfulResource": {
+								"displayText": "Are agents leveraging multiple systems or tools and going out of CCP to collect the information needed to serve the contacts? "
+							},
+							"improvementPlan": {
+								"displayText": "Amazon Connect is an open platform that allows quick and easy integration with other apps and 3rd party systems so that agents can serve the contacts without leaving CCP. Refer to various Amazon Connect capabilities like Invoke Lambda , Amazon Connect Agents Apps, Amazon Connect Customers Profile, Amazon Connect Tasks, Amazon Connect Wisdom features and Amazon Connect Stream APIs to build a unified and rich user experience for agent that not only provides relevant and contextual information from various systems and apps in one place (CCP) but also allows agents to take actions like create ticket in ITSM or update Customer information in CRM etc from CCP.",
+								"url": "https://aws.amazon.com/blogs/aws/amazon-connect-smarter-and-more-integrated/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Transferring calls to other agents",
+							"helpfulResource": {
+								"displayText": "Metrics like Call Transfer-in / Out, Call Transfer-out by agent etc can provide meaningful insights and data around call routing. Optimizing these metrics can help improve agent's productivity and reduce cost.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html#contacts-transferred-in-historical"
+							},
+							"improvementPlan": {
+								"displayText": "Refer documentation on how to setup contact transfers and leverage features like Transfer contact to specific agent and Queue To Queue transfer that allow you to automatically transfer calls from one queue to another in your contact flow. This lets you minimize call wait times in your contact center, adjust to changing call patterns dynamically, or to assign calls to more qualified agents. You can use metrics, such as agent availability or the number of calls in the queue, to determine which queue to route the call to. To do this,, first create a customer queue contact flow, then define the conditions for transferring calls using blocks in your contact flow. Finally, use a transfer to queue block in your contact flow to enable calls to automatically transfer to the desired queue.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/transfer.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "CCP is auto-populated with desired information to guide and assist the agent",
+							"helpfulResource": {
+								"displayText": "Are there any intelligence added to CCP to provide real-time assistance to agent serving the contact?"
+							},
+							"improvementPlan": {
+								"displayText": "Leverage Amazon Connect Customer Profiles, Contact Lens, Wisdom and Voice ID features of Amazon Connect to auto-populate the information and provide additional context and guidance in near real-time to improve agents effectiveness in serving the contacts.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/customer-profiles.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Agents leverage SOPs and their experience to best serve the contact",
+							"helpfulResource": {
+								"displayText": "Are appropriate SOPs in place for agents to refer and being evaluated periodically for their effectiveness?"
+							},
+							"improvementPlan": {
+								"displayText": "Have appropriate Standard Operating Procedures (SOPs) for agents to follow as well as implement means to monitor and enforce compliance and governance of them. You can leverage platform features like Amazon Connect Contact Lens, Stream APIs and CTR records etc to realize governance and monitoring. For more details on Contact Lens, refer Amazon Connect documentation.",
+								"url": "https://github.com/amazon-connect/amazon-connect-streams"
+							}	
+						},	
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+						}	
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST02",
+					"title": "What call deflection strategy is in place ?",
+					"description": "It's highly encouraged have a call deflection strategy as it can help significantly reduce the cost.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Provide callback options, in case of long queue",
+							"helpfulResource": {
+							"displayText": "Is the expected wait time and queue depth monitored and used to provide callback options to contacts? Long wait times in contact center queues are a key driver for customer frustration. They also increase costs to companies. "
+							},
+							"improvementPlan": {
+								"displayText": "Implement callback options considering things like queue status, time in queue, staff availability / hours of operation etc. Another good place to offer callbacks is the transfer to queue node. While you can check queue capacity within the check queue status node, transfer to queue is the last node in the IVR and will contain the most recent queue data. Depending on how complex your call flow is this might be a better point in the call experience to route callers to a callback menu option.Once we use a branch node to asses the status and the caller is aware there are no immediately available agents, it makes sense to offer them a callback option through a get customer input node. Refer these docs on how to implement callbacks. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/optimize-customer-wait-experience-in-queue-using-amazon-connect/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Leverage self-serve IVR",
+							"helpfulResource": {
+							"displayText": "Are the IVR systems fronting the agent to serve the contacts?"
+							},
+							"improvementPlan": {
+								"displayText": "Utilize services like Amazon Lex bots to implement call deflection strategy. You can further improve the customer experience and reduce the cost by leveraging features like Voice ID to automate authentication etc.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-lex.html"
+
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Detect theme across issues and proactive reach-out for common issues ",
+							"helpfulResource": {
+							"displayText": "Proactively identify call patterns or trends for a potential of mass communication on common issues, system-wide problems, trends etc. "
+							},
+							"improvementPlan": {
+								"displayText": "Use features like Amazon Connect Contact Lens Theme Detection , High Volume Outbound communication in conjunction with Amazon Pinpoint, or Contact Trace Records (CTR) and Stream APIs to identify themes and categorization of issues to drive proactive actions and reach-out to contacts on common issues / patterns / trends which in-turn will help drive down the inbound calls and hence cost. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/announcing-contact-lens-for-amazon-connect-preview/"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Use of alternate channels",
+							"helpfulResource": {
+							"displayText": "Do you offer other channels to contacts seeking assistance e.g. Chat, Email etc?"
+							},
+							"improvementPlan": {
+								"displayText": "Implement an omni-channel based contact center solution on Amazon Connect using Amazon Connect Streaming APIs , native channels,  and other services like Amazon Pinpoint, and SNS. ",
+								"url": "https://aws.amazon.com/blogs/contact-center/adding-digital-messaging-channels-to-your-amazon-connect-contact-center/"
+							}
+						},
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3  && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3  || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST03",
+					"title": "What procedure do you follow to ensure agents utilization ?",
+					"description": "There are several procedures like SOPs, training and compliance as well as forecasting items that can help improve agents utilization.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Regular review of SOPs",
+							"helpfulResource": {
+							"displayText": "Are Standard Operating Procedures (SOPs) being periodically reviewed and/or updated for its accuracy and effectiveness?"
+							},
+							"improvementPlan": {
+								"displayText": "To monitor and enforce compliance and governance of the procedures, you can leverage  platform features like Contact Lens, Stream APIs and CTR records etc",
+								"url": "https://aws.amazon.com/blogs/contact-center/analyze-amazon-connect-contact-lens-using-contact-trace-record-amazon-athena-and-amazon-quicksight-part-2/"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "Capacity planning accurately forecasting the staff",
+							"helpfulResource": {
+							"displayText": "Is staff forecasting and capacity planning accurate for both short-term and log term forecast? "
+							},
+							"improvementPlan": {
+								"displayText": "Ensure that Workforce management capacity planning and forecasting module in use is appropriately setup and accounting for any changes in contact volumes, patterns, seasonality etc along with agents schedules, performance etc. to accurately forecast the staffing, for both short-term and long-term forecast.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "Periodic coaching and training of Amazon Connect users",
+							"helpfulResource": {
+							"displayText": "Keeping agents up-to-date with use of SOPs and platform / tools is key to their ability to effectively use the resources. Are Amazon Connect users (agents, supervisors etc) being regularly trained and kept up-to-date on the resources and tools available at their disposal to serve the contacts."
+							},
+							"improvementPlan": {
+								"displayText": "Account for training time in resource schedule in the Workforce management scheduling and forecasting module to ensure timely and regular training of agents on the resources / tools etc. Leverage and/or create and update resources and mechanisms like agents training guide , internal resources and knowledge bases, SOPs, and evaluation process to gauge effectiveness of the training.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/agent-user-guide.html"
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Agents schedule aligned to contacts volume and other activities",
+							"helpfulResource": {
+							"displayText": "Are the agents schedule created keeping all activities and considerations in mind, including but not only limited to contact volumes and trainings ?"
+							},
+							"improvementPlan": {
+								"displayText": "Make sure to create agents schedule (both for short term and long term) keeping expected volumes, seasonality, shrinkage, time offs (planned and unplanned), training etc activities in mind.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/forecasting-capacity-planning-scheduling.html"
+							}
+						},
+						{
+							"id": "choice9_no",
+							"title": "None of these"
+                        }
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST04",
+					"title": "Have you reviewed telephony and inbound call routes for the opportunities, if any, to optimize telephony cost?",
+					"description": "Telephony being another major cost element, its important to apply considerations in choosing the right telephony to optimize cost.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Calls routed from the 3rd party managed phone number to Amazon Connect claimed number",
+							"helpfulResource": {
+							"displayText": "Are the customer facing number(s) dialed in by contacts owned and managed by 3rd party in order to route calls to Amazon Connect?"
+							},
+							"improvementPlan": {
+								"displayText": "Considering porting the numbers over to Amazon Connect (subject to regional availability, country and legal rules etc.) and leveraging Amazon Connect native capabilities like Contact Flow to realize the routing. This will eliminate some of the call legs in the flow contributing to the cost and may help reduce operations cost of the solution. Refer to the link for more info.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html#concepts-telephony-architecture"
+							}
+						},
+						{
+							"id": "choice2",
+							"title": "No intermediate hops in the call flow managed outside of Amazon Connect",
+							"helpfulResource": {
+							"displayText": "There are no intermediate hops in between the phone number dialed by Contacts and Amazon Connect claimed number(s) to route the Contacts to agent"
+							},
+							"improvementPlan": {
+								"displayText": "Consider having customer dialed number directly route to Amazon claimed phone numbers as opposed to keeping any intermediate hops in between. This will help remove the unnecessary cost due to additional hops for any non customer facing numbers outside of Amazon Connect",
+								"url": "https://github.com/aws/amazon-connect-streams"
+
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "No Telephony outbound for Integration to external systems",
+							"helpfulResource": {
+							"displayText": "Does the end to end call flow involve transfer out to external systems for e.g. 3rd party IVR?"
+							},
+							"improvementPlan": {
+								"displayText": "PSTN call transfers out to a 3rd Party IP telephony system can add to your Amazon Connect spend because the calls are still pinned to Connect for the duration of the transfer.  It's highly advised to streamline the call flow and avoid one or more call transfer out between Amazon and 3rd party systems, if possible. As this will not only help with our customer experience and operations but will also help reduce the Amazon Connect telephony and/or platform service minute costs when outbound transfers cannot be avoided. Connect SAs can review the call flow etc. and determine the next best options available. Work with an Amazon Connect specialist to identify the most appropriate design catering to your customer experience goals.",
+								"url": ""
+							}
+						},
+						{
+							"id": "choice4",
+							"title": "Considered appropriate Telephony type for numbers claimed on Amazon Connect",
+							"helpfulResource": {
+							"displayText": "Amazon Connect offers Direct in-dial (DID) and Toll Free numbers (TFN) for telephony managed by Amazon Connect. Have appropriate considerations been taken into account in choosing between DIDs and TFNs."
+							},
+							"improvementPlan": {
+								"displayText": "Though Toll free numbers provide additional resiliency, it comes with additional cost when compared with DIDs. Apply your workload's availability and resiliency requirements in choosing right telephony numbers. Refer documentation for additional details on DIDs and TFNs in Amazon Connect",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/concepts-telephony.html"
+							}
+						},
+						{
+                            "id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3 && choice4",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "choice1 || !choice2 || !choice3 || !choice4",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				},
+				{
+					"id": "COST05",
+					"title": "How is the region for Amazon Connect instance determined for your Contact Center solution deployment?",
+					"description": "Amazon Connect Region is one of the first decision customers make when adopting Amazon Connect for their contact center workloads. Telephony pricing for Claimed Phone Numbers Per Day and Per Minute Inbound Usage can be different for countries depending upon the AWS Region in which you select to instantiate your Amazon Connect Instance.",
+					"choices": [
+						{
+							"id": "choice1",
+							"title": "Same region as the country of business",
+							"helpfulResource": {
+							"displayText": "Amazon Connect instance is deployed in the AWS region as the country of your business"
+							},
+							"improvementPlan": {
+								"displayText": "Review the recommendation to further ensure appropriate setup",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#ccp-region-selection"
+							}
+						},				
+						{
+							"id": "choice2",
+							"title": "Different region(s) than country of business",
+							"helpfulResource": {
+							"displayText": "Is your Amazon Connect instance deployed to AWS region different from the country of your business?"
+							},
+							"improvementPlan": {
+								"displayText": "If you require to have the Amazon Connect instance in a different regions than the country of business (agent vs customers), consider the most cost effective phone call (inbound/outbound) costs",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html#ccp-region-selection"
+							}
+						},
+						{
+							"id": "choice3",
+							"title": "A combination of country of business and Amazon Connect region",
+							"helpfulResource": {
+							"displayText": "Chose this option if your agents and contacts are in a different country"
+							},
+							"improvementPlan": {
+								"displayText": "Optimize the inbound/outbound call costs based on the customer's and agent's country and Amazon Connect region.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/ccp-networking.html"
+							}
+						},
+						{
+                           	"id": "choice9_no",
+							"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+							"condition": "choice1 && choice2 && choice3",
+							"risk": "NO_RISK"
+						},
+						{
+							"condition": "!choice1 || choice2 || choice3",
+							"risk": "MEDIUM_RISK"
+						},
+						{
+							"condition": "choice9_no",
+							"risk": "HIGH_RISK"
+						}
+					]
+				}
+			]
+		}
+	]
+}
