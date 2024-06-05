@@ -1,3 +1,7 @@
+## Well-architected
+
+**v1.0 (10/12/2022)** - Initial Release. This is a single file, combined lens, for Operational Excellence, Security, Performance Efficiency, Reliability, and Cost Optimization. 
+
 ## Cost Optimization
 
 **v1.3 (03/03/2023)** - Updated all 'None of the above' choices and fixed riskRules bug.
@@ -10,6 +14,7 @@
 
 ## Operational Excellence
 
+**v1.4 (06/05/2023)** - Added two new choices under ConOps_02 for 'Optimize reputation for outbound calling' and 'Understand outbound calling restrictions and follow eligibility criteria'.
 **v1.3 (10/17/2023)** - Added helpful resource link to relevant question on incident response.
 **v1.2 (01/09/2023)** - Reduced question count from 20 to 16 by removing duplicate questions and combining into existing questions. Added additional helpful links for questions that were missing them.
 
@@ -47,8 +52,6 @@
 
 ## Global Resiliency
 
+**v1.2 (4/19/2024)** - Updated the Risk in Q1 from MEDIUM to HIGH when any of the first 5 choices is not selected. Q19 risk was reduced to MEDIUM for other Amazon Connect features that are in use and are not supported by ACGR. Update Wisdom to Amazon Q in Connect.
+
 **v1.1 (2/13/2023)** - Initial Release
-
-## Global Resiliency
-
-**v1.2 (4/19/2024)** - Updated the Risk in Q1 from MEDIUM to HIGH when any of the first 5 choices is not selected. Q19 risk was reduced to MEDIUM for other Amazon Connect features that are in use and are not supported by ACGR. Update Wisdom to Amazon Q in Connnect.
