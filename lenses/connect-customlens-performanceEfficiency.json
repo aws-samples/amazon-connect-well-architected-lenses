@@ -16,7 +16,7 @@
 							"id": "choice1",
 							"title": "Establish key performance metrics",
 							"helpfulResource": {
-								"displayText": "Amazon Connect provides suprivsors and admins with the ability to monitor Contact Center metrics with out of the box reporting cababilites. If organizations would like use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to the third party app(s).",
+								"displayText": "Amazon Connect provides supervisors and admins with the ability to monitor Contact Center metrics with out of the box reporting capabilities. If organizations would like use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to the third party app(s).",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
 							},
 							"improvementPlan": {
@@ -28,7 +28,7 @@
 							"id": "choice2",
 							"title": "Mechanisms exist to monitor and report on the metrics",
 							"helpfulResource": {
-								"displayText": "Amazon Connect provides suprivsors and admins the ability to monitor Contact Center metrics with out-of-the box reporting cababilites. If organizations would like to use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to third party app(s).",
+								"displayText": "Amazon Connect provides supervisors and admins the ability to monitor Contact Center metrics with out-of-the box reporting capabilities. If organizations would like to use third party reporting and analytics tools, a mechanism should be implemented to stream data from Connect to third party app(s).",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-metrics.html"
 							},
 							"improvementPlan": {
@@ -56,7 +56,7 @@
 								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
 							},
 							"improvementPlan": {
-								"displayText": "Evaluate chat and call flows to determine where surveys and survey opt-in options could be implemented. Blog resources exist that provide information how to implement surveys in Amazon Connect and how to gain valuble insights from the results.",
+								"displayText": "Evaluate chat and call flows to determine where surveys and survey opt-in options could be implemented. Blog resources exist that provide information how to implement surveys in Amazon Connect and how to gain valuable insights from the results.",
 								"url": "https://aws.amazon.com/blogs/contact-center/create-post-call-surveys-in-amazon-connect/"
 							}
 						},
@@ -104,11 +104,11 @@
 							"id": "choice2",
 							"title": "Using Modules within Contact Flows",
 							"helpfulResource": {
-								"displayText": "Contact Flow Modules are resusable sections of a contact flow.",
+								"displayText": "Contact Flow Modules are reusable sections of a contact flow.",
 								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
 							},
 							"improvementPlan": {
-								"displayText": "Consider using Modules to extract repeatable logic across your flow and creat common functions.",
+								"displayText": "Consider using Modules to extract repeatable logic across your flow and create common functions.",
 								"url": "https://aws.amazon.com/about-aws/whats-new/2021/11/amazon-connects-supports-contact-flow-modules-repeatable-logic/"
 							}
 						},
@@ -156,7 +156,7 @@
 							"id": "choice1",
 							"title": "Performing periodic Load or Scale Testing",
 							"helpfulResource": {
-								"displayText": "Performance Load and Scale testing should be performed on a periodic basis to ensure your Contact Center can perform duing periods of increased or peak volumes.",
+								"displayText": "Performance Load and Scale testing should be performed on a periodic basis to ensure your Contact Center can perform during periods of increased or peak volumes.",
 								"url": "https://www.connect-tools.net/endpoint-test/"
 							},
 							"improvementPlan": {
@@ -232,7 +232,7 @@
 							"id": "choice2",
 							"title": "Amazon Connect is integrated with a CRM",
 							"helpfulResource": {
-								"displayText": "With a CRM integration, your agents can get a comprenehsive view of customer and contact information in a single interface without managing multiple screens and interfaces",
+								"displayText": "With a CRM integration, your agents can get a comprehensive view of customer and contact information in a single interface without managing multiple screens and interfaces",
 								"url": "https://github.com/aws/amazon-connect-streams"
 							},
 							"improvementPlan": {
@@ -244,7 +244,7 @@
 							"id": "choice3",
 							"title": "Agent Automation",
 							"helpfulResource": {
-								"displayText": "Common and repeatable tasks are automated for your agents. For example, automatically creating cases or pre-filling webforms and offering a screen pop with relevant information when a contact is offered.",
+								"displayText": "Common and repeatable tasks are automated for your agents. For example, automatically creating cases or pre-filling web-forms and offering a screen pop with relevant information when a contact is offered.",
 								"url": "https://aws.amazon.com/connect/tasks/"
 							},
 							"improvementPlan": {
@@ -296,11 +296,11 @@
 							"id": "choice1",
 							"title": "AWS Lambda",
 							"helpfulResource": {
-								"displayText": "You can use AWS Lambda un you Amazon Connect contact flows to perform data dips for customer information, send SMS text messages, and with other services like Amazon S3  to automatically distribute scheduled repots.",
+								"displayText": "You can use AWS Lambda un you Amazon Connect contact flows to perform data dips for customer information, send SMS text messages, and with other services like Amazon S3  to automatically distribute scheduled reports.",
 								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
 							},
 							"improvementPlan": {
-								"displayText": "Determine what self-service or automation options you'd like to provide to customers, agents and supervisors and evaluate how AWS Lambda could help ahchieve desired functionality.",
+								"displayText": "Determine what self-service or automation options you'd like to provide to customers, agents and supervisors and evaluate how AWS Lambda could help achieve desired functionality.",
 								"url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
 							}
 						},
@@ -308,7 +308,7 @@
 							"id": "choice2",
 							"title": "Amazon Polly",
 							"helpfulResource": {
-								"displayText": "Amazon Connect offers a native integration with Amazon Polly, allowing you to play dynamic and natural Text-to-Speech (TTS), use Speech Synthesis Markup Language (SSML), and take advantageof Neural Text-to-Speech (NTTS) to achieve the most natural and human-like text-to-speech voices possible.",
+								"displayText": "Amazon Connect offers a native integration with Amazon Polly, allowing you to play dynamic and natural Text-to-Speech (TTS), use Speech Synthesis Markup Language (SSML), and take advantage Neural Text-to-Speech (NTTS) to achieve the most natural and human-like text-to-speech voices possible.",
 								"url": "https://aws.amazon.com/polly/"
 							},
 							"improvementPlan": {
@@ -320,11 +320,11 @@
 							"id": "choice3",
 							"title": "Amazon Lex",
 							"helpfulResource": {
-								"displayText": "Amazon Lex is a service that allows you to create intelligent conversational chatbots. It lets you turnyour Amazon Connect contact center contact flows into natural conversations that provide personalizedexperiences for your caller.",
+								"displayText": "Amazon Lex is a service that allows you to create intelligent conversational chat-bots. It lets you turn your Amazon Connect contact center contact flows into natural conversations that provide personalized experiences for your caller.",
 								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
 							},
 							"improvementPlan": {
-								"displayText": "Work with your Contact Center agents and supervisors to understand the common topics that customers call in about. If these topics can be built into a conversational bot, evaluate how Amazon Lex could faciliate those interactions with your callers.",
+								"displayText": "Work with your Contact Center agents and supervisors to understand the common topics that customers call in about. If these topics can be built into a conversational bot, evaluate how Amazon Lex could facilitate those interactions with your callers.",
 								"url": "https://aws.amazon.com/blogs/machine-learning/building-better-bots/"
 							}
 						},
@@ -336,7 +336,7 @@
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
 							},
 							"improvementPlan": {
-								"displayText": "Evaulate any current reporting and dashboard tools used within your organization and understand how Amazon Kinesis can stream data from Connect to these tools. If your organization doesn't have tools that allow you to process and query real-tiome and historical data from Amazon Connect, consdier using Amazon Opensearch Service or Kibana.",
+								"displayText": "Evaluate any current reporting and dashboard tools used within your organization and understand how Amazon Kinesis can stream data from Connect to these tools. If your organization doesn't have tools that allow you to process and query real-time and historical data from Amazon Connect, consider using Amazon OpenSearch Service or Kibana.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ag.pdf#%5B%7B%22num%22%3A10912%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C72%2C269.888%2Cnull%5D"
 							}
 						},

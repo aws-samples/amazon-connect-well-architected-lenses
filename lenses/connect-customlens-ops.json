@@ -78,6 +78,18 @@
 					"choices": [
 						{
 							"id": "choice1",
+							"title": "Optimize reputation for outbound calling.",
+							"helpfulResource": {
+								"displayText": "It is important to understand how your customers expect to be contacted and adopt an outbound calling strategy to improve and protect your call answer rate for outbound calling. This includes knowing your customer's preferred contact method, branding your calls, selecting caller ID's that mean something to your customer, and monitoring the reputation of your caller IDs.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/optimize-outbound-calling.html"
+							},
+							"improvementPlan": {
+								"displayText": "Establish an outbound calling strategy to protect, monitor, and validate your call answer rate is delivering real business value.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/optimize-outbound-calling.html"
+							}
+						},
+						{
+							"id": "choice2",
 							"title": "Provide adequate lead time for phone number porting.",
 							"helpfulResource": {
 								"displayText": "When porting phone numbers for critical workloads, include all requirements and use case information in your claim/port number several months before the go-live date. This includes requests for live cutover support, communication prior, during, and after cutover, monitoring, and anything else specific to your use case.",
@@ -89,7 +101,7 @@
 							}
 						},
 						{
-							"id": "choice2",
+							"id": "choice3",
 							"title": "Ensure telephony support/availability in the target deployment region.",
 							"helpfulResource": {
 								"displayText": "In the US, you should use Amazon Connect telephony services for US toll-free numbers, allowing you to route toll-free traffic across multiple suppliers in an active-active fashion at no additional charge.",
@@ -101,7 +113,7 @@
 							}
 						},
 						{
-							"id": "choice3",
+							"id": "choice4",
 							"title": "Ensure carrier diversity for international toll-free and high-concurrency DIDs.",
 							"helpfulResource": {
 								"displayText": "If you are using an existing toll-free national service to redirect inbound traffic to DIDs, you should request DID phone numbers across multiple telephony providers. A general recommendation for this configuration is 100 sessions per-DID and your AWS Solutions Architect can help with capacity calculations and setup.",
@@ -110,6 +122,18 @@
 							"improvementPlan": {
 								"displayText": "If you are using an existing toll-free national service to redirect inbound traffic to DIDs, you should request DID phone numbers across multiple telephony providers. A general recommendation for this configuration is 100 sessions per-DID and your AWS Solutions Architect can help with capacity calculations and setup.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/operational-excellence.html#telephony-bp"
+							}
+						},
+						{
+							"id": "choice5",
+							"title": "Understand outbound calling restrictions and follow eligibility criteria.",
+							"helpfulResource": {
+								"displayText": "Domestic and international carriers have several restrictions that can impact your ability to contact your customers. These include presenting toll-free numbers for international calling, using UIFN numbers for outbound calling, and blocking international calls with unsupported use cases.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/outbound-calling-restrictions.html"
+							},
+							"improvementPlan": {
+								"displayText": "Implement a process to train administrators and operationalize your outbound calling to international destinations to ensure calls can be delivered.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/outbound-calling-restrictions.html"
 							}
 						},
                         {
@@ -122,11 +146,11 @@
 					],
 					"riskRules": [
 						{
-							"condition": "choice1 && choice2 && choice3",
+							"condition": "choice1 && choice2 && choice3 && choice4 && choice5",
 							"risk": "NO_RISK"
 						},
 						{
-							"condition": "((choice2 || choice3) && choice1)",
+							"condition": "((choice2 || choice3 || choice4 || choice5) && choice1)",
 							"risk": "MEDIUM_RISK"
 						},
 						{
@@ -538,7 +562,7 @@
 							"id": "choice3",
 							"title": "Ensure event logging is enabled and integrated to an appropriate log management system for collection and analysis.",
 							"helpfulResource": {
-								"displayText": "Monitoring is important for maintaining the reliability, availability, and performance of your contact center. You should collect monitoring data from all of the parts of your AWS solution so that you can more easily debug a multipoint failure if one occurs.",
+								"displayText": "Monitoring is important for maintaining the reliability, availability, and performance of your contact center. You should collect monitoring data from all of the parts of your AWS solution so that you can more easily debug a multi-point failure if one occurs.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/logging-and-monitoring.html"
 							},
 							"improvementPlan": {
@@ -759,7 +783,7 @@
 							"id": "choice2",
 							"title": "Define support escalation paths.",
 							"helpfulResource": {
-								"displayText": "Identify owners for each action to ensure effective and prompt responses to operations events. Identify when a human decision is required before an action is taken. Work with decision makers to have that decision made in advance, and the action preapproved, so that Mean-Time-to-Resolution (MTTR) is not extended waiting for a response.",
+								"displayText": "Identify owners for each action to ensure effective and prompt responses to operations events. Identify when a human decision is required before an action is taken. Work with decision makers to have that decision made in advance, and the action pre-approved, so that Mean-Time-to-Resolution (MTTR) is not extended waiting for a response.",
                                 "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/ops_event_response_define_escalation_paths.html"
 							},
 							"improvementPlan": {
