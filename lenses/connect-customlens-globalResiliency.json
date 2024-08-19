@@ -26,7 +26,7 @@
 						},
 						{
 							"id": "choice2",
-							"title": "Created a test/dev SAML 2.0-enabled Amazon Connect instance in regions where ACGR is available (IAD/PDX or LHR/FRA)",
+							"title": "Created a Test SAML 2.0-enabled Amazon Connect instance where ACGR is available (us-east-1/us-west-2 or eu-west-2/eu-central-1)",
 							"helpfulResource": {
 								"displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance. This allows your users to sign in to a portal in your organization hosted by a SAML 2.0 compatible identity provider (IdP) and log in to an Amazon Connect instance with a single sign-on experience without having to provide separate credentials for Amazon Connect.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
@@ -38,7 +38,7 @@
 						},
 						{
 							"id": "choice3",
-							"title": "Created a production SAML 2.0-enabled Amazon Connect instance in regions where ACGR is available (IAD/PDX or LHR/FRA)",
+							"title": "Created a Prod SAML 2.0-enabled Amazon Connect instance where ACGR is available (us-east-1/us-west-2 or eu-west-2/eu-central-1)",
 							"helpfulResource": {
 								"displayText": "Amazon Connect supports identity federation by configuring Security Assertion Markup Language (SAML) 2.0 with AWS IAM to enable web-based single sign-on (SSO) from your organization to your Amazon Connect instance. This allows your users to sign in to a portal in your organization hosted by a SAML 2.0 compatible identity provider (IdP) and log in to an Amazon Connect instance with a single sign-on experience without having to provide separate credentials for Amazon Connect.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html"
@@ -238,7 +238,7 @@
 						},
 						{
 							"id": "choice3",
-							"title": "All production numbers and agents are in one TDG and all test numbers and agetns are in another TDG.",
+							"title": "All production numbers and agents are in one TDG and all test numbers and agents are in another TDG.",
 							"helpfulResource": {
 								"displayText": "You can choose to move all numbers and agents from one region to another at the same time in production and test buckets.",
 								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/setup-traffic-distribution-groups.html"
@@ -345,7 +345,7 @@
 						},
 						{
 							"id": "choice6",
-							"title": "Why and how you move a particular traffi distribution group before another",
+							"title": "Why and how you move a particular traffic distribution group before another",
 							"helpfulResource": {
 								"displayText": "Business impact may be time dependent. You may want to consider factoring this in to your disaster recovery planning. For example, disruption to your payroll system is likely to have a very high impact to the business just before everyone gets paid, but it may have a low impact just after everyone has already been paid.",
 								"url": "https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/business-continuity-plan-bcp.html"
@@ -568,7 +568,7 @@
 				},
 				{
 					"id": "GlobalResiliency_09",
-					"title": "Are you checking whether agents have completed their active calls before failing them over?",
+					"title": "Are you checking whether agents have completed their active interactions before failing them over?",
 					"description": "Shifting agent logins can be disruptive if they are actively participating in a non-voice interaction.",
 					"choices": [
 						{
