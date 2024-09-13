@@ -61,3 +61,7 @@
 **v1.2 (4/19/2024)** - Updated the Risk in Q1 from MEDIUM to HIGH when any of the first 5 choices is not selected. Q19 risk was reduced to MEDIUM for other Amazon Connect features that are in use and are not supported by ACGR. Update Wisdom to Amazon Q in Connect.
 
 **v1.1 (2/13/2023)** - Initial Release
+
+## Peak Readiness
+
+**v1.0 (9/13/2024)** - Initial Release
