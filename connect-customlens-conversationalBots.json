@@ -1,0 +1,430 @@
+{
+  "schemaVersion": "2021-11-01",
+  "name": "Amazon Connect Contact Center Lens - Conversational Bot Best Practices",
+  "description": "Amazon Connect Well-Architected Lens for Launching Conversational Bots on Lex and Amazon Connect",
+  "pillars": [
+        {
+             "id": "CONVBOT",
+            "name": "ConversationalBots",
+            "questions": [
+            {
+          "id": "ConvBot_01",
+          "title": "How to you maintain resilience with your Lex Bots?",
+          "description": "After you have designed your workload to be resilient to the stresses of production, best practices are the only way to ensure that it will operate as designed, and deliver the resiliency you expect.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Periodically backing up your Lex bots",
+              "helpfulResource": {
+                "displayText": "For resiliency it is recommended to periodically backup the Amazon Lex bot including all of the intents, custom slot types used by the bot and the custom vocabularies by exporting the bot to a JSON file that is contained in a .zip archive file.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/export-console.html"
+              },
+              "improvementPlan": {
+                "displayText": "Regularly backup your Amazon Lex bot to ensure resiliency and version control.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/export-console.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Periodic use of the Test Workbench",
+              "helpfulResource": {
+                "displayText": "Test Workbench enables you to review the performance metrics for transcription, intent recognition, and slot resolution using test cases generated from your conversation logs or created manually in a no code manner. It is highly recommend to test your bot performance using the Test Workbench in per-production phases ensuring the quality and reliability of the conversational bot.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/test-workbench.html"
+              },
+              "improvementPlan": {
+                "displayText": "Use Amazon Lex Test Workbench to review performance metrics for transcription, intent recognition, and slot resolution.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/test-workbench.html"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Deploy multi-Region bots using Lex Global Resiliency",
+              "helpfulResource": {
+                "displayText": "Amazon Lex offers global resiliency features to ensure high availability and fault tolerance for your conversational bots across multiple regions. Here are key aspects of Lex global resiliency.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/global-resiliency.html"
+              },
+              "improvementPlan": {
+                "displayText": "Evaluate your multi-region strategy and consider enabling Lex Global Resiliency to improve availability and fault tolerance across multiple AWS regions",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/global-resiliency.html"
+              }
+            },
+            {"id": "choice4",
+            "title": "Create a new alias for production use",
+            "helpfulResource": {
+              "displayText": "It's recommended to create a new alias for production environments instead of using the default TestBotAlias",
+              "url": "https://docs.aws.amazon.com/lexv2/latest/dg/versions-aliases.html"
+            },
+            "improvementPlan": {
+              "displayText": "Create a dedicated alias for your production environment. This new alias should point to the thoroughly tested and approved version of your bot. Implement a process for updating this alias as part of your release management, ensuring that production always uses a stable and optimized version of the bot.",
+              "url": "https://docs.aws.amazon.com/lexv2/latest/dg/versions-aliases.html"
+            }
+          },
+          {
+              "id": "choice5",
+              "title": "Tag your resources.",
+              "helpfulResource": {
+                "displayText": "Tagging AWS resources offers several important benefits, including improved organization, cost allocation, access control, and automation.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/tags-console.html"
+              },
+              "improvementPlan": {
+                "displayText": "Implement a comprehensive tagging strategy for your Lex bot resources to enhance organization, cost tracking, and management capabilities.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/tags-console.html"
+              }
+            },
+            {
+              "id": "option_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this option if you haven't implemented any of these quota management strategies."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+                "condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+                "risk": "NO_RISK"
+            },
+            {
+              "condition": "!choice3 || !choice3 || !choice5",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+              "condition": "!choice1 || !choice2 || !choice4",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        },
+            {
+          "id": "ConvBot_02",
+          "title": "How do you measure the performance of your Amazon Lex bot?",
+          "description": "System performance can degrade over time. Monitor system performance to identify degradation and remediate internal or external factors, such as the operating system or application load.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Using Amazon CloudWatch to pro-actively monitor your Lex bot",
+              "helpfulResource": {
+                "displayText": "Pro-actively monitor your Lex bot using Amazon CloudWatch alarms to be notified of critical events based on predefined thresholds.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-cloudwatch.html"
+              },
+              "improvementPlan": {
+                "displayText": "Set up Amazon CloudWatch alarms for critical Lex bot metrics, such as RuntimeInvalidLambdaResponses, and configure Amazon SNS notifications to enable proactive monitoring and rapid response to issues.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-cloudwatch.htm"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Measuring the bot performance with Lex Analytics",
+              "helpfulResource": {
+                "displayText": "Using Lex analytics, you can measure the performance of your bots by monitoring commonly used intents and missed intent utterances. The performance dashboard provides insights into intent fulfillment rates, allowing you to identify which intents are most frequently triggered and which ones may need improvement. You can also review missed utterances to refine your bot's language understanding and add new sample utterances to relevant intents, thereby enhancing your bot's ability to accurately interpret user inputs and provide appropriate responses.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/analytics.html"
+              },
+              "improvementPlan": {
+                "displayText": "Regularly review the Lex Analytics performance dashboard to identify improvement opportunities and implement changes to enhance your bot's accuracy and user experience.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/analytics.html"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Leverage Amazon Connect Flows Dashboard for bot and contact flow monitoring",
+              "helpfulResource": {
+                "displayText": "The Amazon Connect Flows Dashboard provides real-time and historical metrics on your contact flows and bot interactions, allowing you to identify bottlenecks, abandonment points, and performance issues. This dashboard offers visualization of flow execution paths, helping to pinpoint where customers might be experiencing difficulties.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/contact-flow-metrics.html"
+              },
+              "improvementPlan": {
+                "displayText": "Configure Security Profiles to grant business users and supervisors access to the Flows Dashboard within Amazon Connect, enabling them to perform regular reviews of the IVR and Bot peformance. Schedule weekly reviews with business stakeholders to analyze flow performance metrics and identify optimization opportunities. Train business users on interpreting dashboard data to empower them to make informed decisions about bot and flow improvements. Set up automated notifications for significant deviations in performance metrics. Document findings from dashboard reviews and maintain a backlog of improvement initiatives based on these insights.",
+                "url": "https://docs.aws.amazon.com/connect/latest/adminguide/flows-performance-dashboard.html"
+              }
+            },
+            {
+                "id": "choice4",
+                "title": "Utilize Amazon Connect Data Lake tables for comprehensive bot performance analysis",
+                "helpfulResource": {
+                  "displayText": "Amazon Connect provides three specialized data lake tables for bot performance monitoring: bot_intents, bot_slots, and bot_conversations. These tables capture detailed metrics on intent recognition, slot filling success rates, and bot responses, enabling deep analysis of conversational performance.",
+                  "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-lake-botdata.html"
+                },
+                "improvementPlan": {
+                  "displayText": "Implement regular ETL processes to extract and transform bot performance data from the three data lake tables. Create custom metrics that measure intent recognition accuracy, slot filling efficiency, and conversation completion rates. Establish baseline performance metrics for each bot and intent, then set up automated alerts when performance falls below thresholds. Develop a routine for analyzing trends in bot performance data to identify opportunities for intent refinement, utterance expansion, or slot configuration improvements. Correlate bot performance data with customer satisfaction metrics to prioritize improvements that have the greatest impact on customer experience.",
+                  "url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-lake-query.html"
+                }
+              },
+            {
+              "id": "choice5",
+              "title": "Implement business intelligence tools for visualizing Lex conversational logs and data lake metrics",
+              "helpfulResource": {
+                "displayText": "Business intelligence tools like Amazon QuickSight can be integrated with Amazon Connect data lake tables and Lex conversational logs to create intuitive dashboards for monitoring bot performance. These visualizations make complex bot metrics accessible to business stakeholders and enable data-driven decision making for bot improvements.",
+                "url": "https://docs.aws.amazon.com/quicksight/latest/user/connect-data-sources.html"
+              },
+              "improvementPlan": {
+                "displayText": "Design QuickSight dashboards that visualize key bot performance indicators from Lex conversational logs and Connect data lake tables. Create specific visualizations for intent recognition rates, slot filling success, conversation completion rates, and common failure points. Configure dashboards for different stakeholder groups, with technical details for developers and simplified business metrics for management. Schedule automated distribution of reports to relevant stakeholders on a weekly basis. Conduct quarterly reviews with cross-functional teams to analyze visualization insights and prioritize bot enhancements. Implement a feedback loop where dashboard insights directly inform the bot development roadmap.",
+                "url": "https://docs.aws.amazon.com/quicksight/latest/user/example-connect.html"
+              }
+            },                      
+            {
+              "id": "option_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this option if you haven't implemented any of these scaling strategies for downstream dependencies."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+                "condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+                "risk": "NO_RISK"
+            },
+            {
+              "condition": "!choice1 || !choice2 || !choice3 || !choice4 || !choice5",
+              "risk": "HIGH_RISK"
+            },
+            {
+              "condition": "default",
+              "risk": "MEDIUM_RISK"
+            }
+          ]
+        },
+        {
+          "id": "ConvBot_03",
+          "title": "What considerations you take when designing your bot?",
+          "description": "Amazon Lex bots should be designed using best practices. Principles to follow include designing for testability, maintainability and customer experience. Consider making use of these Lex features to optimize bot performance.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Verify Amazon Lex timeouts for capturing user input are correctly set",
+              "helpfulResource": {
+                "displayText": "Amazon Lex V2 provides predefined session attributes for managing the way the StartConversation operations works with text, voice, or DTMF input to your bot. All predefined attributes are editable such as Allow interrupt, Voice timeout, Silence timeout, Timeouts for text input and DTMF input.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/session-attribs-speech.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review and configure the timeout settings for your Lex bot, focusing on attributes like Allow interrupt, Voice timeout, Silence timeout, and Timeouts for text and DTMF input. Adjust these settings through session attributes when starting a conversation with the bot. If necessary, implement logic in your Lambda function to overwrite these timeout values based on specific use cases or user interactions. Regularly test and refine these settings to ensure optimal user experience and bot performance.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/session-attribs-speech.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Use Custom Vocabulary",
+              "helpfulResource": {
+                "displayText": "Custom vocabularies can be used to add specific phrases that were not recognized by Amazon Lex in voice-based audio input. This improves speech-to-text transcription and overall customer experience.",
+                "url": "https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review your bot's transcription logs to identify frequently misrecognized words or phrases. Create a custom vocabulary with these terms, assigning appropriate weights based on their importance and frequency of misrecognition. Test the custom vocabulary with a representative audio set to fine-tune its effectiveness.",
+                "url": "https://docs.aws.amazon.com/transcribe/latest/dg/custom-vocabulary.html"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Use Wait and Continue",
+              "helpfulResource": {
+                "displayText": "The wait and continue feature allows users to pause the conversation and resume it later, improving the user experience for non-linear input scenarios.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/wait-and-continue.html"
+              },
+              "improvementPlan": {
+                "displayText": "Implement the wait and continue feature for intents where users might need time to gather information. Enable this feature on relevant slot's advanced options, allowing users to say phrases like hold on a second to pause the conversation. Test various scenarios to ensure smooth resumption of the dialog",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/wait-and-continue.html"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "For FAQ functionality, consider using QnAIntent",
+              "helpfulResource": {
+                "displayText": "If your Interactive Voice Response (IVR) system includes a Frequently Asked Questions (FAQ) section, consider implementing QnAIntent to manage and optimize this feature. QnAIntent is a powerful tool that can enhance the efficiency and accuracy of your FAQ responses harnessing generative AI capabilities from Amazon Bedrock.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/generative-qna.html"
+              },
+              "improvementPlan": {
+                "displayText": "Evaluate your FAQ management strategy and consider implementing QnAIntent to enhance the efficiency and accuracy of your IVR's FAQ responses harnessing generative AI capabilities from Amazon Bedrock.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/generative-qna.html"
+              }
+            },
+            {
+              "id": "choice5",
+              "title": "Enable Slot Obfuscation",
+              "helpfulResource": {
+                "displayText": "Amazon Lex V2 enables you to obfuscate or hide the contents of slots, ensuring that sensitive data captured as slot values is not visible. By enabling slot obfuscation, you can mask these values in the logs, providing an additional layer of protection for sensitive information. Slot obfuscation only works for text logs.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/conversation-logs-obfuscate.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review your bot's slot configurations and identify slots that contain sensitive information. Enable slot obfuscation for these slots to ensure that sensitive data is masked in the logs, enhancing data protection and compliance. This is particularly important for text logs containing sensitive information.",
+                "url": "http://docs.aws.amazon.com/lexv2/latest/dg/conversation-logs-obfuscate.html"
+              }
+            },
+            {
+              "id": "option_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this option if you haven't implemented any of these monitoring strategies."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "!choice1",
+              "risk": "HIGH_RISK"
+            },
+            {
+                "condition": "choice1 && choice2 && choice3 && choice4",
+                "risk": "NO_RISK"
+              },
+            {
+              "condition": "default",
+              "risk": "MEDIUM_RISK"
+            }
+          ]
+        },
+        {
+          "id": "ConvBot_04",
+          "title": "How are you ensuring your services are appropriately scaled for your workload?",
+          "description": "Service quotas also referred to as limits could be adjusted or increased to be prepared for peak volume periods and avoid any bottle necks.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Review Amazon Lex V2 Quota Guidelines",
+              "helpfulResource": {
+                "displayText": "Understand and adhere to Amazon Lex V2 service quota limits for successful bot deployment. If your bot will be experiencing more than 50 Transactions Per Second, engage support to determine if you bot needs to be added to the group more scaled out to handle higher capacity workloads.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/quotas.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review your bot's usage against Amazon Lex V2 quotas, focusing on key areas like concurrent bots, intents, and slots, to ensure your implementation stays within service limits and can handle expected traffic.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/quotas.html"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Ensure that Lambda Limits are scaled appropriately",
+              "helpfulResource": {
+                "displayText": "By default, AWS Lambda allows 1,000 concurrent executions per AWS account per region. If you require more concurrent executions, you can submit a request to increase this limit to AWS Lambda. Refer to the AWS Lambda limits documentation for more details on Lambda limits and scaling.",
+                "url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review your Lambda function usage, focusing on concurrent executions and execution time. Consider implementing provisioned concurrency to reduce cold starts and improve responsiveness. If needed, submit a request to increase Lambda limits to accommodate your bot's requirements.",
+                "url": "https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Ensure that Amazon Polly Limits are scaled appropriately",
+              "helpfulResource": {
+                "displayText": "Amazon Polly throttles SynthesizeSpeech requests by the number of concurrent requests that it synthesizes. Amazon Polly automatically publishes to CloudWatch to analyze your current usage and forecast usage growth.",
+                "url": "https://docs.aws.amazon.com/polly/latest/dg/limits.html"
+              },
+              "improvementPlan": {
+                "displayText": "Monitor your Polly usage, particularly concurrent requests for SynthesizeSpeech. Use CloudWatch metrics to analyze usage patterns and forecast growth. Request quota increases through the AWS Management Console if needed to ensure smooth text-to-speech operations for your Lex bot.",
+                "url": "https://docs.aws.amazon.com/polly/latest/dg/limits.html"
+              }
+            },
+            {
+              "id": "choice4",
+              "title": "Ensure that Amazon  Bedrock limits are scaled appropriately",
+              "helpfulResource": {
+                "displayText": "Check the Amazon Bedrock quota documentation for more information.",
+                "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html"
+              },
+              "improvementPlan": {
+                "displayText": "Review your Bedrock usage, particularly if you're using features like QnAIntent and BedrockAgentIntent. Monitor your usage against the current quotas and request increases through the AWS Management Console as needed to support your bot's functionality.",
+                "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html"
+              }
+            },
+            {
+              "id": "choice5",
+              "title": "Monitor service quotas and API throttling for your Lex bots",
+              "helpfulResource": {
+                "displayText": "Amazon Lex V2 reports metrics in the AWS/Lex namespace that can be monitored with CloudWatch. You can track throttled events when Amazon Lex V2 receives more requests than the transaction limit set for your account, allowing you to identify when you're approaching service quotas.",
+                "url": "https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-cloudwatch.html"
+              },
+              "improvementPlan": {
+                "displayText": "Set up CloudWatch dashboards to visualize your current service usage and service quotas for Amazon Lex V2. Create CloudWatch alarms that alert you when usage approaches service quota thresholds (typically at 80% of the quota). Monitor the ThrottledCount metric in the AWS/Lex namespace to identify when requests are being throttled. For workloads with predictable patterns, implement CloudWatch Anomaly Detection to identify unexpected changes in API usage. Consider requesting quota increases through Service Quotas or AWS Support if you consistently approach limits. Implement proper retry logic with exponential backoff in your application code to handle throttling events gracefully.",
+                "url": "https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Quotas-Visualize-Alarms.html"
+              }
+            },            
+            {
+              "id": "option_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this option if you haven't implemented any of these conversation log strategies."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "!choice1 || !choice2 || !choice3 || !choice4 || !choice5",
+              "risk": "HIGH_RISK"
+            },
+            {
+                "condition": "choice1 && choice2 && choice3 && choice4 && choice5",
+                "risk": "NO_RISK"
+              },
+            {
+              "condition": "default",
+              "risk": "MEDIUM_RISK"
+            }
+          ]
+        },
+        {
+          "id": "ConvBot_05",
+          "title": "How do you know that you are ready to support your Amazon Lex bots?",
+          "description": "Evaluate the operational readiness of your workload, processes and procedures, and personnel to understand the operational risks related to your workload.",
+          "choices": [
+            {
+              "id": "choice1",
+              "title": "Specialist learning & badge Plan",
+              "helpfulResource": {
+                "displayText": "This collection of learning resources have been created specifically for learners who may have the responsibilities or play the role of Amazon Connect Communications Specialist in their organization. The course will help you to describe the typical architecture associated with an Amazon Lex solution, understand the cost structure of Amazon Lex and to implement a demonstration of Amazon Lex in the AWS Management Console.",
+                "url": "https://explore.skillbuilder.aws/learn/learning-plans/2262/plan"
+              },
+              "improvementPlan": {
+                "displayText": "Elevate the operational team's knowledge and skills using the specialized badge plan, validate and accredit those skills by gaining the program badges.",
+                "url": "https://explore.skillbuilder.aws/learn/learning-plans/2262/plan"
+              }
+            },
+            {
+              "id": "choice2",
+              "title": "Amazon Lex Workshops",
+              "helpfulResource": {
+                "displayText": "Workshops are hands-on events designed by the teams at AWS to teach or introduce practical skills, techniques, or concepts which you can use to solve business problems.",
+                "url": "https://workshops.aws/card/lex"
+              },
+              "improvementPlan": {
+                "displayText": "Practice Amazon Lex Workshops to boost your knowledge on configuration and integration of AWS services including Amazon Lex, AWS Lambda, Amazon DynamoDB, and Amazon Connect and to bring dynamic, life-like experiences to your callers.",
+                "url": "https://workshops.aws/card/lex"
+              }
+            },
+            {
+              "id": "choice3",
+              "title": "Is a conversational designer role being engaged?",
+              "helpfulResource": {
+                "displayText": "The conversational designer role is different from the Lex developer, while Lex developer is expected to demonstrate deep Lex experience to ensure best practices and positive outcomes are met, the conversational designer needs to Understand how humans converse with things and focuses on establishing or adhering to the brand’s voice.",
+                "url": "https://aws.amazon.com/blogs/machine-learning/part-3-how-to-approach-conversation-design-with-amazon-lex-building-and-testing"
+              },
+              "improvementPlan": {
+                "displayText": "Make sure that a conversational designer role is infused to improve the prompts quality and to set the righteous bot personality.",
+                "url": "https://aws.amazon.com/blogs/machine-learning/part-3-how-to-approach-conversation-design-with-amazon-lex-building-and-testing"
+              }
+            },
+            {
+              "id": "option_no",
+              "title": "None of these",
+              "helpfulResource": {
+                "displayText": "Choose this option if you haven't implemented any of these conversation log strategies."
+              }
+            }
+          ],
+          "riskRules": [
+            {
+              "condition": "!choice1 || !choice2",
+              "risk": "MEDIUM_RISK"
+            },
+            {
+                "condition": "choice1 && choice2 && choice3",
+                "risk": "NO_RISK"
+              },
+            {
+              "condition": "!choice3",
+              "risk": "HIGH_RISK"
+            }
+          ]
+        }
+    ]
+        }
+    ]
+}
+           
+
