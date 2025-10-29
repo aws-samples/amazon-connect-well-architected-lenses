@@ -49,6 +49,19 @@
 							}
 						},
 						{
+							"id": "choice4",
+							"title": "Ensure you configure the identity provider to use your regional SAML endpoint.",
+							"helpfulResource": {
+								"displayText": "To provide the best availability we recommend using the regional SAML endpoint that coincides with your Amazon Connect instance instead of the default global endpoint.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html#regionally-isolated-saml"
+							},
+							"improvementPlan": {
+								"displayText": "If you are already using the global SAML endpoint in your identity provider, update it to point to your regional SAML endpoint in the region where your Amazon Connect instance is located.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/configure-saml.html#regionally-isolated-saml"
+							}
+						},
+						
+						{
 							"id": "option_no",
 							"title": "None of these",
                             "helpfulResource": {
@@ -58,11 +71,11 @@
 					],
 					"riskRules": [
 						{
-							"condition": "choice1 && choice2 && choice3",
+							"condition": "choice1 && choice2 && choice3 && choice4",
 							"risk": "NO_RISK"
 						},
 						{
-							"condition": "((choice1 || choice3) && choice2)",
+							"condition": "((choice1 || choice3) && choice2 && choice4)",
 							"risk": "MEDIUM_RISK"
 						},
 						{
@@ -1354,4 +1367,5 @@
 			]
 		}
 	]
+
 }
