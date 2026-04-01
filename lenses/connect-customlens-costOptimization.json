@@ -347,7 +347,7 @@
 				{
 					"id": "COST06",
 					"title": "How are you managing data storage lifecycle and retention for call recordings, transcripts, and contact data?",
-					"description": "Amazon Connect stores call recordings, screen recordings, chat transcripts, and contact trace records in Amazon S3. Without proper lifecycle management, storage costs can accumulate significantly over time, especially with compliance retention requirements often spanning six or more years. Implementing S3 lifecycle policies to transition data to lower-cost storage classes (such as S3 Glacier Instant Retrieval) can reduce storage costs by 40-80%, with additional savings possible through audio resampling techniques while maintaining compliance requirements.",
+					"description": "Amazon Connect stores call recordings, screen recordings, chat transcripts, and contact trace records in Amazon S3. Without proper lifecycle management, storage costs can accumulate significantly over time, especially with compliance retention requirements often spanning six or more years. Implementing S3 lifecycle policies to transition data to lower-cost storage classes (such as S3 Glacier Instant Retrieval) can reduce storage costs by 40-80 percent, with additional savings possible through audio resampling techniques while maintaining compliance requirements.",
 					"choices": [
 						{
 						"id": "choice1",
@@ -356,7 +356,7 @@
 							"displayText": "Are you using S3 Lifecycle policies to automatically transition call recordings, screen recordings, and chat transcripts to S3 Glacier or S3 Glacier Deep Archive after a defined period (e.g., 90 days)?"
 						},
 						"improvementPlan": {
-							"displayText": "Configure S3 Lifecycle policies on your Amazon Connect recording buckets to transition objects to S3 Standard-IA after 30 days, S3 Glacier after 90 days, or S3 Glacier Deep Archive for long-term archival. This can reduce storage costs by 60-85% compared to S3 Standard while maintaining compliance with retention requirements. For additional savings, consider implementing audio resampling after analytics processing is complete (typically 7 days) to reduce file sizes by 75% before transitioning to lower-cost storage tiers. It's an advanced technique, for more details see: https://aws.amazon.com/blogs/architecture/serverless-architecture-for-optimizing-amazon-connect-call-recording-archival-costs/",
+							"displayText": "Configure S3 Lifecycle policies on your Amazon Connect recording buckets to transition objects to S3 Standard-IA after 30 days, S3 Glacier after 90 days, or S3 Glacier Deep Archive for long-term archival. This can reduce storage costs by 60-85 percent compared to S3 Standard while maintaining compliance with retention requirements. For additional savings, consider implementing audio resampling after analytics processing is complete (typically 7 days) to reduce file sizes by 75 percent before transitioning to lower-cost storage tiers. It's an advanced technique, for more details see: https://aws.amazon.com/blogs/architecture/serverless-architecture-for-optimizing-amazon-connect-call-recording-archival-costs/",
 							"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
 						}
 						},
