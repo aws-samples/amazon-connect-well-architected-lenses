@@ -343,7 +343,77 @@
 							"risk": "HIGH_RISK"
 						}
 					]
+				},
+				{
+					"id": "COST06",
+					"title": "How are you managing data storage lifecycle and retention for call recordings, transcripts, and contact data?",
+					"description": "Amazon Connect stores call recordings, screen recordings, chat transcripts, and contact trace records in Amazon S3. Without proper lifecycle management, storage costs can accumulate significantly over time, especially with compliance retention requirements often spanning six or more years. Implementing S3 lifecycle policies to transition data to lower-cost storage classes (such as S3 Glacier Instant Retrieval) can reduce storage costs by 40-80 percent, with additional savings possible through audio resampling techniques while maintaining compliance requirements.",
+					"choices": [
+						{
+						"id": "choice1",
+						"title": "S3 Lifecycle policies configured to transition recordings to lower-cost storage tiers",
+						"helpfulResource": {
+							"displayText": "Are you using S3 Lifecycle policies to automatically transition call recordings, screen recordings, and chat transcripts to S3 Glacier or S3 Glacier Deep Archive after a defined period (e.g., 90 days)?"
+						},
+						"improvementPlan": {
+							"displayText": "Configure S3 Lifecycle policies on your Amazon Connect recording buckets to transition objects to S3 Standard-IA after 30 days, S3 Glacier after 90 days, or S3 Glacier Deep Archive for long-term archival. This can reduce storage costs by 60-85 percent compared to S3 Standard while maintaining compliance with retention requirements. For additional savings, consider implementing audio resampling after analytics processing is complete (typically 7 days) to reduce file sizes by 75 percent before transitioning to lower-cost storage tiers. It's an advanced technique, for more details see: https://aws.amazon.com/blogs/architecture/serverless-architecture-for-optimizing-amazon-connect-call-recording-archival-costs/",
+							"url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lifecycle-mgmt.html"
+						}
+						},
+						{
+						"id": "choice2",
+						"title": "Retention policies aligned with business and compliance requirements",
+						"helpfulResource": {
+							"displayText": "Have you defined and implemented retention policies that balance compliance requirements with cost optimization, rather than retaining all data indefinitely?"
+						},
+						"improvementPlan": {
+							"displayText": "Work with your compliance and legal teams to establish appropriate retention periods for call recordings, screen recordings, and chat transcripts. Configure S3 Lifecycle expiration policies to automatically delete objects after the retention period expires. Contact Trace Records (CTRs) are retained by Amazon Connect for 24 months by default.",
+							"url": "https://docs.aws.amazon.com/connect/latest/adminguide/data-handled-by-connect.html"
+						}
+						},
+						{
+						"id": "choice3",
+						"title": "S3 Intelligent-Tiering enabled for unpredictable access patterns",
+						"helpfulResource": {
+							"displayText": "For recordings with unpredictable access patterns, are you using S3 Intelligent-Tiering to automatically optimize costs based on actual usage?"
+						},
+						"improvementPlan": {
+							"displayText": "Enable S3 Intelligent-Tiering on your recording buckets to automatically move objects between access tiers based on changing access patterns. This eliminates the need to manually manage lifecycle transitions while optimizing costs for data with unknown or changing access patterns.",
+							"url": "https://aws.amazon.com/s3/storage-classes/intelligent-tiering/"
+						}
+						},
+						{
+						"id": "choice4",
+						"title": "Regular review and optimization of storage usage and costs",
+						"helpfulResource": {
+							"displayText": "Do you regularly monitor storage usage, analyze access patterns, and optimize lifecycle policies using tools like S3 Storage Lens, S3 Analytics, or AWS Cost Explorer?"
+						},
+						"improvementPlan": {
+							"displayText": "Use S3 Storage Lens to gain visibility into storage usage and activity trends across your Amazon Connect recording buckets. Leverage S3 Analytics to understand access patterns and optimize lifecycle transitions. Review storage costs regularly in AWS Cost Explorer and adjust policies as needed to balance cost and compliance requirements.",
+							"url": "https://docs.aws.amazon.com/connect/latest/adminguide/cost-optimization-bp.html"
+						}
+						},
+						{
+						"id": "choice9_no",
+						"title": "None of these"
+						}
+					],
+					"riskRules": [
+						{
+						"condition": "choice1 && choice2 && choice3 && choice4",
+						"risk": "NO_RISK"
+						},
+						{
+						"condition": "(choice1 && choice2) || (choice1 && choice4) || (choice2 && choice4)",
+						"risk": "MEDIUM_RISK"
+						},
+						{
+						"condition": "choice9_no || (!choice1 && !choice2)",
+						"risk": "HIGH_RISK"
+						}
+					]
 				}
+
 			]
 		}
 	]
