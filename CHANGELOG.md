@@ -58,6 +58,8 @@
 
 ## Global Resiliency
 
+**v1.3 (11/6/2026)** - Added Global Routing coverage: new question GlobalResiliency_20 (Global Routing adoption readiness), new choices in Q8 (active-active agents), Q10 (30-day failover testing and resiliency readiness validation before a Region switch) and Q13 (Global Analytics), and Global Routing notes in Q3 and Q13 descriptions. Q10 now requires 30-day failover testing for MEDIUM and NO risk. Added default risk rules to Q5, Q11 and Q12. Replaced special characters for Well-Architected Tool compatibility and corrected spelling errors.
+
 **v1.2 (4/19/2024)** - Updated the Risk in Q1 from MEDIUM to HIGH when any of the first 5 choices is not selected. Q19 risk was reduced to MEDIUM for other Amazon Connect features that are in use and are not supported by ACGR. Update Wisdom to Amazon Q in Connect.
 
 **v1.1 (2/13/2023)** - Initial Release
