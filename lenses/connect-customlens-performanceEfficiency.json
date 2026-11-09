@@ -221,11 +221,11 @@
 							"title": "A Custom CCP is being used",
 							"helpfulResource": {
 								"displayText": "Significant performance efficiency can be realized through the creation of custom agent desktop solutions using the Amazon Connect Streams API.",
-								"url": "https://github.com/aws/amazon-connect-streams"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/embed-custom-ccp.html"
 							},
 							"improvementPlan": {
 								"displayText": "Consider using the Streams API to create customized CCP's for your agents to increase performance efficiency.",
-								"url": "https://github.com/aws/amazon-connect-streams"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/embed-custom-ccp.html"
 							}
 						},
 						{
@@ -233,11 +233,11 @@
 							"title": "Amazon Connect is integrated with a CRM",
 							"helpfulResource": {
 								"displayText": "With a CRM integration, your agents can get a comprehensive view of customer and contact information in a single interface without managing multiple screens and interfaces",
-								"url": "https://github.com/aws/amazon-connect-streams"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/3p-apps.html"
 							},
 							"improvementPlan": {
 								"displayText": "Evaluate if a CCP can be embedded into the CRM used by your organization.",
-								"url": "https://github.com/aws/amazon-connect-streams"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/embed-custom-ccp.html"
 							}
 						},
 						{
@@ -245,11 +245,11 @@
 							"title": "Agent Automation",
 							"helpfulResource": {
 								"displayText": "Common and repeatable tasks are automated for your agents. For example, automatically creating cases or pre-filling web-forms and offering a screen pop with relevant information when a contact is offered.",
-								"url": "https://aws.amazon.com/connect/tasks/"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html"
 							},
 							"improvementPlan": {
 								"displayText": "Evaluate what repeatable processes or jobs are performed by agents and determine if Tasks can be used to improve automation.",
-								"url": "https://aws.amazon.com/connect/tasks/"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html"
 							}
 						},
 						{
@@ -257,11 +257,11 @@
 							"title": "Enhanced Capabilities have been built into the CCP",
 							"helpfulResource": {
 								"displayText": "CCP functionality can be extended/enhanced to include real-time Transcriptions, Translations, Suggested Actions and Knowledge base integrations.",
-								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/analyze-conversations.html"
 							},
 							"improvementPlan": {
-								"displayText": "Integrate enhanced capabilities with your agent desktop to allow skilled agents to service contacts more efficiently and unskilled agents to provide service when skilled agents aren’t available. For example, you can use this approach to automatically translate a chat contact for unskilled agents that don't know the language. When your agent replies, you can automatically translate the text to the contact’s language, allowing for real-time bilingual communication.",
-								"url": "https://aws.amazon.com/solutions/implementations/ai-powered-speech-analytics-for-amazon-connect/"
+								"displayText": "Integrate enhanced capabilities with your agent desktop to allow skilled agents to service contacts more efficiently and unskilled agents to provide service when skilled agents aren't available. For example, you can use this approach to automatically translate a chat contact for unskilled agents that don't know the language. When your agent replies, you can automatically translate the text to the contact's language, allowing for real-time bilingual communication.",
+								"url": "https://docs.aws.amazon.com/connect/latest/adminguide/connect-ai-agent.html"
 							}
 						},
 						{
@@ -278,7 +278,7 @@
 							"risk": "NO_RISK"
 						},
 						{
-							"condition": "!choice1 || !choice2 || !choice3 || !choice4",
+							"condition": "choice1 || choice2 || choice3 || choice4",
 							"risk": "MEDIUM_RISK"
 						},
 						{
