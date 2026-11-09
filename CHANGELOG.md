@@ -36,6 +36,8 @@
 
 ## Performance Efficiency
 
+**v1.4 (11/9/2026)** - Updated PER04 helpful resource and improvement plan links to point to the Amazon Connect Administrator Guide. Corrected the PER04 risk rules so that selecting none of the best practices, or "None of these", returns HIGH risk instead of MEDIUM. Replaced special characters for Well-Architected Tool compatibility.
+
 **v1.3 (06/05/2024)** - Corrected spelling errors.
 
 **v1.2 (02/17/2023)** - Updated all questions with correct "None of these" option formatting.
